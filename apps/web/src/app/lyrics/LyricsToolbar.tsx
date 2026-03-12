@@ -1,0 +1,107 @@
+import { Minus, Plus, Type, Bold, Copy } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { READING_MODES, type ReadingMode } from "./constants"
+
+interface Props {
+  fontSize: number
+  bold: boolean
+  readingMode: ReadingMode
+  onFontDecrease: () => void
+  onFontIncrease: () => void
+  onBoldToggle: () => void
+  onReadingModeChange: (mode: ReadingMode) => void
+  onCopy: () => void
+}
+
+export function LyricsToolbar({
+  fontSize,
+  bold,
+  readingMode,
+  onFontDecrease,
+  onFontIncrease,
+  onBoldToggle,
+  onReadingModeChange,
+  onCopy,
+}: Props) {
+  return (
+    <div className="sticky top-0 z-20 flex items-center gap-2.5 border-b border-border bg-background/95 px-4 py-2 backdrop-blur-sm md:hidden">
+      {/* Font size */}
+      <div className="flex items-center gap-1">
+        <button
+          onClick={onFontDecrease}
+          className="rounded-lg p-1.5 transition-colors hover:bg-muted"
+        >
+          <Minus size={12} className="text-muted-foreground" />
+        </button>
+        <span className="flex w-9 items-center justify-center gap-1 text-xs text-muted-foreground">
+          <Type size={10} /> {fontSize}
+        </span>
+        <button
+          onClick={onFontIncrease}
+          className="rounded-lg p-1.5 transition-colors hover:bg-muted"
+        >
+          <Plus size={12} className="text-muted-foreground" />
+        </button>
+      </div>
+
+      <div className="h-4 w-px bg-border" />
+
+      {/* Reading mode swatches */}
+      <div className="flex items-center gap-1">
+        {(["light", "warm", "night"] as ReadingMode[]).map((mode) => {
+          const cfg = READING_MODES[mode]
+          const Icon = cfg.icon
+          return (
+            <button
+              key={mode}
+              onClick={() => onReadingModeChange(mode)}
+              title={cfg.label}
+              className={cn(
+                "flex h-6 w-6 items-center justify-center rounded-full border transition-all duration-200",
+                readingMode === mode
+                  ? "scale-110 border-primary/60 shadow-sm"
+                  : "border-border/60"
+              )}
+              style={{ backgroundColor: cfg.swatch }}
+            >
+              <Icon
+                size={11}
+                style={{
+                  color:
+                    mode === "night"
+                      ? "#9D8FCC"
+                      : mode === "warm"
+                        ? "#A06820"
+                        : "#9CA3AF",
+                }}
+              />
+            </button>
+          )
+        })}
+      </div>
+
+      <div className="h-4 w-px bg-border" />
+
+      {/* Bold */}
+      <button
+        onClick={onBoldToggle}
+        className={cn(
+          "flex h-6 w-6 items-center justify-center rounded-lg border transition-all duration-150",
+          bold
+            ? "border-primary/50 bg-primary/8 text-primary"
+            : "border-border/60 text-muted-foreground"
+        )}
+      >
+        <Bold size={12} />
+      </button>
+
+      {/* Copy — far right */}
+      <button
+        onClick={onCopy}
+        className="ml-auto flex items-center gap-1 text-xs font-medium text-brand-blue"
+      >
+        <Copy size={12} /> Copy
+      </button>
+    </div>
+  )
+}

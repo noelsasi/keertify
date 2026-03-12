@@ -1,0 +1,171 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource/poppins/400.css";
+@import "@fontsource/poppins/500.css";
+@import "@fontsource/poppins/600.css";
+@import "@fontsource/poppins/700.css";
+@import "@fontsource/poppins/800.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── LIGHT MODE ─────────────────────────────────────── */
+:root {
+  /* Barely-there lavender surface — clean and readable */
+  --background: oklch(0.98 0.007 292);
+  --foreground: oklch(0.13 0.05 290);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.13 0.05 290);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.13 0.05 290);
+
+  /* Electric violet as the interactive primary */
+  --primary: oklch(0.55 0.25 291);
+  --primary-foreground: oklch(0.98 0 0);
+
+  --secondary: oklch(0.93 0.02 290);
+  --secondary-foreground: oklch(0.13 0.05 290);
+
+  --muted: oklch(0.94 0.012 290);
+  --muted-foreground: oklch(0.5 0.025 290);
+
+  /* Rose/hot-pink accent — the Musixmatch energy */
+  --accent: oklch(0.6 0.27 336);
+  --accent-foreground: oklch(0.98 0 0);
+
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.88 0.015 290);
+  --input: oklch(0.88 0.015 290);
+  --ring: oklch(0.55 0.25 291 / 30%);
+  --radius: 0.75rem;
+
+  /* Nav chrome */
+  --nav-bg: oklch(1 0 0);
+  --nav-foreground: oklch(0.13 0.05 290);
+  --nav-border: oklch(0.88 0.015 290);
+
+  /* ── Keertify brand tokens ────────────────────────────
+     brand-navy  → deep violet  (header bg, active buttons)
+     brand-gold  → vibrant rose (accent highlights, icons)
+     brand-blue  → purple-blue  (link / "See all" text)
+  ─────────────────────────────────────────────────────── */
+  --brand-navy: oklch(0.22 0.12 291);
+  --brand-gold: oklch(0.65 0.28 336);
+  --brand-blue: oklch(0.6 0.18 272);
+  --brand-gold-muted: oklch(0.65 0.28 336 / 12%);
+
+  /* Extended palette — Musixmatch full spectrum */
+  --brand-violet: oklch(0.55 0.25 291);
+  --brand-pink: oklch(0.65 0.28 336);
+  --brand-amber: oklch(0.84 0.17 80);
+  --brand-teal: oklch(0.77 0.15 168);
+}
+
+/* ─── DARK MODE ──────────────────────────────────────── */
+.dark {
+  /* Deep rich purple dark — evocative, concert-hall feel */
+  --background: oklch(0.1 0.04 290);
+  --foreground: oklch(0.95 0.006 290);
+
+  --card: oklch(0.15 0.055 290);
+  --card-foreground: oklch(0.95 0.006 290);
+
+  --popover: oklch(0.15 0.055 290);
+  --popover-foreground: oklch(0.95 0.006 290);
+
+  /* Lighter violet on dark bg — legible, vivid */
+  --primary: oklch(0.73 0.2 293);
+  --primary-foreground: oklch(0.1 0.04 290);
+
+  --secondary: oklch(0.21 0.075 290);
+  --secondary-foreground: oklch(0.95 0.006 290);
+
+  --muted: oklch(0.21 0.075 290);
+  --muted-foreground: oklch(0.62 0.04 290);
+
+  /* Rose stays vivid in dark — pops beautifully */
+  --accent: oklch(0.68 0.27 336);
+  --accent-foreground: oklch(0.98 0 0);
+
+  --destructive: oklch(0.65 0.22 22);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.73 0.2 293 / 40%);
+
+  /* Nav chrome */
+  --nav-bg: oklch(0.14 0.05 290);
+  --nav-foreground: oklch(0.95 0.006 290);
+  --nav-border: oklch(1 0 0 / 8%);
+
+  /* Brand tokens in dark — same values, works on both surfaces */
+  --brand-navy: oklch(0.22 0.12 291);
+  --brand-gold: oklch(0.7 0.27 336);
+  --brand-blue: oklch(0.68 0.18 272);
+  --brand-gold-muted: oklch(0.7 0.27 336 / 15%);
+
+  --brand-violet: oklch(0.73 0.2 293);
+  --brand-pink: oklch(0.7 0.27 336);
+  --brand-amber: oklch(0.84 0.17 80);
+  --brand-teal: oklch(0.77 0.15 168);
+}
+
+@theme inline {
+  --font-sans: "Poppins", sans-serif;
+  --font-telugu: "Noto Sans Telugu", sans-serif;
+  --font-hindi: "Noto Sans Devanagari", sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Nav */
+  --color-nav-bg: var(--nav-bg);
+  --color-nav-foreground: var(--nav-foreground);
+  --color-nav-border: var(--nav-border);
+
+  /* Brand */
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-gold-muted: var(--brand-gold-muted);
+  --color-brand-violet: var(--brand-violet);
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-amber: var(--brand-amber);
+  --color-brand-teal: var(--brand-teal);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 500;
+  }
+  html {
+    @apply font-sans;
+  }
+}
