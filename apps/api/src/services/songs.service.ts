@@ -43,7 +43,7 @@ export async function listSongs(
         canonicalSlug: songs.canonicalSlug,
         title: songs.title,
         artist: songs.artist,
-        categoryId: songs.categoryId,
+        category: songs.category,
         categoryName: categories.name,
         language: songs.language,
         lyrics: songs.lyrics,
@@ -54,10 +54,10 @@ export async function listSongs(
         updatedAt: songs.updatedAt,
       })
       .from(songs)
-      .innerJoin(categories, eq(songs.categoryId, categories.id))
+      .innerJoin(categories, eq(songs.category, categories.slug))
       .where(
         opts.category
-          ? and(where, eq(categories.slug, opts.category))
+          ? and(where, eq(songs.category, opts.category))
           : where
       )
       .orderBy(desc(songs.createdAt))
@@ -67,10 +67,10 @@ export async function listSongs(
     db()
       .select({ value: count() })
       .from(songs)
-      .innerJoin(categories, eq(songs.categoryId, categories.id))
+      .innerJoin(categories, eq(songs.category, categories.slug))
       .where(
         opts.category
-          ? and(where, eq(categories.slug, opts.category))
+          ? and(where, eq(songs.category, opts.category))
           : where
       ),
   ])

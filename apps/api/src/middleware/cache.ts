@@ -57,9 +57,13 @@ export function cacheMiddleware(options: CacheOptions): MiddlewareHandler {
  * Use after write operations (create/update/delete).
  */
 export async function invalidateCache(prefix: string): Promise<void> {
-  const r = redis()
-  const keys = await r.keys(`${prefix}*`)
-  if (keys.length > 0) {
-    await r.del(...keys)
+  try {
+    const r = redis()
+    const keys = await r.keys(`${prefix}*`)
+    if (keys.length > 0) {
+      await r.del(...keys)
+    }
+  } catch {
+    // Redis unavailable — skip invalidation, not fatal
   }
 }

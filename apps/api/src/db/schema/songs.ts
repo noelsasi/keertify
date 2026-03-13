@@ -29,9 +29,10 @@ export const songs = pgTable("songs", {
   canonicalSlug: text("canonical_slug").notNull(),
   title: text("title").notNull(),
   artist: text("artist").notNull(),
-  categoryId: text("category_id")
+  artistEnglish: text("artist_english"),
+  category: text("category")
     .notNull()
-    .references(() => categories.id),
+    .references(() => categories.slug),
   language: languageEnum("language").notNull(),
   lyrics: text("lyrics").notNull(),
   lyricsEnglish: text("lyrics_english"),
@@ -50,6 +51,7 @@ export const songSections = pgTable("song_sections", {
   number: text("number").notNull().default("0"),
   position: text("position").notNull().default("0"),
   content: text("content").notNull(),
+  contentEnglish: text("content_english"),
   repeatCount: text("repeat_count"),
   refLabel: text("ref_label"),
 })
@@ -64,9 +66,9 @@ export const streamingLinks = pgTable("streaming_links", {
 })
 
 export const songsRelations = relations(songs, ({ one, many }) => ({
-  category: one(categories, {
-    fields: [songs.categoryId],
-    references: [categories.id],
+  categoryRef: one(categories, {
+    fields: [songs.category],
+    references: [categories.slug],
   }),
   sections: many(songSections),
   streamingLinks: many(streamingLinks),

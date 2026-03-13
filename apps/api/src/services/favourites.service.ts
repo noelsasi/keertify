@@ -8,7 +8,7 @@ export async function getFavourites(sessionId: string): Promise<Song[]> {
     .select({ song: songs })
     .from(favourites)
     .innerJoin(songs, eq(favourites.songId, songs.id))
-    .innerJoin(categories, eq(songs.categoryId, categories.id))
+    .innerJoin(categories, eq(songs.category, categories.slug))
     .where(and(eq(favourites.sessionId, sessionId), eq(songs.isActive, true)))
     .orderBy(desc(favourites.createdAt))
 
