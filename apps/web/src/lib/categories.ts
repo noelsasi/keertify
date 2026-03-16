@@ -166,19 +166,28 @@ export const CATEGORIES: Record<Category, CategoryConfig> = {
 
 export type CategoryGroup = "evergreen" | "thematic" | "seasonal" | "special"
 
-export const GROUP_LABELS: Record<CategoryGroup, string> = {
-  evergreen: "Every Sunday",
-  thematic: "By Theme",
-  seasonal: "Occasions",
-  special: "Special",
-}
-
 export const ALL_CATEGORIES = Object.keys(CATEGORIES) as Category[]
 
-export const CATEGORIES_BY_GROUP = (group: CategoryGroup): Category[] =>
-  ALL_CATEGORIES.filter((c) => CATEGORIES[c].group === group)
+export const CATEGORY_LABELS: Record<Category, string> = {
+  Praise: "praise",
+  Worship: "worship",
+  "Good Friday": "good-friday",
+  Easter: "easter",
+  Marriage: "marriage",
+  Christmas: "christmas",
+  Thanksgiving: "thanksgiving",
+  Prayer: "prayer",
+  Gospel: "gospel",
+  Comfort: "comfort",
+  Repentance: "repentance",
+  Commitment: "commitment",
+  "Second Coming": "second-coming",
+  Kids: "kids",
+  Offering: "offering",
+  Default: "default",
+}
 
-export function getCategoryConfig(category: string): CategoryConfig {
+export function getCategoryConfig(category: Category): CategoryConfig {
   return (
     CATEGORIES[category as Category] ?? {
       label: category,

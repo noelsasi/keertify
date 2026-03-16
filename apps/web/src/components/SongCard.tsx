@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 import { useAppStore } from "@/store/app.store"
-import { CATEGORY_COLORS, LANGUAGE_LABELS } from "@/lib/mock-data"
+import { CATEGORY_COLORS, LANGUAGE_LABELS } from "@/lib/constants"
 import type { Song } from "@/types/song.types"
 
 interface SongCardProps {
@@ -25,21 +25,19 @@ export function SongCard({ song }: SongCardProps) {
   return (
     <div
       onClick={() => navigate(`/song/${song.slug}`)}
-      className="flex cursor-pointer items-center gap-0 overflow-hidden rounded-xl border border-border bg-card transition-all duration-150 hover:border-brand-gold/30 hover:shadow-md active:scale-[0.98]"
+      className="border-border bg-card hover:border-brand-gold/30 flex cursor-pointer items-center gap-0 overflow-hidden rounded-xl border transition-all duration-150 hover:shadow-md active:scale-[0.98]"
     >
       {/* Category accent bar */}
       <div className={cn("w-1.5 flex-shrink-0 self-stretch", accentColor)} />
 
       {/* Content */}
       <div className="min-w-0 flex-1 px-4 py-4">
-        <p className="truncate text-base leading-snug font-semibold text-foreground">
+        <p className="text-foreground truncate text-base leading-snug font-semibold">
           {song.title}
         </p>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {song.artist} · {song.category} ·{" "}
-          <span className="text-brand-blue">
-            {LANGUAGE_LABELS[song.language]}
-          </span>
+        <p className="text-muted-foreground mt-1 text-sm">
+          {song.artist || "NA"} · {song.category} ·{" "}
+          <span className="text-brand-blue">{LANGUAGE_LABELS[song.language]}</span>
         </p>
       </div>
 
@@ -53,9 +51,7 @@ export function SongCard({ song }: SongCardProps) {
           size={20}
           className={cn(
             "transition-colors duration-200",
-            favourite
-              ? "fill-red-500 stroke-red-500"
-              : "stroke-muted-foreground"
+            favourite ? "fill-red-500 stroke-red-500" : "stroke-muted-foreground"
           )}
         />
       </button>

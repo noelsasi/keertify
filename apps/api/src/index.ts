@@ -10,6 +10,8 @@ import { songsRouter } from "./routes/songs.ts"
 import { categoriesRouter } from "./routes/categories.ts"
 import { favouritesRouter } from "./routes/favourites.ts"
 import { adminRouter } from "./routes/admin.ts"
+import { albumsRouter } from "./routes/albums.ts"
+import { artistsRouter } from "./routes/artists.ts"
 
 const app = new Hono<AppEnv>()
 
@@ -49,6 +51,8 @@ app.route("/api/songs", songsRouter)
 app.route("/api/categories", categoriesRouter)
 app.route("/api/favourites", favouritesRouter)
 app.route("/api/admin", adminRouter)
+app.route("/api/albums", albumsRouter)
+app.route("/api/artists", artistsRouter)
 
 // ---------------------------------------------------------------------------
 // Health check

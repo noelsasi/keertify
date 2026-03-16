@@ -1,5 +1,5 @@
 import { ExternalLink } from "lucide-react"
-import { LANGUAGE_LABELS } from "@/lib/mock-data"
+import { LANGUAGE_LABELS } from "@/lib/constants"
 import type { Song } from "@/types/song.types"
 import type { CategoryConfig } from "@/lib/categories"
 import type { StreamingLink } from "@/types/song.types"
@@ -24,7 +24,7 @@ export function SongMeta({ song, catConfig, streamingLinks }: Props) {
     <div className="rounded-none border-t border-border/60 bg-card px-5 py-5 md:rounded-2xl md:border md:border-border/60">
       <div className="grid grid-cols-2 gap-x-6 gap-y-3.5 md:grid-cols-4">
         {[
-          { label: "Artist", value: song.artist },
+          { label: "Artist", value: song.artist || "NA" },
           { label: "Category", value: `${catConfig.emoji} ${catConfig.label}` },
           { label: "Language", value: LANGUAGE_LABELS[song.language] },
           { label: "Added", value: formatDate(song.createdAt) },
@@ -66,7 +66,7 @@ export function SongMeta({ song, catConfig, streamingLinks }: Props) {
                     alt={p.label}
                     className="h-3.5 w-3.5"
                     onError={(e) => {
-                      ;(e.target as HTMLImageElement).style.display = "none"
+                      ; (e.target as HTMLImageElement).style.display = "none"
                     }}
                   />
                   {p.label}

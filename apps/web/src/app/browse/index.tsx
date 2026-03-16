@@ -1,26 +1,22 @@
-import { useState, useMemo } from "react"
-import { Search, ArrowLeft } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import { Search, ArrowLeft } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { SongCard } from "@/components/SongCard"
 import { useAppStore } from "@/store/app.store"
-import { MOCK_SONGS, LANGUAGE_LABELS } from "@/lib/mock-data"
+import { useSongSearch } from "@/hooks/useSongs"
+import { LANGUAGE_LABELS } from "@/lib/constants"
 
 export function Browse() {
   const navigate = useNavigate()
   const { language } = useAppStore()
-  const [search, setSearch] = useState("")
 
-  const songs = useMemo(() => {
-    return MOCK_SONGS.filter((s) => {
-      const matchesLang = s.language === language
-      const matchesSearch =
-        search === "" ||
-        s.title.toLowerCase().includes(search.toLowerCase()) ||
-        s.artist.toLowerCase().includes(search.toLowerCase())
-      return matchesLang && matchesSearch
-    }).sort((a, b) => a.title.localeCompare(b.title))
-  }, [language, search])
+  const { search, setSearch, data, isLoading } = useSongSearch({
+    language,
+    pageSize: 100, // fetch full library; sorted A-Z client-side
+  })
+
+  const songs = [...(data?.data ?? [])].sort((a, b) => a.title.localeCompare(b.title))
+  const total = data?.total ?? 0
 
   return (
     <div className="flex min-h-screen flex-col md:min-h-0">
@@ -35,10 +31,7 @@ export function Browse() {
           </h1>
         </div>
         <div className="relative">
-          <Search
-            size={16}
-            className="absolute top-1/2 left-3 -translate-y-1/2 text-white/40"
-          />
+          <Search size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-white/40" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -54,15 +47,12 @@ export function Browse() {
           <div>
             <h1 className="text-3xl font-bold text-foreground">Browse</h1>
             <p className="mt-1 text-muted-foreground">
-              {songs.length} {LANGUAGE_LABELS[language]} songs · A–Z
+              {isLoading ? "Loading…" : `${total} ${LANGUAGE_LABELS[language]} songs · A–Z`}
             </p>
           </div>
         </div>
         <div className="relative">
-          <Search
-            size={18}
-            className="absolute top-1/2 left-4 -translate-y-1/2 text-muted-foreground"
-          />
+          <Search size={18} className="absolute top-1/2 left-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -75,16 +65,20 @@ export function Browse() {
       {/* Mobile count bar */}
       <div className="border-b border-border px-4 py-3 md:hidden">
         <p className="text-xs text-muted-foreground">
-          {songs.length} songs · A–Z
+          {isLoading ? "Loading…" : `${songs.length} songs · A–Z`}
         </p>
       </div>
 
       {/* Song grid */}
       <div className="flex-1 px-4 py-3 md:px-0 md:py-0">
-        {songs.length === 0 ? (
-          <div className="py-16 text-center text-sm text-muted-foreground">
-            No songs found
+        {isLoading ? (
+          <div className="space-y-2 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="h-[72px] animate-pulse rounded-xl border border-border bg-muted" />
+            ))}
           </div>
+        ) : songs.length === 0 ? (
+          <div className="py-16 text-center text-sm text-muted-foreground">No songs found</div>
         ) : (
           <div className="space-y-2 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
             {songs.map((song) => (

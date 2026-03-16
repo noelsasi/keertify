@@ -165,8 +165,26 @@ function buildTabMapFormatA(pfContent: HTMLElement): Record<string, HTMLElement[
   titles.forEach((title, i) => {
     const label = title.textContent.trim()
     const container = contents[i]
-    if (container) {
-      tabMap[label] = container.querySelectorAll("p")
+    if (!container) return
+
+    const paragraphs = [...container.querySelectorAll("p")]
+
+    // Some songs have the pallavi as raw text directly in the tabcontent div
+    // without an opening <p> tag (malformed HTML from the source site).
+    // Detect by checking if there is non-whitespace content before the first <p>.
+    const raw = container.innerHTML
+    const firstPIndex = raw.indexOf("<p")
+    const leading = firstPIndex > 0 ? raw.slice(0, firstPIndex) : (firstPIndex === -1 ? raw : "")
+    const leadingText = leading.replace(/<[^>]+>/g, "").trim()
+
+    if (leadingText) {
+      // Wrap the leading content in a real <p> so the rest of the pipeline can handle it
+      const synthetic = parse(`<p>${leading}</p>`).querySelector("p")
+      if (synthetic) paragraphs.unshift(synthetic)
+    }
+
+    if (paragraphs.length > 0) {
+      tabMap[label] = paragraphs
     }
   })
 

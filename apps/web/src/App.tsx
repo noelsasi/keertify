@@ -7,7 +7,14 @@ import { LyricsPage } from "@/app/lyrics"
 import { Favourites } from "@/app/favourites"
 import { Settings } from "@/app/settings"
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 min — matches API Redis cache TTL
+      retry: 1,
+    },
+  },
+})
 
 export default function App() {
   return (

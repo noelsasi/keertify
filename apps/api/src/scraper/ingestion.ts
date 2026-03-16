@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm"
+import { eq, ilike } from "drizzle-orm"
 import { db } from "../db/index.ts"
-import { songs, songSections, streamingLinks } from "../db/schema/index.ts"
+import { songs, songSections, streamingLinks, artists } from "../db/schema/index.ts"
 import { parseSong, type ParsedSong, type ParsedSection } from "./parser.ts"
 
 // ---------------------------------------------------------------------------
@@ -28,7 +28,7 @@ export interface IngestResult {
   songId: string
   slug: string
   title: string
-  artist: string
+  artistName: string | null
   sectionCount: number
 }
 
@@ -68,7 +68,7 @@ export async function insertParsedSong(
       songId: existing.id,
       slug: parsed.slug,
       title: parsed.title,
-      artist: parsed.artist,
+      artistName: parsed.artistEnglish ?? null,
       sectionCount: parsed.sections.length,
     }
   }
@@ -79,6 +79,11 @@ export async function insertParsedSong(
 async function createSong(parsed: ParsedSong, categorySlug: string): Promise<IngestResult> {
   const songId = crypto.randomUUID()
 
+  // Resolve or create the artist record before inserting the song
+  const artistId = parsed.artistEnglish
+    ? await upsertArtist(parsed.artistEnglish, parsed.artist)
+    : null
+
   await db()
     .insert(songs)
     .values({
@@ -86,8 +91,7 @@ async function createSong(parsed: ParsedSong, categorySlug: string): Promise<Ing
       slug: parsed.slug,
       canonicalSlug: parsed.slug,
       title: parsed.title,
-      artist: parsed.artist,
-      artistEnglish: parsed.artistEnglish ?? null,
+      artistId,
       category: categorySlug,
       language: parsed.language,
       lyrics: parsed.lyrics,
@@ -124,9 +128,49 @@ async function createSong(parsed: ParsedSong, categorySlug: string): Promise<Ing
     songId,
     slug: parsed.slug,
     title: parsed.title,
-    artist: parsed.artist,
+    artistName: parsed.artistEnglish ?? null,
     sectionCount: parsed.sections.length,
   }
+}
+
+/**
+ * Finds an existing artist by English name (case-insensitive) or creates a new one.
+ * English name is the canonical identity — the same artist across Telugu/Tamil/etc. songs.
+ */
+async function upsertArtist(nameEnglish: string, nameTelugu?: string | null): Promise<string> {
+  const [existing] = await db()
+    .select({ id: artists.id })
+    .from(artists)
+    .where(ilike(artists.name, nameEnglish))
+    .limit(1)
+
+  if (existing) return existing.id
+
+  const id = crypto.randomUUID()
+  const slug = generateArtistSlug(nameEnglish, id)
+
+  await db().insert(artists).values({
+    id,
+    slug,
+    name: nameEnglish,
+    nameTelugu: nameTelugu ?? null,
+    isActive: true,
+  })
+
+  return id
+}
+
+/**
+ * Generates a URL-safe slug from the English artist name.
+ * Falls back to artist-{uuid prefix} when the name has no ASCII characters.
+ */
+function generateArtistSlug(nameEnglish: string, fallbackId: string): string {
+  const slugified = nameEnglish
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+
+  return slugified.length > 0 ? slugified : `artist-${fallbackId.slice(0, 8)}`
 }
 
 /**

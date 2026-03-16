@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:3000/api/artists)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f''''Total artists: {len\\(d\\)}''''\\)\" curl -s \"http://localhost:3000/api/artists/hosanna-ministries\")",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f''''Artist: {d[\"\"name\"\"]}, songs: {len\\(d[\"\"songs\"\"]\\)}, albums: {len\\(d[\"\"albums\"\"]\\)}''''\\)\")"
+    ]
+  }
+}

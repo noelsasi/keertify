@@ -8,6 +8,27 @@
       "when": 1773397858485,
       "tag": "0000_illegal_mandrill",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1773405330195,
+      "tag": "0001_concerned_puck",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1773410131471,
+      "tag": "0002_big_hobgoblin",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1773443736090,
+      "tag": "0003_fresh_the_initiative",
+      "breakpoints": true
     }
   ]
 }

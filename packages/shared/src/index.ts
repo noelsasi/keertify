@@ -8,4 +8,5 @@ export type {
   PaginatedResponse,
   ApiError,
   SongListQuery,
+  SongDetail,
 } from "./types/song.js"

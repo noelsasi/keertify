@@ -30,6 +30,7 @@ export const CACHE_TTL = {
   SONG_LIST: 60 * 5, // 5 min — list changes infrequently
   SONG_DETAIL: 60 * 30, // 30 min — individual song data is stable
   CATEGORIES: 60 * 60, // 1 hour
+  ARTISTS: 60 * 60, // 1 hour
   FAVOURITES: 60 * 2, // 2 min — more dynamic, session-specific
 } as const
 

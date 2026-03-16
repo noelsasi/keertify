@@ -18,6 +18,12 @@ interface CacheOptions {
  */
 export function cacheMiddleware(options: CacheOptions): MiddlewareHandler {
   return async (c, next) => {
+    // Skip all Redis I/O in dev — set DISABLE_CACHE=true in .env
+    if (process.env.DISABLE_CACHE === "true") {
+      await next()
+      return
+    }
+
     if (c.req.method !== "GET") {
       await next()
       return
@@ -38,15 +44,18 @@ export function cacheMiddleware(options: CacheOptions): MiddlewareHandler {
 
     await next()
 
-    // Only cache successful responses
+    // Only cache successful responses — fire-and-forget so the write doesn't block
     if (c.res.status === 200) {
       try {
         const cloned = c.res.clone()
         const body = await cloned.json()
-        await redis().set(key, body, { ex: options.ttl })
+        // Intentionally not awaited: client gets the response immediately
+        redis()
+          .set(key, body, { ex: options.ttl })
+          .catch(() => {})
         c.res.headers.set("X-Cache", "MISS")
       } catch {
-        // Cache write failure is non-fatal
+        // Body parse failure is non-fatal
       }
     }
   }

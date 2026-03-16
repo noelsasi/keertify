@@ -19,6 +19,12 @@ interface RateLimitOptions {
  */
 export function rateLimitMiddleware(options: RateLimitOptions): MiddlewareHandler {
   return async (c, next) => {
+    // Skip rate limiting in dev — set DISABLE_CACHE=true in .env
+    if (process.env.DISABLE_CACHE === "true") {
+      await next()
+      return
+    }
+
     const identifier = options.keyFn
       ? options.keyFn(c)
       : (c.req.header("x-forwarded-for") ?? c.req.header("x-real-ip") ?? "unknown")
@@ -27,12 +33,12 @@ export function rateLimitMiddleware(options: RateLimitOptions): MiddlewareHandle
 
     try {
       const r = redis()
-      const current = await r.incr(key)
-
-      if (current === 1) {
-        // First request in this window — set TTL
-        await r.expire(key, options.window)
-      }
+      // Single round-trip: INCR + EXPIRE NX (only set TTL if key is new)
+      const [current] = await r
+        .pipeline()
+        .incr(key)
+        .expire(key, options.window, "nx")
+        .exec() as [number, number]
 
       c.res.headers.set("X-RateLimit-Limit", String(options.limit))
       c.res.headers.set("X-RateLimit-Remaining", String(Math.max(0, options.limit - current)))
