@@ -9,6 +9,8 @@ export type {
   ApiError,
   SongListQuery,
   SongDetail,
+  Album,
+  Artist,
   ArtistDetail,
   ArtistSongItem,
   ArtistAlbumItem,

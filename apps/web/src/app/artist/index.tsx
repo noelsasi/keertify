@@ -4,7 +4,7 @@ import { ArrowLeft, Music, Disc3, ListMusic } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useArtist } from "@/hooks/useSongs"
 import { CATEGORY_COLORS, LANGUAGE_LABELS } from "@/lib/constants"
-import type { ArtistSongItem, ArtistAlbumItem, AlbumDetail, Song } from "@/types/song.types"
+import type { ArtistSongItem, ArtistAlbumItem } from "@/types/song.types"
 
 const TOP_SONGS_LIMIT = 5
 
@@ -104,7 +104,7 @@ export function ArtistPage() {
               </div>
             </div>
             <div className="flex gap-3 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {artist.albums.map((album: AlbumDetail) => (
+              {artist.albums.map((album: ArtistAlbumItem) => (
                 <ArtistAlbumCard key={album.id} album={album} />
               ))}
             </div>
@@ -129,7 +129,7 @@ export function ArtistPage() {
               )}
             </div>
             <div className="space-y-2">
-              {visibleSongs.map((song: Song) => (
+              {visibleSongs.map((song: ArtistSongItem) => (
                 <ArtistSongRow key={song.id} song={song} />
               ))}
             </div>

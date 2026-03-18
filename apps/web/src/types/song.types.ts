@@ -8,8 +8,12 @@ export type {
   PaginatedResponse,
   SongListQuery,
   SongDetail,
+  Album,
+  Artist,
   AlbumDetail,
+  AlbumSongItem,
   ApiError,
+  ArtistDetail,
   ArtistSongItem,
   ArtistAlbumItem,
 } from "@keertify/shared"
