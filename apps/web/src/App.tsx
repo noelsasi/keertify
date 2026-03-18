@@ -6,6 +6,8 @@ import { Browse } from "@/app/browse"
 import { LyricsPage } from "@/app/lyrics"
 import { Favourites } from "@/app/favourites"
 import { Settings } from "@/app/settings"
+import { ArtistPage } from "@/app/artist"
+import { AlbumPage } from "@/app/album"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +27,8 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/browse" element={<Browse />} />
             <Route path="/song/:slug" element={<LyricsPage />} />
+            <Route path="/artists/:slug" element={<ArtistPage />} />
+            <Route path="/albums/:slug" element={<AlbumPage />} />
             <Route path="/favourites" element={<Favourites />} />
             <Route path="/settings" element={<Settings />} />
           </Route>

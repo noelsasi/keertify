@@ -10,102 +10,99 @@
 
 /* ─── LIGHT MODE ─────────────────────────────────────── */
 :root {
-  /* Barely-there lavender surface — clean and readable */
-  --background: oklch(0.98 0.007 292);
-  --foreground: oklch(0.13 0.05 290);
+  /* Ivory warm surface — clean, premium, content-first */
+  --background: oklch(0.988 0.004 75);
+  --foreground: oklch(0.145 0.018 62);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.13 0.05 290);
+  --card-foreground: oklch(0.145 0.018 62);
 
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.13 0.05 290);
+  --popover-foreground: oklch(0.145 0.018 62);
 
-  /* Electric violet as the interactive primary */
-  --primary: oklch(0.55 0.25 291);
-  --primary-foreground: oklch(0.98 0 0);
+  /* Amber-gold as the sole interactive accent */
+  --primary: oklch(0.626 0.127 73);
+  --primary-foreground: oklch(1 0 0);
 
-  --secondary: oklch(0.93 0.02 290);
-  --secondary-foreground: oklch(0.13 0.05 290);
+  --secondary: oklch(0.94 0.006 75);
+  --secondary-foreground: oklch(0.145 0.018 62);
 
-  --muted: oklch(0.94 0.012 290);
-  --muted-foreground: oklch(0.5 0.025 290);
+  --muted: oklch(0.94 0.006 75);
+  --muted-foreground: oklch(0.49 0.02 62);
 
-  /* Rose/hot-pink accent — the Musixmatch energy */
-  --accent: oklch(0.6 0.27 336);
-  --accent-foreground: oklch(0.98 0 0);
+  --accent: oklch(0.626 0.127 73);
+  --accent-foreground: oklch(1 0 0);
 
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.88 0.015 290);
-  --input: oklch(0.88 0.015 290);
-  --ring: oklch(0.55 0.25 291 / 30%);
+  --border: oklch(0.912 0.008 75);
+  --input: oklch(0.912 0.008 75);
+  --ring: oklch(0.626 0.127 73 / 30%);
   --radius: 0.75rem;
 
   /* Nav chrome */
   --nav-bg: oklch(1 0 0);
-  --nav-foreground: oklch(0.13 0.05 290);
-  --nav-border: oklch(0.88 0.015 290);
+  --nav-foreground: oklch(0.145 0.018 62);
+  --nav-border: oklch(0.912 0.008 75);
 
   /* ── Keertify brand tokens ────────────────────────────
-     brand-navy  → deep violet  (header bg, active buttons)
-     brand-gold  → vibrant rose (accent highlights, icons)
-     brand-blue  → purple-blue  (link / "See all" text)
+     brand-navy  → warm dark charcoal (header bg, active buttons)
+     brand-gold  → amber gold         (accent highlights, icons)
+     brand-blue  → warm brown         (link / "See all" text)
   ─────────────────────────────────────────────────────── */
-  --brand-navy: oklch(0.22 0.12 291);
-  --brand-gold: oklch(0.65 0.28 336);
-  --brand-blue: oklch(0.6 0.18 272);
-  --brand-gold-muted: oklch(0.65 0.28 336 / 12%);
+  --brand-navy: oklch(0.145 0.018 62);
+  --brand-gold: oklch(0.65 0.14 73);
+  --brand-blue: oklch(0.45 0.05 62);
+  --brand-gold-muted: oklch(0.65 0.14 73 / 12%);
 
-  /* Extended palette — Musixmatch full spectrum */
-  --brand-violet: oklch(0.55 0.25 291);
-  --brand-pink: oklch(0.65 0.28 336);
+  --brand-violet: oklch(0.626 0.127 73);
+  --brand-pink: oklch(0.626 0.127 73);
   --brand-amber: oklch(0.84 0.17 80);
   --brand-teal: oklch(0.77 0.15 168);
 }
 
 /* ─── DARK MODE ──────────────────────────────────────── */
 .dark {
-  /* Deep rich purple dark — evocative, concert-hall feel */
-  --background: oklch(0.1 0.04 290);
-  --foreground: oklch(0.95 0.006 290);
+  /* Warm near-black — premium, focused, content-first */
+  --background: oklch(0.135 0.012 60);
+  --foreground: oklch(0.95 0.008 75);
 
-  --card: oklch(0.15 0.055 290);
-  --card-foreground: oklch(0.95 0.006 290);
+  --card: oklch(0.175 0.013 60);
+  --card-foreground: oklch(0.95 0.008 75);
 
-  --popover: oklch(0.15 0.055 290);
-  --popover-foreground: oklch(0.95 0.006 290);
+  --popover: oklch(0.175 0.013 60);
+  --popover-foreground: oklch(0.95 0.008 75);
 
-  /* Lighter violet on dark bg — legible, vivid */
-  --primary: oklch(0.73 0.2 293);
-  --primary-foreground: oklch(0.1 0.04 290);
+  /* Amber-400 on dark bg — warm, legible, premium */
+  --primary: oklch(0.775 0.14 75);
+  --primary-foreground: oklch(0.135 0.012 60);
 
-  --secondary: oklch(0.21 0.075 290);
-  --secondary-foreground: oklch(0.95 0.006 290);
+  --secondary: oklch(0.21 0.012 60);
+  --secondary-foreground: oklch(0.95 0.008 75);
 
-  --muted: oklch(0.21 0.075 290);
-  --muted-foreground: oklch(0.62 0.04 290);
+  --muted: oklch(0.21 0.012 60);
+  --muted-foreground: oklch(0.55 0.018 62);
 
-  /* Rose stays vivid in dark — pops beautifully */
-  --accent: oklch(0.68 0.27 336);
-  --accent-foreground: oklch(0.98 0 0);
+  --accent: oklch(0.775 0.14 75);
+  --accent-foreground: oklch(0.135 0.012 60);
 
   --destructive: oklch(0.65 0.22 22);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.73 0.2 293 / 40%);
+  --ring: oklch(0.775 0.14 75 / 40%);
 
   /* Nav chrome */
-  --nav-bg: oklch(0.14 0.05 290);
-  --nav-foreground: oklch(0.95 0.006 290);
-  --nav-border: oklch(1 0 0 / 8%);
+  --nav-bg: oklch(0.205 0.015 62);
+  --nav-foreground: oklch(0.95 0.008 75);
+  --nav-border: oklch(0.65 0.14 73 / 18%);
 
-  /* Brand tokens in dark — same values, works on both surfaces */
-  --brand-navy: oklch(0.22 0.12 291);
-  --brand-gold: oklch(0.7 0.27 336);
-  --brand-blue: oklch(0.68 0.18 272);
-  --brand-gold-muted: oklch(0.7 0.27 336 / 15%);
+  /* Brand tokens in dark */
+  --brand-navy: oklch(0.145 0.018 62);
+  --brand-gold: oklch(0.775 0.14 75);
+  --brand-blue: oklch(0.65 0.08 75);
+  --brand-gold-muted: oklch(0.775 0.14 75 / 15%);
 
-  --brand-violet: oklch(0.73 0.2 293);
-  --brand-pink: oklch(0.7 0.27 336);
+  --brand-violet: oklch(0.775 0.14 75);
+  --brand-pink: oklch(0.775 0.14 75);
   --brand-amber: oklch(0.84 0.17 80);
   --brand-teal: oklch(0.77 0.15 168);
 }

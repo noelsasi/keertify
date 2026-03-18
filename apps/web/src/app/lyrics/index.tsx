@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { useAppStore } from "@/store/app.store"
+import { useUIStore } from "@/store/ui.store"
 import { useSong } from "@/hooks/useSongs"
 import { getCategoryConfig } from "@/lib/categories"
 import { LyricsHero } from "./LyricsHero"
@@ -9,6 +10,7 @@ import { LyricsToolbar } from "./LyricsToolbar"
 import { LyricsReader } from "./LyricsReader"
 import { SongMeta } from "./SongMeta"
 import { LyricsSidebar } from "./LyricsSidebar"
+import { LyricsPresenter } from "./LyricsPresenter"
 import type { ReadingMode, LyricsTab } from "./constants"
 
 export function LyricsPage() {
@@ -20,8 +22,29 @@ export function LyricsPage() {
   const [bold, setBold] = useState(false)
   const [readingMode, setReadingMode] = useState<ReadingMode>("light")
   const [lyricsTab, setLyricsTab] = useState<LyricsTab>("native")
+  const { isPresenting, setIsPresenting } = useUIStore()
 
   const { data: song, isLoading, isError } = useSong(slug)
+
+  // Clean up presenting state on unmount
+  useEffect(() => {
+    return () => setIsPresenting(false)
+  }, [setIsPresenting])
+
+  // Keyboard shortcut: "P" to toggle presentation mode
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return
+      }
+      if (e.key.toLowerCase() === "p" && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault()
+        setIsPresenting(!isPresenting)
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [isPresenting, setIsPresenting])
 
   if (isLoading) {
     return <LyricsPageSkeleton />
@@ -45,6 +68,10 @@ export function LyricsPage() {
         : song.lyrics
     navigator.clipboard.writeText(text)
     toast("Lyrics copied")
+  }
+
+  const handlePresent = () => {
+    setIsPresenting(true)
   }
 
   const handleShare = () => {
@@ -76,6 +103,7 @@ export function LyricsPage() {
         onBoldToggle={() => setBold((b) => !b)}
         onReadingModeChange={setReadingMode}
         onCopy={handleCopy}
+        onPresent={handlePresent}
       />
 
       <div className="flex flex-1 gap-6 pt-0 md:items-start md:pt-0">
@@ -104,8 +132,16 @@ export function LyricsPage() {
           onFontIncrease={() => setFontSize((f) => Math.min(28, f + 2))}
           onBoldToggle={() => setBold((b) => !b)}
           onReadingModeChange={setReadingMode}
+          onPresent={handlePresent}
         />
       </div>
+
+      <LyricsPresenter
+        song={song}
+        sections={song.sections}
+        isOpen={isPresenting}
+        onClose={() => setIsPresenting(false)}
+      />
     </div>
   )
 }

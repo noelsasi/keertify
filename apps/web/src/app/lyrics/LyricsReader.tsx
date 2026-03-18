@@ -25,8 +25,7 @@ const SECTION_LABELS: Record<SectionType, string> = {
 
 function getSectionLabel(section: SongSection): string {
   const base = SECTION_LABELS[section.type] ?? section.type
-  const showNumber =
-    (section.type === "charnam" || section.type === "verse") && section.number > 0
+  const showNumber = (section.type === "charnam" || section.type === "verse") && section.number > 0
   return showNumber ? `${base} ${section.number}` : base
 }
 
@@ -41,8 +40,7 @@ export function LyricsReader({
 }: Props) {
   const modeConfig = READING_MODES[readingMode]
   const hasSections = sections.length > 0
-  const hasEnglish =
-    !!song.lyricsEnglish || sections.some((s) => !!s.contentEnglish)
+  const hasEnglish = !!song.lyricsEnglish || sections.some((s) => !!s.contentEnglish)
 
   const textStyle = {
     fontSize: `${fontSize}px`,
@@ -58,10 +56,7 @@ export function LyricsReader({
     >
       {/* Language tab bar — only when transliteration is available */}
       {hasEnglish && (
-        <div
-          className="flex border-b px-5 pt-4"
-          style={{ borderColor: modeConfig.dividerColor }}
-        >
+        <div className="flex border-b px-5 pt-4" style={{ borderColor: modeConfig.dividerColor }}>
           {(["native", "english"] as LyricsTab[]).map((tab) => {
             const isActive = lyricsTab === tab
             const label = tab === "native" ? LANGUAGE_LABELS[song.language] : "English"
@@ -142,9 +137,7 @@ export function LyricsReader({
         ) : (
           // Fallback: raw lyrics string for unstructured songs
           <div className="whitespace-pre-wrap" style={textStyle}>
-            {lyricsTab === "english" && song.lyricsEnglish
-              ? song.lyricsEnglish
-              : song.lyrics}
+            {lyricsTab === "english" && song.lyricsEnglish ? song.lyricsEnglish : song.lyrics}
           </div>
         )}
       </div>

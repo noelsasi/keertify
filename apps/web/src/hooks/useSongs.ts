@@ -51,6 +51,26 @@ export function useArtists() {
   })
 }
 
+/** Fetch a single artist detail by slug — includes songs and albums. */
+export function useArtist(slug: string | undefined) {
+  return useQuery({
+    queryKey: ["artist", slug],
+    queryFn: () => api.artists.get(slug!),
+    enabled: !!slug,
+    staleTime: 30 * 60 * 1000,
+  })
+}
+
+/** Fetch a single album detail by slug — includes ordered track list. */
+export function useAlbum(slug: string | undefined) {
+  return useQuery({
+    queryKey: ["album", slug],
+    queryFn: () => api.albums.get(slug!),
+    enabled: !!slug,
+    staleTime: 30 * 60 * 1000,
+  })
+}
+
 /**
  * Debounces a search string then feeds it into useSongs.
  * Returns the raw input handler alongside the query result so the

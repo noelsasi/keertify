@@ -9,4 +9,9 @@ export type {
   ApiError,
   SongListQuery,
   SongDetail,
+  ArtistDetail,
+  ArtistSongItem,
+  ArtistAlbumItem,
+  AlbumDetail,
+  AlbumSongItem,
 } from "./types/song.js"

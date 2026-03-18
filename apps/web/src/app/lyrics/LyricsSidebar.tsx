@@ -1,4 +1,4 @@
-import { Type, Bold, Minus, Plus } from "lucide-react"
+import { Type, Bold, Minus, Plus, Presentation } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { READING_MODES, type ReadingMode } from "./constants"
 
@@ -10,6 +10,7 @@ interface Props {
   onFontIncrease: () => void
   onBoldToggle: () => void
   onReadingModeChange: (mode: ReadingMode) => void
+  onPresent: () => void
 }
 
 export function LyricsSidebar({
@@ -20,6 +21,7 @@ export function LyricsSidebar({
   onFontIncrease,
   onBoldToggle,
   onReadingModeChange,
+  onPresent,
 }: Props) {
   return (
     <aside className="sticky top-6 hidden w-48 flex-shrink-0 self-start rounded-2xl border border-border/60 bg-card p-4 shadow-sm md:block">
@@ -124,6 +126,20 @@ export function LyricsSidebar({
             )
           })}
         </div>
+      </div>
+
+      <div className="mt-4 h-px bg-border/50" />
+
+      {/* Present */}
+      <div className="mt-4">
+        <button
+          onClick={onPresent}
+          className="flex w-full items-center gap-2.5 rounded-xl bg-brand-blue/10 px-3 py-2.5 text-xs font-medium text-brand-blue transition-colors hover:bg-brand-blue/20"
+          title="Present mode (P)"
+        >
+          <Presentation size={13} />
+          Present
+        </button>
       </div>
     </aside>
   )

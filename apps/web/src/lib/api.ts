@@ -1,4 +1,4 @@
-import type { Song, SongDetail, Language, Category, PaginatedResponse, Album, Artist } from "@/types/song.types"
+import type { Song, SongDetail, Language, Category, PaginatedResponse, Album, Artist, ArtistDetail, AlbumDetail } from "@/types/song.types"
 
 const API_BASE = import.meta.env.VITE_API_URL ?? "http://localhost:3000"
 
@@ -46,9 +46,11 @@ export const api = {
   albums: {
     list: (language?: Language) =>
       apiFetch<Album[]>(`/api/albums${toParams({ language })}`),
+    get: (slug: string) => apiFetch<AlbumDetail>(`/api/albums/${slug}`),
   },
 
   artists: {
     list: () => apiFetch<Artist[]>("/api/artists"),
+    get: (slug: string) => apiFetch<ArtistDetail>(`/api/artists/${slug}`),
   },
 }

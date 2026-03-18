@@ -149,3 +149,66 @@ export interface SongDetail extends Song {
   /** Albums this song appears on — empty array if none */
   albums: SongAlbum[]
 }
+
+// ---------------------------------------------------------------------------
+// Artist detail
+// ---------------------------------------------------------------------------
+
+export interface ArtistSongItem {
+  id: string
+  slug: string
+  title: string
+  category: string
+  language: string
+  createdAt: string
+}
+
+export interface ArtistAlbumItem {
+  id: string
+  slug: string
+  title: string
+  albumCoverUrl: string | null
+  language: string
+}
+
+export interface ArtistDetail {
+  id: string
+  slug: string
+  name: string
+  nameTelugu: string | null
+  avatarUrl: string | null
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+  songs: ArtistSongItem[]
+  albums: ArtistAlbumItem[]
+}
+
+// ---------------------------------------------------------------------------
+// Album detail
+// ---------------------------------------------------------------------------
+
+export interface AlbumSongItem {
+  id: string
+  slug: string
+  title: string
+  artistName: string | null
+  artistNameTelugu: string | null
+  category: string
+  language: string
+  trackNumber: number
+}
+
+export interface AlbumDetail {
+  id: string
+  slug: string
+  title: string
+  artistName: string | null
+  artistNameTelugu: string | null
+  artistSlug: string | null
+  albumCoverUrl: string | null
+  language: string
+  createdAt: string
+  updatedAt: string
+  songs: AlbumSongItem[]
+}
