@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "preview": "vite preview"
+    "preview": "vite preview --host --port $PORT"
   },
   "dependencies": {
     "@fontsource-variable/figtree": "^5.2.10",

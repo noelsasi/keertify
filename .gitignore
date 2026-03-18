@@ -47,6 +47,5 @@ pnpm-debug.log*
 
 # pnpm local store (if not using a global store)
 .pnpm-store
-
-
 .cursor
+.claude
