@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 import { useAppStore } from "@/store/app.store"
@@ -11,7 +11,7 @@ import { LyricsReader } from "./LyricsReader"
 import { SongMeta } from "./SongMeta"
 import { LyricsSidebar } from "./LyricsSidebar"
 import { LyricsPresenter } from "./LyricsPresenter"
-import type { ReadingMode, LyricsTab } from "./constants"
+import type { LyricsTab } from "./constants"
 
 export function LyricsPage() {
   const { slug } = useParams()
@@ -20,11 +20,29 @@ export function LyricsPage() {
 
   const [fontSize, setFontSize] = useState(16)
   const [bold, setBold] = useState(false)
-  const [readingMode, setReadingMode] = useState<ReadingMode>("light")
   const [lyricsTab, setLyricsTab] = useState<LyricsTab>("native")
   const { isPresenting, setIsPresenting } = useUIStore()
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const scrollRAF = useRef<number | null>(null)
 
   const { data: song, isLoading, isError } = useSong(slug)
+
+  // Scroll progress bar
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollRAF.current) cancelAnimationFrame(scrollRAF.current)
+      scrollRAF.current = requestAnimationFrame(() => {
+        const scrollY = window.scrollY
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight
+        setScrollProgress(docHeight > 0 ? (scrollY / docHeight) * 100 : 0)
+      })
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      if (scrollRAF.current) cancelAnimationFrame(scrollRAF.current)
+    }
+  }, [])
 
   // Clean up presenting state on unmount
   useEffect(() => {
@@ -84,6 +102,12 @@ export function LyricsPage() {
 
   return (
     <div className="flex min-h-screen flex-col md:min-h-0">
+      {/* Scroll progress bar */}
+      <div
+        className="fixed top-0 left-0 z-[100] h-0.5 bg-[var(--k-gold)] transition-[width] duration-100"
+        style={{ width: `${scrollProgress}%` }}
+      />
+
       <LyricsHero
         song={song}
         catConfig={catConfig}
@@ -97,23 +121,20 @@ export function LyricsPage() {
       <LyricsToolbar
         fontSize={fontSize}
         bold={bold}
-        readingMode={readingMode}
         onFontDecrease={() => setFontSize((f) => Math.max(12, f - 2))}
         onFontIncrease={() => setFontSize((f) => Math.min(28, f + 2))}
         onBoldToggle={() => setBold((b) => !b)}
-        onReadingModeChange={setReadingMode}
         onCopy={handleCopy}
         onPresent={handlePresent}
       />
 
-      <div className="flex flex-1 gap-6 pt-0 md:items-start md:pt-0">
+      <div className="flex flex-1 gap-6 px-3.5 py-4 md:items-start md:px-0 md:py-0">
         <div className="min-w-0 flex-1 space-y-3">
           <LyricsReader
             song={song}
             sections={song.sections}
             fontSize={fontSize}
             bold={bold}
-            readingMode={readingMode}
             lyricsTab={lyricsTab}
             onTabChange={setLyricsTab}
           />
@@ -127,11 +148,9 @@ export function LyricsPage() {
         <LyricsSidebar
           fontSize={fontSize}
           bold={bold}
-          readingMode={readingMode}
           onFontDecrease={() => setFontSize((f) => Math.max(12, f - 2))}
           onFontIncrease={() => setFontSize((f) => Math.min(28, f + 2))}
           onBoldToggle={() => setBold((b) => !b)}
-          onReadingModeChange={setReadingMode}
           onPresent={handlePresent}
         />
       </div>

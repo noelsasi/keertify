@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom"
 import { ArrowLeft, Music, Disc3 } from "lucide-react"
 import { Breadcrumbs } from "@/components/ui/breadcrumbs"
+import { AvatarImage } from "@/components/AvatarImage"
+import { SectionHeader } from "@/components/SectionHeader"
 import { useAlbum } from "@/hooks/useSongs"
 import { LANGUAGE_LABELS } from "@/lib/constants"
 import type { AlbumSongItem } from "@/types/song.types"
@@ -29,15 +31,14 @@ export function AlbumPage() {
             <ArrowLeft size={22} className="text-[var(--k-text-1)]" />
           </button>
           <div className="flex items-start gap-4">
-            <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-2xl shadow-lg ring-1 ring-[var(--k-border)]">
-              {album.albumCoverUrl ? (
-                <img src={album.albumCoverUrl} alt={album.title} className="h-full w-full object-cover" />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center bg-[var(--k-surface-2)]">
-                  <Disc3 size={28} className="text-[var(--k-text-3)]" />
-                </div>
-              )}
-            </div>
+            <AvatarImage
+              src={album.albumCoverUrl}
+              alt={album.title}
+              size={80}
+              shape="square"
+              fallback={<div className="flex h-full w-full items-center justify-center"><Disc3 size={28} className="text-[var(--k-text-3)]" /></div>}
+              className="rounded-2xl shadow-lg ring-1 ring-[var(--k-border)]"
+            />
             <div className="min-w-0 flex-1 pt-0.5">
               <h1
                 className="leading-tight text-[var(--k-text-1)]"
@@ -75,15 +76,14 @@ export function AlbumPage() {
           />
         </div>
         <div className="flex items-center gap-6">
-          <div className="h-36 w-36 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl ring-1 ring-border">
-            {album.albumCoverUrl ? (
-              <img src={album.albumCoverUrl} alt={album.title} className="h-full w-full object-cover" />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-[var(--k-surface-2)]">
-                <Disc3 size={48} className="text-[var(--k-text-3)]" />
-              </div>
-            )}
-          </div>
+          <AvatarImage
+            src={album.albumCoverUrl}
+            alt={album.title}
+            size={144}
+            shape="square"
+            fallback={<div className="flex h-full w-full items-center justify-center"><Disc3 size={48} className="text-[var(--k-text-3)]" /></div>}
+            className="rounded-2xl shadow-xl ring-1 ring-border"
+          />
           <div>
             <h1
               className="text-[var(--k-text-1)] leading-none"
@@ -108,10 +108,7 @@ export function AlbumPage() {
 
       {/* ── Track list ── */}
       <div className="flex-1 space-y-2 px-4 py-5 md:px-0 md:py-0">
-        <div className="mb-3 flex items-center gap-2">
-          <Music size={16} className="text-[var(--k-gold)]" />
-          <h2 className="text-base font-semibold text-foreground">Tracks</h2>
-        </div>
+        <SectionHeader title="Tracks" icon={Music} />
         {album.songs.map((song, index) => (
           <AlbumTrackRow key={song.id} song={song} index={index} />
         ))}

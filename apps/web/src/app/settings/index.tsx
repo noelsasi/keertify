@@ -1,5 +1,6 @@
-import { Check, ArrowLeft, Monitor, Sun, Moon } from "lucide-react"
+import { Check, Monitor, Sun, Moon } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import { MobilePageHeader } from "@/components/MobilePageHeader"
 import { useAppStore } from "@/store/app.store"
 import { useTheme } from "@/components/layouts/ThemeProvider"
 import { cn } from "@/lib/utils"
@@ -38,20 +39,7 @@ export function Settings() {
 
   return (
     <div className="flex min-h-screen flex-col md:min-h-0">
-      {/* Mobile header */}
-      <div className="bg-[var(--k-surface)] border-b border-[var(--k-border)] px-4 pt-12 pb-5 md:hidden">
-        <div className="flex items-center gap-3">
-          <button onClick={() => navigate(-1)}>
-            <ArrowLeft size={22} className="text-[var(--k-text-1)]" />
-          </button>
-          <h1
-            className="text-[var(--k-text-1)]"
-            style={{ fontFamily: "var(--k-font-display)", fontSize: 22, fontWeight: 500 }}
-          >
-            Settings
-          </h1>
-        </div>
-      </div>
+      <MobilePageHeader title="Settings" onBack={() => navigate(-1)} />
 
       {/* Desktop header */}
       <div className="mb-8 hidden md:block">

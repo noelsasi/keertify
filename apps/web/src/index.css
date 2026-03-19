@@ -6,6 +6,8 @@
 
 /* ─── LIGHT MODE ─────────────────────────────────────── */
 :root {
+  /* Hero band gradient (lyrics page) */
+  --hero-gradient: linear-gradient(135deg, var(--k-gold-faint), var(--k-surface-2));
   /* Ivory warm surface — Keertanalu brand */
   --background: oklch(0.972 0.013 78);     /* #FAF7F0 ivory */
   --foreground: oklch(0.142 0.018 62);     /* #1A1208 ink */
@@ -54,6 +56,7 @@
 
 /* ─── DARK MODE ──────────────────────────────────────── */
 .dark {
+  --hero-gradient: var(--k-surface-2);
   /* Warm near-black — #0E0A04 night */
   --background: oklch(0.09 0.012 60);
   --foreground: oklch(0.916 0.055 90);     /* #F5E6B8 gold-pale */

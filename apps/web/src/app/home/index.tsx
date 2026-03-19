@@ -1,9 +1,11 @@
 import { useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Search, ChevronRight, Settings } from "lucide-react"
+import { Search, Settings } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { SongCard } from "@/components/SongCard"
 import { LogoIcon } from "@/components/LogoIcon"
+import { SectionHeader } from "@/components/SectionHeader"
+import { AvatarImage } from "@/components/AvatarImage"
 import { useAppStore } from "@/store/app.store"
 import { useSongs, useDebounce, useAlbums, useArtists } from "@/hooks/useSongs"
 import { LANGUAGE_LABELS } from "@/lib/constants"
@@ -331,10 +333,7 @@ export function Home() {
 
               {/* Col 1: Recently Added */}
               <section>
-                <SectionHeader
-                  title="Recently Added"
-                  onSeeAll={() => navigate("/browse")}
-                />
+                <SectionHeader title="Recently Added" onSeeAll={() => navigate("/browse")} className="mb-3.5" />
                 <div className="space-y-2">
                   {homeLoading ? (
                     <SongListSkeleton count={3} />
@@ -346,10 +345,7 @@ export function Home() {
 
               {/* Col 2: Trending */}
               <section>
-                <SectionHeader
-                  title="Trending this week"
-                  onSeeAll={() => navigate("/browse")}
-                />
+                <SectionHeader title="Trending this week" onSeeAll={() => navigate("/browse")} className="mb-3.5" />
                 <div className="space-y-2">
                   {homeLoading ? (
                     <SongListSkeleton count={3} />
@@ -361,7 +357,7 @@ export function Home() {
 
               {/* Col 1: Top Artists (pills) */}
               <section>
-                <SectionHeader title="Top Artists" onSeeAll={() => navigate("/browse")} />
+                <SectionHeader title="Top Artists" onSeeAll={() => navigate("/browse")} className="mb-3.5" />
                 <div className="flex flex-wrap gap-2">
                   {artistsLoading
                     ? Array.from({ length: 4 }).map((_, i) => (
@@ -375,9 +371,9 @@ export function Home() {
 
               {/* Col 2: Browse by language */}
               <section>
-                <SectionHeader title="Browse by language" />
+                <SectionHeader title="Browse by language" className="mb-3.5" />
                 <div className="grid grid-cols-2 gap-2.5">
-                  {LANGUAGE_CARDS.map((card, i) => (
+                  {LANGUAGE_CARDS.map((card) => (
                     <LanguageCard
                       key={card.code}
                       card={card}
@@ -395,7 +391,7 @@ export function Home() {
             {/* Desktop: Top Albums — full width below */}
             {topAlbums.length > 0 && (
               <section className="hidden md:block md:pb-10">
-                <SectionHeader title="Top Albums" />
+                <SectionHeader title="Top Albums" className="mb-3.5" />
                 <div className="scrollbar-none flex gap-3 overflow-x-auto pb-1">
                   {topAlbums.map((album, i) => (
                     <AlbumCard key={album.id} album={album} index={i} />
@@ -409,7 +405,7 @@ export function Home() {
 
               {/* Recently Added */}
               <section>
-                <MobileSectionHeader title="Recently Added" onSeeAll={() => navigate("/browse")} />
+                <SectionHeader title="Recently Added" onSeeAll={() => navigate("/browse")} />
                 <div className="space-y-2">
                   {homeLoading ? <SongListSkeleton count={2} /> : recentSongs.map((s) => <SongCard key={s.id} song={s} />)}
                 </div>
@@ -417,7 +413,7 @@ export function Home() {
 
               {/* Trending */}
               <section>
-                <MobileSectionHeader title="Trending this week" onSeeAll={() => navigate("/browse")} />
+                <SectionHeader title="Trending this week" onSeeAll={() => navigate("/browse")} />
                 <div className="space-y-2">
                   {homeLoading ? <SongListSkeleton count={2} /> : trendingSongs.map((s) => <SongCard key={s.id} song={s} />)}
                 </div>
@@ -452,7 +448,7 @@ export function Home() {
 
               {/* Browse by language — mobile */}
               <section>
-                <MobileSectionHeader title="Browse by language" />
+                <SectionHeader title="Browse by language" />
                 <div className="grid grid-cols-2 gap-2">
                   {LANGUAGE_CARDS.map((card, i) => (
                     <LanguageCard
@@ -477,38 +473,6 @@ export function Home() {
 
 /* ── Sub-components ───────────────────────────────── */
 
-function SectionHeader({ title, onSeeAll }: { title: string; onSeeAll?: () => void }) {
-  return (
-    <div className="mb-3.5 flex items-center justify-between">
-      <span className="text-[16px] font-medium text-[var(--k-text-1)]">{title}</span>
-      {onSeeAll && (
-        <button
-          onClick={onSeeAll}
-          className="text-[12px] text-[var(--k-gold)] transition-opacity hover:opacity-70"
-        >
-          See all →
-        </button>
-      )}
-    </div>
-  )
-}
-
-function MobileSectionHeader({ title, onSeeAll }: { title: string; onSeeAll?: () => void }) {
-  return (
-    <div className="mb-3 flex items-center justify-between">
-      <span className="text-[15px] font-medium text-[var(--k-text-1)]">{title}</span>
-      {onSeeAll && (
-        <button
-          onClick={onSeeAll}
-          className="flex items-center gap-0.5 text-[12px] text-[var(--k-gold)]"
-        >
-          See all <ChevronRight size={13} />
-        </button>
-      )}
-    </div>
-  )
-}
-
 function ArtistPill({ artist }: { artist: Artist }) {
   const navigate = useNavigate()
   const initials = artist.name
@@ -523,20 +487,19 @@ function ArtistPill({ artist }: { artist: Artist }) {
       onClick={() => navigate(`/artists/${artist.slug}`)}
       className="flex cursor-pointer items-center gap-2.5 rounded-xl border border-[var(--k-border)] bg-[var(--k-surface)] px-3.5 py-2.5 transition-opacity hover:opacity-80 active:scale-[0.98]"
     >
-      <div
-        className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-[13px] font-medium"
-        style={{
-          background: "var(--k-gold-faint)",
-          color: "var(--k-gold)",
-          border: "1px solid var(--k-gold-pale)",
-        }}
-      >
-        {artist.avatarUrl ? (
-          <img src={artist.avatarUrl} alt={artist.name} className="h-full w-full rounded-full object-cover" />
-        ) : (
-          initials
-        )}
-      </div>
+      <AvatarImage
+        src={artist.avatarUrl}
+        alt={artist.name}
+        size={36}
+        fallback={
+          <span
+            className="flex h-full w-full items-center justify-center text-[13px] font-medium"
+            style={{ background: "var(--k-gold-faint)", color: "var(--k-gold)", border: "1px solid var(--k-gold-pale)" }}
+          >
+            {initials}
+          </span>
+        }
+      />
       <div className="min-w-0">
         <p className="truncate text-[13px] font-medium text-[var(--k-text-1)]">{artist.name}</p>
       </div>

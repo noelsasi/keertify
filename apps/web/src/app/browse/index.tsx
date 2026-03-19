@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom"
-import { Search, ArrowLeft } from "lucide-react"
+import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { SongCard } from "@/components/SongCard"
+import { MobilePageHeader } from "@/components/MobilePageHeader"
 import { useAppStore } from "@/store/app.store"
 import { useSongSearch } from "@/hooks/useSongs"
 import { LANGUAGE_LABELS } from "@/lib/constants"
@@ -20,21 +21,18 @@ export function Browse() {
 
   return (
     <div className="flex min-h-screen flex-col md:min-h-0">
-      {/* Mobile header */}
-      <div className="bg-[var(--k-surface)] border-b border-[var(--k-border)] px-4 pt-12 pb-4 md:hidden">
-        <div className="mb-4 flex items-center gap-3">
-          <button onClick={() => navigate(-1)}>
-            <ArrowLeft size={22} className="text-[var(--k-text-1)]" />
-          </button>
-          <h1
-            className="text-[var(--k-text-1)]"
-            style={{ fontFamily: "var(--k-font-display)", fontSize: 20, fontWeight: 500 }}
-          >
-            Browse · {LANGUAGE_LABELS[language]}
-          </h1>
-        </div>
+      <MobilePageHeader
+        title={`Browse · ${LANGUAGE_LABELS[language]}`}
+        onBack={() => navigate(-1)}
+      />
+
+      {/* Mobile search */}
+      <div className="px-4 py-4 md:hidden">
         <div className="relative">
-          <Search size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-[var(--k-text-3)]" />
+          <Search
+            size={16}
+            className="absolute top-1/2 left-3 -translate-y-1/2 text-[var(--k-text-3)]"
+          />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -49,30 +47,33 @@ export function Browse() {
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h1
-              className="text-[var(--k-text-1)] leading-none"
+              className="leading-none text-[var(--k-text-1)]"
               style={{ fontFamily: "var(--k-font-display)", fontSize: 44, fontWeight: 400 }}
             >
               Browse
             </h1>
-            <p className="mt-2 text-muted-foreground">
+            <p className="text-muted-foreground mt-2">
               {isLoading ? "Loading…" : `${total} ${LANGUAGE_LABELS[language]} songs · A–Z`}
             </p>
           </div>
         </div>
         <div className="relative">
-          <Search size={18} className="absolute top-1/2 left-4 -translate-y-1/2 text-muted-foreground" />
+          <Search
+            size={18}
+            className="text-muted-foreground absolute top-1/2 left-4 -translate-y-1/2"
+          />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Filter by title or artist..."
-            className="border-[var(--k-border)] bg-[var(--k-surface)] focus-visible:ring-[var(--k-gold)]/30 h-12 rounded-2xl pl-11 text-base"
+            className="h-12 rounded-2xl border-[var(--k-border)] bg-[var(--k-surface)] pl-11 text-base focus-visible:ring-[var(--k-gold)]/30"
           />
         </div>
       </div>
 
       {/* Mobile count bar */}
       <div className="border-b border-[var(--k-border)] px-4 py-3 md:hidden">
-        <p className="text-xs text-muted-foreground">
+        <p className="text-muted-foreground text-xs">
           {isLoading ? "Loading…" : `${songs.length} songs · A–Z`}
         </p>
       </div>
@@ -82,11 +83,14 @@ export function Browse() {
         {isLoading ? (
           <div className="space-y-2 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="h-[72px] animate-pulse rounded-xl border border-border bg-muted" />
+              <div
+                key={i}
+                className="border-border bg-muted h-[72px] animate-pulse rounded-xl border"
+              />
             ))}
           </div>
         ) : songs.length === 0 ? (
-          <div className="py-16 text-center text-sm text-muted-foreground">No songs found</div>
+          <div className="text-muted-foreground py-16 text-center text-sm">No songs found</div>
         ) : (
           <div className="space-y-2 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
             {songs.map((song) => (

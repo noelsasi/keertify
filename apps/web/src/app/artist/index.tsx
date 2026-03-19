@@ -2,6 +2,8 @@ import { useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { ArrowLeft, Music, Disc3, ListMusic } from "lucide-react"
 import { Breadcrumbs } from "@/components/ui/breadcrumbs"
+import { AvatarImage } from "@/components/AvatarImage"
+import { SectionHeader } from "@/components/SectionHeader"
 import { useArtist } from "@/hooks/useSongs"
 import { LANGUAGE_LABELS } from "@/lib/constants"
 import type { ArtistSongItem, ArtistAlbumItem } from "@/types/song.types"
@@ -29,24 +31,22 @@ export function ArtistPage() {
   return (
     <div className="flex min-h-screen flex-col md:min-h-0">
       {/* ── Mobile header ── */}
-      <div className="bg-[var(--k-surface)] border-b border-[var(--k-border)] px-4 pt-12 pb-5 md:hidden">
+      <div className="border-b border-[var(--k-border)] bg-[var(--k-surface)] px-4 pt-12 pb-5 md:hidden">
         <button onClick={() => navigate(-1)} className="mb-4">
           <ArrowLeft size={22} className="text-[var(--k-text-1)]" />
         </button>
         <div className="flex items-center gap-4">
-          <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-full ring-2 ring-[var(--k-border)]">
-            {artist.avatarUrl ? (
-              <img
-                src={artist.avatarUrl}
-                alt={artist.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-[var(--k-surface-2)]">
+          <AvatarImage
+            src={artist.avatarUrl}
+            alt={artist.name}
+            size={64}
+            fallback={
+              <div className="flex h-full w-full items-center justify-center">
                 <Music size={28} className="text-[var(--k-text-3)]" />
               </div>
-            )}
-          </div>
+            }
+            className="ring-2 ring-[var(--k-border)]"
+          />
           <div className="min-w-0">
             <h1
               className="leading-tight text-[var(--k-text-1)]"
@@ -67,30 +67,23 @@ export function ArtistPage() {
       {/* ── Desktop header ── */}
       <div className="mb-6 hidden md:block">
         <div className="text-muted-foreground mb-5">
-          <Breadcrumbs
-            items={[
-              { label: "Home", href: "/" },
-              { label: artist.name },
-            ]}
-          />
+          <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: artist.name }]} />
         </div>
         <div className="flex items-center gap-6">
-          <div className="ring-border h-24 w-24 flex-shrink-0 overflow-hidden rounded-full ring-2">
-            {artist.avatarUrl ? (
-              <img
-                src={artist.avatarUrl}
-                alt={artist.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="bg-[var(--k-surface-2)] flex h-full w-full items-center justify-center">
+          <AvatarImage
+            src={artist.avatarUrl}
+            alt={artist.name}
+            size={96}
+            fallback={
+              <div className="flex h-full w-full items-center justify-center">
                 <Music size={36} className="text-[var(--k-text-3)]" />
               </div>
-            )}
-          </div>
+            }
+            className="ring-border ring-2"
+          />
           <div>
             <h1
-              className="text-[var(--k-text-1)] leading-none"
+              className="leading-none text-[var(--k-text-1)]"
               style={{ fontFamily: "var(--k-font-display)", fontSize: 36, fontWeight: 400 }}
             >
               {artist.name}
@@ -109,12 +102,7 @@ export function ArtistPage() {
         {/* ── Albums section ── */}
         {artist.albums.length > 0 && (
           <section>
-            <div className="mb-3 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Disc3 size={16} className="text-[var(--k-gold)]" />
-                <h2 className="text-foreground text-base font-semibold">Albums</h2>
-              </div>
-            </div>
+            <SectionHeader title="Albums" icon={Disc3} />
             <div className="flex gap-3 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {artist.albums.map((album: ArtistAlbumItem) => (
                 <ArtistAlbumCard key={album.id} album={album} />
@@ -134,7 +122,7 @@ export function ArtistPage() {
               {artist.songs.length > TOP_SONGS_LIMIT && (
                 <button
                   onClick={() => setShowAllSongs((v) => !v)}
-                  className="text-[var(--k-gold)] text-xs font-semibold transition-opacity hover:opacity-70"
+                  className="text-xs font-semibold text-[var(--k-gold)] transition-opacity hover:opacity-70"
                 >
                   {showAllSongs ? "Show less" : `See all ${artist.songs.length}`}
                 </button>
@@ -182,11 +170,17 @@ function ArtistSongRow({ song }: { song: ArtistSongItem }) {
   return (
     <div
       onClick={() => navigate(`/song/${song.slug}`)}
-      className="border-border bg-card hover:border-[var(--k-gold)]/30 flex cursor-pointer items-center gap-0 overflow-hidden rounded-xl border transition-all duration-150 hover:shadow-md active:scale-[0.98]"
+      className="border-border bg-card flex cursor-pointer items-center gap-0 overflow-hidden rounded-xl border transition-all duration-150 hover:border-[var(--k-gold)]/30 hover:shadow-md active:scale-[0.98]"
     >
       {/* Song icon box */}
       <div className="mx-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[8px] bg-[var(--k-ink)] dark:bg-[var(--k-surface-2)]">
-        <svg width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <rect x="9" y="1" width="2.5" height="14" rx="1.25" fill="var(--k-gold-light)" />
           <rect x="3" y="6" width="14" height="2.5" rx="1.25" fill="var(--k-gold-light)" />
         </svg>
@@ -239,4 +233,3 @@ function ArtistPageSkeleton() {
     </div>
   )
 }
-
