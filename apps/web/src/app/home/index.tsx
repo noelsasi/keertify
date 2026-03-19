@@ -66,7 +66,6 @@ const LANGUAGE_CARDS = [
   },
 ]
 
-
 export function Home() {
   const navigate = useNavigate()
   const { language, setLanguage } = useAppStore()
@@ -115,15 +114,14 @@ export function Home() {
 
   return (
     <div className="flex min-h-screen flex-col md:min-h-0">
-
       {/* ══════════════════════════════════════
           MOBILE HEADER — logo + settings icon
       ══════════════════════════════════════ */}
-      <div className="bg-[var(--k-surface)] border-b border-[var(--k-border)] px-5 py-3.5 flex items-center justify-between md:hidden">
+      <div className="flex items-center justify-between border-b border-[var(--k-border)] bg-[var(--k-surface)] px-5 py-3.5 md:hidden">
         <div className="flex items-center gap-2.5">
           <LogoIcon size={32} />
           <span
-            className="text-[var(--k-text-1)] leading-none"
+            className="leading-none text-[var(--k-text-1)]"
             style={{ fontFamily: "var(--k-font-display)", fontSize: 20, fontWeight: 500 }}
           >
             Keert<span style={{ color: "var(--k-gold)" }}>a</span>nalu
@@ -144,15 +142,26 @@ export function Home() {
       <div className="bg-[var(--k-bg)] px-5 pt-6 pb-4 md:hidden">
         <p
           className="mb-1.5 text-[var(--k-text-3)]"
-          style={{ fontSize: 11, fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase" }}
+          style={{
+            fontSize: 11,
+            fontWeight: 400,
+            letterSpacing: "3px",
+            textTransform: "uppercase",
+          }}
         >
           {greetingMessage}
         </p>
         <h1
           className="mb-4 leading-tight text-[var(--k-text-1)]"
-          style={{ fontFamily: "var(--k-font-display)", fontSize: 34, fontWeight: 400, letterSpacing: "-0.5px" }}
+          style={{
+            fontFamily: "var(--k-font-display)",
+            fontSize: 34,
+            fontWeight: 400,
+            letterSpacing: "-0.5px",
+          }}
         >
-          {LANGUAGE_LABELS[language]} Christian<br />
+          {LANGUAGE_LABELS[language]} Christian
+          <br />
           <em style={{ color: "var(--k-gold)" }}>Lyrics</em>
         </h1>
         <div className="flex items-center gap-2.5 rounded-full border border-[var(--k-border)] bg-[var(--k-surface)] px-4 py-3">
@@ -161,7 +170,7 @@ export function Home() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search songs, artists…"
-            className="flex-1 bg-transparent text-[14px] text-[var(--k-text-1)] placeholder:text-[var(--k-text-4)] outline-none"
+            className="flex-1 bg-transparent text-[14px] text-[var(--k-text-1)] outline-none placeholder:text-[var(--k-text-4)]"
           />
         </div>
       </div>
@@ -170,18 +179,28 @@ export function Home() {
           DESKTOP HERO — 2-column layout
       ══════════════════════════════════════ */}
       <div className="mb-0 hidden md:block">
-        <div className="flex items-start justify-between gap-10 pb-8 pt-10">
+        <div className="flex items-start justify-between gap-10 pt-10 pb-8">
           {/* Left column */}
           <div className="min-w-0 flex-1">
             <p
               className="mb-2.5 text-[var(--k-text-3)]"
-              style={{ fontSize: 12, fontWeight: 400, letterSpacing: "3px", textTransform: "uppercase" }}
+              style={{
+                fontSize: 12,
+                fontWeight: 400,
+                letterSpacing: "3px",
+                textTransform: "uppercase",
+              }}
             >
               {greetingMessage}
             </p>
             <h1
               className="mb-2 leading-tight text-[var(--k-text-1)]"
-              style={{ fontFamily: "var(--k-font-display)", fontSize: 52, fontWeight: 400, letterSpacing: "-1px" }}
+              style={{
+                fontFamily: "var(--k-font-display)",
+                fontSize: 52,
+                fontWeight: 400,
+                letterSpacing: "-1px",
+              }}
             >
               {LANGUAGE_LABELS[language]} Christian
               <br />
@@ -199,7 +218,7 @@ export function Home() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search songs, artists, categories…"
-                className="flex-1 border-0 bg-transparent p-0 text-[14px] text-[var(--k-text-1)] placeholder:text-[var(--k-text-4)] shadow-none outline-none ring-0 focus-visible:ring-0"
+                className="flex-1 border-0 bg-transparent p-0 text-[14px] text-[var(--k-text-1)] shadow-none ring-0 outline-none placeholder:text-[var(--k-text-4)] focus-visible:ring-0"
               />
               <span
                 className="flex-shrink-0 rounded px-2 py-0.5 text-[11px] text-[var(--k-text-4)]"
@@ -213,49 +232,49 @@ export function Home() {
             <div className="flex items-center gap-8">
               <div>
                 <p
-                  className="text-[var(--k-text-1)] leading-none"
+                  className="leading-none text-[var(--k-text-1)]"
                   style={{ fontFamily: "var(--k-font-display)", fontSize: 28, fontWeight: 500 }}
                 >
                   {totalSongs > 0 ? `${totalSongs}` : "2,400"}
                   <span style={{ color: "var(--k-gold)" }}>+</span>
                 </p>
-                <p className="mt-1 text-[11px] uppercase tracking-widest text-[var(--k-text-3)]">Songs</p>
+                <p className="mt-1 text-[11px] tracking-widest text-[var(--k-text-3)] uppercase">
+                  Songs
+                </p>
               </div>
               <div className="h-8 w-px bg-[var(--k-border)]" />
               <div>
                 <p
-                  className="text-[var(--k-text-1)] leading-none"
+                  className="leading-none text-[var(--k-text-1)]"
                   style={{ fontFamily: "var(--k-font-display)", fontSize: 28, fontWeight: 500 }}
                 >
-                  4{" "}
-                  <span style={{ fontSize: 18, color: "var(--k-gold)" }}>Languages</span>
+                  4 <span style={{ fontSize: 18, color: "var(--k-gold)" }}>Languages</span>
                 </p>
-                <p className="mt-1 text-[11px] uppercase tracking-widest text-[var(--k-text-3)]">
+                <p className="mt-1 text-[11px] tracking-widest text-[var(--k-text-3)] uppercase">
                   Telugu · Tamil · Hindi · English
                 </p>
               </div>
               <div className="h-8 w-px bg-[var(--k-border)]" />
               <div>
                 <p
-                  className="text-[var(--k-text-1)] leading-none"
+                  className="leading-none text-[var(--k-text-1)]"
                   style={{ fontFamily: "var(--k-font-display)", fontSize: 28, fontWeight: 500 }}
                 >
                   {artistsData ? `${artistsData.length}` : "120"}
                   <span style={{ color: "var(--k-gold)" }}>+</span>
                 </p>
-                <p className="mt-1 text-[11px] uppercase tracking-widest text-[var(--k-text-3)]">Artists</p>
+                <p className="mt-1 text-[11px] tracking-widest text-[var(--k-text-3)] uppercase">
+                  Artists
+                </p>
               </div>
             </div>
           </div>
 
           {/* Right column — Verse of the day */}
-          <div className="flex-shrink-0 w-[280px]">
-            <div
-              className="rounded-2xl p-7"
-              style={{ background: "var(--k-ink)" }}
-            >
+          <div className="w-[280px] flex-shrink-0">
+            <div className="rounded-2xl p-7" style={{ background: "var(--k-ink)" }}>
               <p
-                className="mb-3.5 text-[10px] uppercase tracking-[3px]"
+                className="mb-3.5 text-[10px] tracking-[3px] uppercase"
                 style={{ color: "var(--k-text-3)" }}
               >
                 Verse of the day
@@ -281,7 +300,7 @@ export function Home() {
       {/* ══════════════════════════════════════
           CATEGORY CHIPS
       ══════════════════════════════════════ */}
-      <div className="scrollbar-none flex gap-2 overflow-x-auto px-5 py-3 md:border-0 md:px-0 md:pb-6 md:pt-0">
+      <div className="scrollbar-none flex gap-2 overflow-x-auto px-5 py-3 md:border-0 md:px-0 md:pt-0 md:pb-6">
         {CATEGORIES.map((cat) => (
           <button
             key={cat}
@@ -305,7 +324,7 @@ export function Home() {
         {/* ── Search / filter results ── */}
         {isFiltering && (
           <section>
-            <p className="mb-3 text-xs text-muted-foreground">
+            <p className="text-muted-foreground mb-3 text-xs">
               {filterLoading
                 ? "Searching…"
                 : `${filteredCount} result${filteredCount !== 1 ? "s" : ""}${debouncedSearch ? ` for "${debouncedSearch}"` : ""}`}
@@ -314,7 +333,7 @@ export function Home() {
               {filterLoading ? (
                 <SongListSkeleton count={4} />
               ) : filteredSongs.length === 0 ? (
-                <div className="col-span-2 py-16 text-center text-sm text-muted-foreground">
+                <div className="text-muted-foreground col-span-2 py-16 text-center text-sm">
                   No songs found
                 </div>
               ) : (
@@ -327,13 +346,15 @@ export function Home() {
         {/* ── Discovery feed ── */}
         {!isFiltering && (
           <div className="md:space-y-0">
-
             {/* Desktop: 2-column content grid */}
             <div className="hidden md:grid md:grid-cols-2 md:gap-x-10 md:gap-y-10 md:pb-10">
-
               {/* Col 1: Recently Added */}
               <section>
-                <SectionHeader title="Recently Added" onSeeAll={() => navigate("/browse")} className="mb-3.5" />
+                <SectionHeader
+                  title="Recently Added"
+                  onSeeAll={() => navigate("/browse")}
+                  className="mb-3.5"
+                />
                 <div className="space-y-2">
                   {homeLoading ? (
                     <SongListSkeleton count={3} />
@@ -345,7 +366,11 @@ export function Home() {
 
               {/* Col 2: Trending */}
               <section>
-                <SectionHeader title="Trending this week" onSeeAll={() => navigate("/browse")} className="mb-3.5" />
+                <SectionHeader
+                  title="Trending this week"
+                  onSeeAll={() => navigate("/browse")}
+                  className="mb-3.5"
+                />
                 <div className="space-y-2">
                   {homeLoading ? (
                     <SongListSkeleton count={3} />
@@ -357,15 +382,17 @@ export function Home() {
 
               {/* Col 1: Top Artists (pills) */}
               <section>
-                <SectionHeader title="Top Artists" onSeeAll={() => navigate("/browse")} className="mb-3.5" />
+                <SectionHeader
+                  title="Top Artists"
+                  onSeeAll={() => navigate("/browse")}
+                  className="mb-3.5"
+                />
                 <div className="flex flex-wrap gap-2">
                   {artistsLoading
                     ? Array.from({ length: 4 }).map((_, i) => (
-                        <div key={i} className="h-14 w-48 animate-pulse rounded-xl bg-muted" />
+                        <div key={i} className="bg-muted h-14 w-48 animate-pulse rounded-xl" />
                       ))
-                    : topArtists.map((artist) => (
-                        <ArtistPill key={artist.id} artist={artist} />
-                      ))}
+                    : topArtists.map((artist) => <ArtistPill key={artist.id} artist={artist} />)}
                 </div>
               </section>
 
@@ -385,7 +412,6 @@ export function Home() {
                   ))}
                 </div>
               </section>
-
             </div>
 
             {/* Desktop: Top Albums — full width below */}
@@ -402,12 +428,15 @@ export function Home() {
 
             {/* ─── MOBILE content (stacked) ─── */}
             <div className="space-y-7 md:hidden">
-
               {/* Recently Added */}
               <section>
                 <SectionHeader title="Recently Added" onSeeAll={() => navigate("/browse")} />
                 <div className="space-y-2">
-                  {homeLoading ? <SongListSkeleton count={2} /> : recentSongs.map((s) => <SongCard key={s.id} song={s} />)}
+                  {homeLoading ? (
+                    <SongListSkeleton count={2} />
+                  ) : (
+                    recentSongs.map((s) => <SongCard key={s.id} song={s} />)
+                  )}
                 </div>
               </section>
 
@@ -415,17 +444,18 @@ export function Home() {
               <section>
                 <SectionHeader title="Trending this week" onSeeAll={() => navigate("/browse")} />
                 <div className="space-y-2">
-                  {homeLoading ? <SongListSkeleton count={2} /> : trendingSongs.map((s) => <SongCard key={s.id} song={s} />)}
+                  {homeLoading ? (
+                    <SongListSkeleton count={2} />
+                  ) : (
+                    trendingSongs.map((s) => <SongCard key={s.id} song={s} />)
+                  )}
                 </div>
               </section>
 
               {/* Verse of the day — mobile */}
-              <div
-                className="rounded-2xl p-5"
-                style={{ background: "var(--k-ink)" }}
-              >
+              <div className="rounded-2xl p-5" style={{ background: "var(--k-ink)" }}>
                 <p
-                  className="mb-2.5 text-[10px] uppercase tracking-[3px]"
+                  className="mb-2.5 text-[10px] tracking-[3px] uppercase"
                   style={{ color: "var(--k-text-3)" }}
                 >
                   Verse of the day
@@ -450,7 +480,7 @@ export function Home() {
               <section>
                 <SectionHeader title="Browse by language" />
                 <div className="grid grid-cols-2 gap-2">
-                  {LANGUAGE_CARDS.map((card, i) => (
+                  {LANGUAGE_CARDS.map((card) => (
                     <LanguageCard
                       key={card.code}
                       card={card}
@@ -462,7 +492,6 @@ export function Home() {
                   ))}
                 </div>
               </section>
-
             </div>
           </div>
         )}
@@ -494,7 +523,11 @@ function ArtistPill({ artist }: { artist: Artist }) {
         fallback={
           <span
             className="flex h-full w-full items-center justify-center text-[13px] font-medium"
-            style={{ background: "var(--k-gold-faint)", color: "var(--k-gold)", border: "1px solid var(--k-gold-pale)" }}
+            style={{
+              background: "var(--k-gold-faint)",
+              color: "var(--k-gold)",
+              border: "1px solid var(--k-gold-pale)",
+            }}
           >
             {initials}
           </span>
@@ -506,7 +539,6 @@ function ArtistPill({ artist }: { artist: Artist }) {
     </div>
   )
 }
-
 
 function LanguageCard({
   card,
@@ -549,15 +581,15 @@ function AlbumCard({ album, index }: { album: Album; index: number }) {
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
         <div className="absolute right-2.5 bottom-2.5 left-2.5 flex items-end justify-between gap-1">
-          <span className="max-w-[95px] truncate rounded-md bg-black/60 px-2 py-0.5 text-[11px] font-bold leading-tight text-[var(--k-gold-pale)]">
+          <span className="max-w-[95px] truncate rounded-md bg-black/60 px-2 py-0.5 text-[11px] leading-tight font-bold text-[var(--k-gold-pale)]">
             {album.title}
           </span>
-          <span className="flex-shrink-0 rounded-md bg-black/60 px-2 py-0.5 text-sm font-black leading-tight text-white">
+          <span className="flex-shrink-0 rounded-md bg-black/60 px-2 py-0.5 text-sm leading-tight font-black text-white">
             {num}
           </span>
         </div>
       </div>
-      <p className="mt-2 truncate text-xs text-muted-foreground">{album.artistName ?? "Various"}</p>
+      <p className="text-muted-foreground mt-2 truncate text-xs">{album.artistName ?? "Various"}</p>
     </div>
   )
 }
@@ -566,7 +598,7 @@ function SongListSkeleton({ count }: { count: number }) {
   return (
     <>
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="h-[68px] animate-pulse rounded-xl border border-border bg-muted" />
+        <div key={i} className="border-border bg-muted h-[68px] animate-pulse rounded-xl border" />
       ))}
     </>
   )
