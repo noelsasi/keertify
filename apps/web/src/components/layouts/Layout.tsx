@@ -1,10 +1,13 @@
 import { Outlet } from "react-router-dom"
 import { Toaster } from "sonner"
+import { ScrollToTop } from "@/components/ScrollToTop"
 import { BottomNav } from "./BottomNav"
 import { TopNav } from "./TopNav"
 
 export function Layout() {
   return (
+    <>
+      <ScrollToTop />
     <div className="min-h-screen bg-background">
       {/* Desktop — top navbar + full content area */}
       <div className="hidden min-h-screen md:flex md:flex-col">
@@ -28,12 +31,13 @@ export function Layout() {
         position="top-center"
         toastOptions={{
           style: {
-            background: "oklch(0.18 0.04 264)",
-            color: "white",
-            border: "1px solid oklch(1 0 0 / 10%)",
+            background: "var(--k-ink)",
+            color: "var(--k-gold-pale)",
+            border: "1px solid var(--k-border)",
           },
         }}
       />
     </div>
+    </>
   )
 }

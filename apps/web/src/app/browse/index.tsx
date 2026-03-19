@@ -21,22 +21,25 @@ export function Browse() {
   return (
     <div className="flex min-h-screen flex-col md:min-h-0">
       {/* Mobile header */}
-      <div className="bg-brand-navy px-4 pt-12 pb-4 md:hidden">
+      <div className="bg-[var(--k-surface)] border-b border-[var(--k-border)] px-4 pt-12 pb-4 md:hidden">
         <div className="mb-4 flex items-center gap-3">
           <button onClick={() => navigate(-1)}>
-            <ArrowLeft size={22} className="text-white" />
+            <ArrowLeft size={22} className="text-[var(--k-text-1)]" />
           </button>
-          <h1 className="text-xl font-bold text-white">
+          <h1
+            className="text-[var(--k-text-1)]"
+            style={{ fontFamily: "var(--k-font-display)", fontSize: 20, fontWeight: 500 }}
+          >
             Browse · {LANGUAGE_LABELS[language]}
           </h1>
         </div>
         <div className="relative">
-          <Search size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-white/40" />
+          <Search size={16} className="absolute top-1/2 left-3 -translate-y-1/2 text-[var(--k-text-3)]" />
           <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Filter songs..."
-            className="rounded-xl border-white/10 bg-white/10 pl-9 text-white placeholder:text-white/40"
+            className="border-[var(--k-border)] bg-[var(--k-surface-2)] pl-9 text-[var(--k-text-1)] placeholder:text-[var(--k-text-4)] focus-visible:ring-[var(--k-gold)]/30"
           />
         </div>
       </div>
@@ -45,8 +48,13 @@ export function Browse() {
       <div className="mb-8 hidden md:block">
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Browse</h1>
-            <p className="mt-1 text-muted-foreground">
+            <h1
+              className="text-[var(--k-text-1)] leading-none"
+              style={{ fontFamily: "var(--k-font-display)", fontSize: 44, fontWeight: 400 }}
+            >
+              Browse
+            </h1>
+            <p className="mt-2 text-muted-foreground">
               {isLoading ? "Loading…" : `${total} ${LANGUAGE_LABELS[language]} songs · A–Z`}
             </p>
           </div>
@@ -57,13 +65,13 @@ export function Browse() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Filter by title or artist..."
-            className="h-12 rounded-2xl pl-11 text-base"
+            className="border-[var(--k-border)] bg-[var(--k-surface)] focus-visible:ring-[var(--k-gold)]/30 h-12 rounded-2xl pl-11 text-base"
           />
         </div>
       </div>
 
       {/* Mobile count bar */}
-      <div className="border-b border-border px-4 py-3 md:hidden">
+      <div className="border-b border-[var(--k-border)] px-4 py-3 md:hidden">
         <p className="text-xs text-muted-foreground">
           {isLoading ? "Loading…" : `${songs.length} songs · A–Z`}
         </p>

@@ -1,6 +1,7 @@
 import { ArrowLeft, Heart, Share2, Copy, Music2, Disc3 } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { cn } from "@/lib/utils"
+import { Breadcrumbs } from "@/components/ui/breadcrumbs"
 import type { SongDetail } from "@/types/song.types"
 import type { CategoryConfig } from "@/lib/categories"
 import { CATEGORY_HERO_GRADIENTS, CATEGORY_THUMB_GRADIENTS, NOISE_BG } from "./constants"
@@ -139,6 +140,17 @@ export function LyricsHero({
 
       {/* ── Desktop hero ── */}
       <div className="mb-5 hidden md:block">
+        <div className="text-muted-foreground mb-4">
+          <Breadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              ...(song.artist && song.artistSlug
+                ? [{ label: song.artist, href: `/artists/${song.artistSlug}` }]
+                : []),
+              { label: song.title },
+            ]}
+          />
+        </div>
         <div
           className={cn(
             "relative overflow-hidden rounded-2xl bg-gradient-to-br px-8 py-7",

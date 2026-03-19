@@ -1,6 +1,8 @@
+import { useRef } from "react"
 import { NavLink, useNavigate } from "react-router-dom"
-import { Settings, Music } from "lucide-react"
+import { Settings, Search } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { LogoIcon } from "@/components/LogoIcon"
 
 const navItems = [
   { to: "/", label: "Home", end: true },
@@ -9,17 +11,25 @@ const navItems = [
 
 export function TopNav() {
   const navigate = useNavigate()
+  const searchRef = useRef<HTMLInputElement>(null)
+
+  function handleSearchSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    const q = searchRef.current?.value.trim()
+    if (q) navigate("/browse")
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-nav-border bg-nav-bg">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-8 px-6">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-8 px-6">
         {/* Left — Logo */}
-        <NavLink to="/" className="flex flex-shrink-0 items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-gold/20">
-            <Music size={16} className="text-brand-gold" />
-          </div>
-          <span className="text-lg font-bold tracking-tight text-nav-foreground">
-            Keertify
+        <NavLink to="/" className="flex shrink-0 items-center gap-2.5">
+          <LogoIcon size={36} />
+          <span
+            className="text-k-text-1 tracking-tight"
+            style={{ fontFamily: "var(--k-font-display)", fontSize: 22, fontWeight: 500 }}
+          >
+            Keert<span style={{ color: "var(--k-gold)" }}>a</span>nalu
           </span>
         </NavLink>
 
@@ -32,10 +42,10 @@ export function TopNav() {
               end={end}
               className={({ isActive }) =>
                 cn(
-                  "relative rounded-lg px-4 py-2 text-sm font-medium text-nav-foreground transition-all duration-200",
+                  "relative rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200",
                   isActive
-                    ? "opacity-100"
-                    : "opacity-60 hover:bg-black/5 hover:opacity-90 dark:hover:bg-white/10 dark:hover:opacity-90"
+                    ? "text-k-text-1"
+                    : "text-[var(--k-text-3)] opacity-70 hover:opacity-100 hover:bg-[var(--k-surface-2)] hover:text-[var(--k-text-1)]"
                 )
               }
             >
@@ -43,7 +53,7 @@ export function TopNav() {
                 <>
                   {label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-1/2 h-0.5 w-4 -translate-x-1/2 rounded-full bg-brand-gold" />
+                    <span className="absolute bottom-0 left-1/2 h-0.5 w-4 -translate-x-1/2 rounded-full bg-[var(--k-gold)]" />
                   )}
                 </>
               )}
@@ -51,14 +61,29 @@ export function TopNav() {
           ))}
         </nav>
 
-        {/* Right — Settings icon */}
-        <button
-          onClick={() => navigate("/settings")}
-          className="flex-shrink-0 rounded-lg p-2 text-nav-foreground/60 transition-all duration-200 hover:bg-black/5 hover:text-nav-foreground dark:hover:bg-white/10 dark:hover:text-nav-foreground"
-          aria-label="Settings"
-        >
-          <Settings size={20} />
-        </button>
+        {/* Right — compact search + settings */}
+        <div className="ml-auto flex items-center gap-3">
+          <form
+            onSubmit={handleSearchSubmit}
+            className="flex items-center gap-2 rounded-full border border-[var(--k-border)] bg-[var(--k-surface-2)] px-3.5 py-2 w-48 transition-all duration-200 focus-within:border-[var(--k-gold)]/60 focus-within:w-56"
+          >
+            <Search size={13} className="flex-shrink-0 text-[var(--k-text-3)]" />
+            <input
+              ref={searchRef}
+              type="text"
+              placeholder="Search lyrics…"
+              className="bg-transparent text-[13px] text-[var(--k-text-1)] placeholder:text-[var(--k-text-4)] outline-none w-full"
+            />
+          </form>
+
+          <button
+            onClick={() => navigate("/settings")}
+            className="shrink-0 cursor-pointer rounded-lg p-2 text-[var(--k-text-3)] transition-all duration-200 hover:bg-[var(--k-surface-2)] hover:text-[var(--k-text-1)]"
+            aria-label="Settings"
+          >
+            <Settings size={20} />
+          </button>
+        </div>
       </div>
     </header>
   )

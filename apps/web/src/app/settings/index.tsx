@@ -39,19 +39,29 @@ export function Settings() {
   return (
     <div className="flex min-h-screen flex-col md:min-h-0">
       {/* Mobile header */}
-      <div className="bg-brand-navy px-4 pt-12 pb-5 md:hidden">
+      <div className="bg-[var(--k-surface)] border-b border-[var(--k-border)] px-4 pt-12 pb-5 md:hidden">
         <div className="flex items-center gap-3">
           <button onClick={() => navigate(-1)}>
-            <ArrowLeft size={22} className="text-white" />
+            <ArrowLeft size={22} className="text-[var(--k-text-1)]" />
           </button>
-          <h1 className="text-xl font-bold text-white">Settings</h1>
+          <h1
+            className="text-[var(--k-text-1)]"
+            style={{ fontFamily: "var(--k-font-display)", fontSize: 22, fontWeight: 500 }}
+          >
+            Settings
+          </h1>
         </div>
       </div>
 
       {/* Desktop header */}
       <div className="mb-8 hidden md:block">
-        <h1 className="text-3xl font-bold text-foreground">Settings</h1>
-        <p className="mt-1 text-muted-foreground">Manage your preferences</p>
+        <h1
+          className="text-[var(--k-text-1)] leading-none"
+          style={{ fontFamily: "var(--k-font-display)", fontSize: 44, fontWeight: 400 }}
+        >
+          Settings
+        </h1>
+        <p className="mt-2 text-muted-foreground">Manage your preferences</p>
       </div>
 
       <div className="space-y-8 px-4 py-6 md:max-w-lg md:px-0 md:py-0">
@@ -70,27 +80,29 @@ export function Settings() {
                   className={cn(
                     "flex cursor-pointer flex-col items-center gap-2 rounded-xl border px-3 py-4 transition-all duration-200",
                     active
-                      ? "border-brand-navy bg-brand-navy text-white dark:text-white"
-                      : "border-border bg-card text-foreground hover:border-brand-navy/40"
+                      ? "border-[var(--k-ink)] bg-[var(--k-ink)]"
+                      : "border-border bg-card text-foreground hover:border-[var(--k-ink)]/40"
                   )}
                 >
                   <Icon
                     size={20}
                     className={
-                      active ? "text-brand-gold" : "text-muted-foreground"
+                      active ? "text-[var(--k-gold)]" : "text-muted-foreground"
                     }
                   />
-                  <span className="text-sm font-semibold">{label}</span>
+                  <span className={cn("text-sm font-semibold", active ? "text-[var(--k-gold-pale)]" : "text-foreground")}>
+                    {label}
+                  </span>
                   <span
                     className={cn(
                       "text-center text-[10px] leading-tight",
-                      active ? "text-white/60" : "text-muted-foreground"
+                      active ? "text-[var(--k-text-3)]" : "text-muted-foreground"
                     )}
                   >
                     {description}
                   </span>
                   {active && (
-                    <div className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
+                    <div className="h-1.5 w-1.5 rounded-full bg-[var(--k-gold)]" />
                   )}
                 </button>
               )
@@ -118,17 +130,19 @@ export function Settings() {
                 className={cn(
                   "flex w-full items-center justify-between rounded-xl border px-4 py-3.5 transition-all duration-200",
                   language === lang.code
-                    ? "border-brand-navy bg-brand-navy text-white"
-                    : "border-border bg-card text-foreground hover:border-brand-navy/40"
+                    ? "border-[var(--k-ink)] bg-[var(--k-ink)]"
+                    : "border-border bg-card text-foreground hover:border-[var(--k-ink)]/40"
                 )}
               >
                 <div className="flex items-center gap-3">
-                  <span className="font-semibold">{lang.label}</span>
+                  <span className={cn("font-semibold", language === lang.code ? "text-[var(--k-gold-pale)]" : "text-foreground")}>
+                    {lang.label}
+                  </span>
                   <span
                     className={cn(
                       "text-sm",
                       language === lang.code
-                        ? "text-white/60"
+                        ? "text-[var(--k-text-3)]"
                         : "text-muted-foreground"
                     )}
                   >
@@ -136,7 +150,7 @@ export function Settings() {
                   </span>
                 </div>
                 {language === lang.code && (
-                  <Check size={18} className="text-brand-gold" />
+                  <Check size={18} className="text-[var(--k-gold)]" />
                 )}
               </button>
             ))}
@@ -149,7 +163,7 @@ export function Settings() {
             About
           </p>
           <div className="rounded-xl border border-border bg-card px-4 py-3">
-            <p className="text-sm font-semibold">Keertify</p>
+            <p className="text-sm font-semibold">Keertanalu</p>
             <p className="mt-0.5 text-xs text-muted-foreground">
               Version 1.0.0 · Christian Songs
             </p>

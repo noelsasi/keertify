@@ -12,14 +12,19 @@ export function Favourites() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="bg-brand-navy px-4 pt-12 pb-5">
+      <div className="bg-[var(--k-surface)] border-b border-[var(--k-border)] px-4 pt-12 pb-5">
         <div className="flex items-center gap-3">
           <button onClick={() => navigate(-1)}>
-            <ArrowLeft size={22} className="text-white" />
+            <ArrowLeft size={22} className="text-[var(--k-text-1)]" />
           </button>
           <div>
-            <h1 className="text-xl font-bold text-white">Saved Songs</h1>
-            <p className="text-xs text-white/50">
+            <h1
+              className="text-[var(--k-text-1)]"
+              style={{ fontFamily: "var(--k-font-display)", fontSize: 22, fontWeight: 500 }}
+            >
+              Saved Songs
+            </h1>
+            <p className="text-xs text-[var(--k-text-3)]">
               {savedSongs.length} saved · {LANGUAGE_LABELS[language]}
             </p>
           </div>
