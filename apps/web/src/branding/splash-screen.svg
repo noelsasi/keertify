@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 844" fill="none">
+  <!-- Mobile splash — iPhone 14 Pro size -->
+  <rect width="390" height="844" fill="#1A1208"/>
+  <!-- Subtle warm gradient feel via layered rects -->
+  <rect width="390" height="844" fill="#0E0A04" opacity="0.25"/>
+
+  <!-- Decorative open book — large background -->
+  <path d="M195 200 C195 200 70 216 30 270 L30 680 C70 636 168 620 195 644 Z" fill="#D4A92A" opacity="0.06"/>
+  <path d="M195 200 C195 200 320 216 360 270 L360 680 C320 636 222 620 195 644 Z" fill="#D4A92A" opacity="0.04"/>
+
+  <!-- Centered icon -->
+  <rect x="147" y="320" width="96" height="96" rx="24" fill="#251C0A"/>
+  <rect x="147.5" y="320.5" width="95" height="95" rx="23.5" fill="none" stroke="#3A2E18" stroke-width="1"/>
+  <!-- Left page -->
+  <path d="M195 340 C195 340 166 343 158 352 L158 398 C166 390 190 387 195 391 Z" fill="#D4A92A" opacity="0.9"/>
+  <!-- Right page -->
+  <path d="M195 340 C195 340 224 343 232 352 L232 398 C224 390 200 387 195 391 Z" fill="#D4A92A" opacity="0.62"/>
+  <!-- Spine -->
+  <line x1="195" y1="340" x2="195" y2="391" stroke="#F5E6B8" stroke-width="2" stroke-linecap="round"/>
+  <!-- Text lines -->
+  <line x1="165" y1="362" x2="192" y2="361" stroke="#F5E6B8" stroke-width="1.8" stroke-linecap="round" opacity="0.45"/>
+  <line x1="164" y1="370" x2="192" y2="369" stroke="#F5E6B8" stroke-width="1.8" stroke-linecap="round" opacity="0.3"/>
+  <line x1="164" y1="378" x2="191" y2="377" stroke="#F5E6B8" stroke-width="1.8" stroke-linecap="round" opacity="0.2"/>
+  <!-- Bookmark -->
+  <path d="M226 319 L226 340 L222 336.5 L218 340 L218 319 Z" fill="#A63248"/>
+
+  <!-- Wordmark -->
+  <text x="195" y="460" font-family="Georgia, 'Times New Roman', serif" font-size="44" font-weight="500" letter-spacing="-1.5" fill="#F5E6B8" text-anchor="middle">Keert<tspan fill="#D4A92A">a</tspan>nalu</text>
+
+  <!-- Tagline -->
+  <text x="195" y="490" font-family="system-ui, sans-serif" font-size="11" font-weight="400" letter-spacing="3.5" fill="#8C7850" text-anchor="middle">CHRISTIAN LYRICS</text>
+
+  <!-- Bottom loading dot -->
+  <circle cx="195" cy="750" r="3.5" fill="#3A2E18"/>
+  <circle cx="195" cy="750" r="3.5" fill="#D4A92A" opacity="0.6"/>
+</svg>

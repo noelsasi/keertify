@@ -1,0 +1,477 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --ink: #1A1208;
+    --gold: #B8860B;
+    --gold-light: #D4A92A;
+    --gold-pale: #F5E6B8;
+    --gold-faint: #FDF8EC;
+    --crimson: #7B1E2E;
+    --crimson-light: #A63248;
+    --crimson-pale: #F5E0E4;
+    --ivory: #FAF7F0;
+    --ivory-deep: #F0EBE0;
+    --stone: #8C8070;
+    --stone-light: #BEB4A8;
+    --night: #0E0A04;
+    --night-surface: #1C1508;
+    --night-card: #251C0A;
+    --night-border: #3A2E18;
+    --night-gold: #D4A92A;
+    --night-gold-dim: #8C6A10;
+    --night-text: #F5E6B8;
+    --night-muted: #8C7850;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .page { font-family: 'DM Sans', sans-serif; background: transparent; }
+
+  /* ── HERO LOGO ── */
+  .hero { padding: 48px 32px 40px; display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+  .logo-lockup { display: flex; align-items: center; gap: 20px; }
+
+  .logo-mark {
+    width: 72px; height: 72px;
+    background: var(--ink);
+    border-radius: 20px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .cross-v { position: absolute; width: 6px; height: 34px; background: var(--gold-light); border-radius: 3px; }
+  .cross-h { position: absolute; width: 30px; height: 6px; background: var(--gold-light); border-radius: 3px; top: calc(50% - 5px); }
+  .note-dot { position: absolute; width: 6px; height: 6px; border-radius: 50%; background: var(--crimson-light); bottom: 13px; right: 13px; }
+  .note-stem { position: absolute; width: 2px; height: 10px; background: var(--crimson-light); bottom: 18px; right: 14.5px; border-radius: 1px; }
+
+  .logo-text { display: flex; flex-direction: column; }
+  .logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 500;
+    letter-spacing: -1px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .logo-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-top: 6px;
+  }
+
+  .logo-name span { color: var(--gold); }
+
+  /* Dark version */
+  .logo-mark-dark { background: var(--night-card); border: 1px solid var(--night-border); }
+  .cross-v-dark { background: var(--night-gold); }
+  .cross-h-dark { background: var(--night-gold); }
+  .logo-name-dark { color: var(--night-text); }
+  .logo-name-dark span { color: var(--night-gold); }
+  .logo-sub-dark { color: var(--night-muted); }
+
+  /* ── SECTION ── */
+  .section { padding: 0 32px 40px; }
+  .sec-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--ivory-deep);
+  }
+
+  /* ── LOGO ON BOTH MODES ── */
+  .mode-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 40px; padding: 0 32px; }
+
+  .mode-box { border-radius: 16px; padding: 32px 24px; display: flex; align-items: center; justify-content: center; }
+  .mode-light { background: var(--ivory); border: 1px solid var(--ivory-deep); }
+  .mode-dark { background: var(--night); }
+
+  /* ── COLOR PALETTE ── */
+  .palette-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .color-card { border-radius: 12px; overflow: hidden; }
+  .color-swatch { height: 64px; }
+  .color-info { padding: 10px 12px; background: var(--ivory); }
+  .color-name { font-size: 12px; font-weight: 500; color: var(--ink); }
+  .color-hex { font-size: 10px; color: var(--stone); font-family: monospace; margin-top: 2px; }
+  .color-role { font-size: 10px; color: var(--stone-light); margin-top: 1px; }
+
+  /* ── FULL SPECTRUM ── */
+  .spectrum { display: flex; gap: 4px; border-radius: 12px; overflow: hidden; height: 48px; margin-bottom: 40px; }
+  .spec-band { flex: 1; }
+
+  /* ── MODE TABLES ── */
+  .mode-tables { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+  .mode-table { border-radius: 14px; overflow: hidden; }
+  .mode-table-light { background: var(--ivory); border: 1px solid var(--ivory-deep); }
+  .mode-table-dark { background: var(--night-surface); border: 1px solid var(--night-border); }
+  .table-header { padding: 14px 16px 10px; font-size: 10px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase; }
+  .th-light { color: var(--stone); border-bottom: 1px solid var(--ivory-deep); }
+  .th-dark { color: var(--night-muted); border-bottom: 1px solid var(--night-border); }
+  .table-row { display: flex; align-items: center; gap: 12px; padding: 9px 16px; }
+  .tr-border-light { border-bottom: 1px solid var(--ivory-deep); }
+  .tr-border-dark { border-bottom: 1px solid var(--night-border); }
+  .dot { width: 26px; height: 26px; border-radius: 8px; flex-shrink: 0; }
+  .token-name { font-size: 12px; font-weight: 500; }
+  .tn-light { color: var(--ink); }
+  .tn-dark { color: var(--night-text); }
+  .token-hex { font-size: 10px; font-family: monospace; }
+  .tx-light { color: var(--stone); }
+  .tx-dark { color: var(--night-muted); }
+
+  /* ── TYPOGRAPHY ── */
+  .type-showcase { background: var(--ivory); border-radius: 16px; padding: 28px; border: 1px solid var(--ivory-deep); margin-bottom: 40px; }
+  .type-display { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 400; color: var(--ink); line-height: 1.1; letter-spacing: -0.5px; }
+  .type-display span { color: var(--gold); font-style: italic; }
+  .type-body-sample { font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--stone); margin-top: 12px; line-height: 1.6; }
+  .type-pair { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .type-pill { font-size: 11px; padding: 5px 12px; border-radius: 20px; border: 1px solid var(--ivory-deep); color: var(--stone); background: white; }
+
+  /* ── APP PREVIEW ── */
+  .app-preview-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 40px; }
+
+  .app-frame { border-radius: 20px; overflow: hidden; border: 1px solid var(--ivory-deep); }
+  .app-frame-dark { border-color: var(--night-border); }
+
+  .app-topbar { padding: 14px 16px; display: flex; align-items: center; gap: 10px; }
+  .atb-light { background: var(--ivory); border-bottom: 1px solid var(--ivory-deep); }
+  .atb-dark { background: var(--night-surface); border-bottom: 1px solid var(--night-border); }
+
+  .app-icon-sm { width: 30px; height: 30px; border-radius: 9px; background: var(--ink); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .app-icon-sm-dark { background: var(--night-card); border: 1px solid var(--night-border); }
+
+  .atb-title { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 500; }
+  .atb-title-light { color: var(--ink); }
+  .atb-title-dark { color: var(--night-text); }
+
+  .app-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .ab-light { background: var(--ivory-deep); }
+  .ab-dark { background: var(--night); }
+
+  .chip-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { font-size: 11px; padding: 4px 10px; border-radius: 20px; }
+  .chip-active-light { background: var(--ink); color: var(--gold-pale); }
+  .chip-inactive-light { background: white; color: var(--stone); border: 1px solid var(--ivory-deep); }
+  .chip-active-dark { background: var(--night-gold); color: var(--night); }
+  .chip-inactive-dark { background: var(--night-card); color: var(--night-muted); border: 1px solid var(--night-border); }
+
+  .song-card { border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; }
+  .sc-light { background: white; border: 1px solid var(--ivory-deep); }
+  .sc-dark { background: var(--night-card); border: 1px solid var(--night-border); }
+  .sc-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--ink); flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+  .sc-icon-dark { background: var(--night-gold-dim); }
+  .sc-title { font-size: 13px; font-weight: 500; }
+  .sc-title-light { color: var(--ink); }
+  .sc-title-dark { color: var(--night-text); }
+  .sc-sub { font-size: 11px; margin-top: 2px; }
+  .sc-sub-light { color: var(--stone); }
+  .sc-sub-dark { color: var(--night-muted); }
+
+  /* ── MERCHANDISE STRIP ── */
+  .merch-strip { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 40px; }
+  .merch-item { border-radius: 12px; padding: 20px 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; min-height: 110px; }
+  .merch-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
+
+  .mi-black { background: var(--ink); }
+  .mi-gold { background: var(--gold); }
+  .mi-ivory { background: var(--ivory); border: 1px solid var(--ivory-deep); }
+
+  .merch-logo-small { display: flex; align-items: center; gap: 8px; }
+  .mls-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0; }
+  .mls-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500; letter-spacing: -0.3px; }
+
+  /* ── USAGE GUIDE ── */
+  .usage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .usage-card { border-radius: 12px; padding: 16px; }
+  .uc-ivory { background: var(--ivory); border: 1px solid var(--ivory-deep); }
+  .uc-ink { background: var(--ink); }
+  .uc-gold { background: var(--gold-faint); border: 1px solid var(--gold-pale); }
+  .uc-crimson { background: var(--crimson-pale); border: 1px solid #E8C0C8; }
+  .uc-title { font-size: 12px; font-weight: 500; margin-bottom: 4px; }
+  .uc-value { font-size: 10px; font-family: monospace; }
+  .uc-desc { font-size: 11px; margin-top: 6px; }
+</style>
+
+<div class="page">
+
+  <!-- LOGO BOTH MODES -->
+  <div class="mode-strip" style="padding-top:32px;">
+    <div class="mode-box mode-light">
+      <div class="logo-lockup">
+        <div class="logo-mark">
+          <div class="cross-v"></div>
+          <div class="cross-h"></div>
+          <div class="note-stem"></div>
+          <div class="note-dot"></div>
+        </div>
+        <div class="logo-text">
+          <div class="logo-name">Keert<span>a</span>nalu</div>
+          <div class="logo-sub">Christian Lyrics</div>
+        </div>
+      </div>
+    </div>
+    <div class="mode-box mode-dark">
+      <div class="logo-lockup">
+        <div class="logo-mark logo-mark-dark">
+          <div class="cross-v cross-v-dark"></div>
+          <div class="cross-h cross-h-dark"></div>
+          <div class="note-stem" style="background:var(--crimson-light)"></div>
+          <div class="note-dot" style="background:var(--crimson-light)"></div>
+        </div>
+        <div class="logo-text">
+          <div class="logo-name logo-name-dark">Keert<span>a</span>nalu</div>
+          <div class="logo-sub logo-sub-dark">Christian Lyrics</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PALETTE -->
+  <div class="section">
+    <div class="sec-label">Brand palette</div>
+    <div class="spectrum" style="margin-bottom:20px;">
+      <div class="spec-band" style="background:#1A1208;"></div>
+      <div class="spec-band" style="background:#3A2E18;"></div>
+      <div class="spec-band" style="background:#B8860B;"></div>
+      <div class="spec-band" style="background:#D4A92A;"></div>
+      <div class="spec-band" style="background:#F5E6B8;"></div>
+      <div class="spec-band" style="background:#FAF7F0;"></div>
+      <div class="spec-band" style="background:#7B1E2E;"></div>
+      <div class="spec-band" style="background:#A63248;"></div>
+      <div class="spec-band" style="background:#F5E0E4;"></div>
+    </div>
+    <div class="palette-grid">
+      <div class="color-card" style="border:1px solid #E8E0D0;">
+        <div class="color-swatch" style="background:#1A1208;"></div>
+        <div class="color-info">
+          <div class="color-name">Ink</div>
+          <div class="color-hex">#1A1208</div>
+          <div class="color-role">Primary text / icon bg</div>
+        </div>
+      </div>
+      <div class="color-card" style="border:1px solid #E8E0D0;">
+        <div class="color-swatch" style="background:#B8860B;"></div>
+        <div class="color-info">
+          <div class="color-name">Gold</div>
+          <div class="color-hex">#B8860B</div>
+          <div class="color-role">Primary brand accent</div>
+        </div>
+      </div>
+      <div class="color-card" style="border:1px solid #E8E0D0;">
+        <div class="color-swatch" style="background:#D4A92A;"></div>
+        <div class="color-info">
+          <div class="color-name">Gold light</div>
+          <div class="color-hex">#D4A92A</div>
+          <div class="color-role">Hover / active states</div>
+        </div>
+      </div>
+      <div class="color-card" style="border:1px solid #E8E0D0;">
+        <div class="color-swatch" style="background:#7B1E2E;"></div>
+        <div class="color-info">
+          <div class="color-name">Crimson</div>
+          <div class="color-hex">#7B1E2E</div>
+          <div class="color-role">Secondary accent</div>
+        </div>
+      </div>
+      <div class="color-card" style="border:1px solid #E8E0D0;">
+        <div class="color-swatch" style="background:#FAF7F0;"></div>
+        <div class="color-info">
+          <div class="color-name">Ivory</div>
+          <div class="color-hex">#FAF7F0</div>
+          <div class="color-role">Light background</div>
+        </div>
+      </div>
+      <div class="color-card" style="border:1px solid #E8E0D0;">
+        <div class="color-swatch" style="background:#F0EBE0;"></div>
+        <div class="color-info">
+          <div class="color-name">Ivory deep</div>
+          <div class="color-hex">#F0EBE0</div>
+          <div class="color-role">Cards / surfaces</div>
+        </div>
+      </div>
+      <div class="color-card" style="border:1px solid #E8E0D0;">
+        <div class="color-swatch" style="background:#0E0A04;"></div>
+        <div class="color-info">
+          <div class="color-name">Night</div>
+          <div class="color-hex">#0E0A04</div>
+          <div class="color-role">Dark background</div>
+        </div>
+      </div>
+      <div class="color-card" style="border:1px solid #E8E0D0;">
+        <div class="color-swatch" style="background:#8C8070;"></div>
+        <div class="color-info">
+          <div class="color-name">Stone</div>
+          <div class="color-hex">#8C8070</div>
+          <div class="color-role">Muted text</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODE TABLES -->
+  <div class="section" style="padding-bottom:20px;">
+    <div class="sec-label">Color tokens</div>
+    <div class="mode-tables">
+      <div class="mode-table mode-table-light">
+        <div class="table-header th-light">Light mode</div>
+        <div class="table-row tr-border-light"><div class="dot" style="background:#1A1208;"></div><div><div class="token-name tn-light">Primary</div><div class="token-hex tx-light">#1A1208</div></div></div>
+        <div class="table-row tr-border-light"><div class="dot" style="background:#B8860B;"></div><div><div class="token-name tn-light">Accent gold</div><div class="token-hex tx-light">#B8860B</div></div></div>
+        <div class="table-row tr-border-light"><div class="dot" style="background:#7B1E2E;"></div><div><div class="token-name tn-light">Accent crimson</div><div class="token-hex tx-light">#7B1E2E</div></div></div>
+        <div class="table-row tr-border-light"><div class="dot" style="background:#FAF7F0; border:1px solid #E0D8C8;"></div><div><div class="token-name tn-light">Background</div><div class="token-hex tx-light">#FAF7F0</div></div></div>
+        <div class="table-row tr-border-light"><div class="dot" style="background:#FFFFFF; border:1px solid #E0D8C8;"></div><div><div class="token-name tn-light">Surface</div><div class="token-hex tx-light">#FFFFFF</div></div></div>
+        <div class="table-row tr-border-light"><div class="dot" style="background:#1A1208;"></div><div><div class="token-name tn-light">Text primary</div><div class="token-hex tx-light">#1A1208</div></div></div>
+        <div class="table-row tr-border-light"><div class="dot" style="background:#8C8070;"></div><div><div class="token-name tn-light">Text muted</div><div class="token-hex tx-light">#8C8070</div></div></div>
+        <div class="table-row"><div class="dot" style="background:#E0D8C8;"></div><div><div class="token-name tn-light">Border</div><div class="token-hex tx-light">#E0D8C8</div></div></div>
+      </div>
+      <div class="mode-table mode-table-dark">
+        <div class="table-header th-dark">Dark mode</div>
+        <div class="table-row tr-border-dark"><div class="dot" style="background:#D4A92A;"></div><div><div class="token-name tn-dark">Primary</div><div class="token-hex tx-dark">#D4A92A</div></div></div>
+        <div class="table-row tr-border-dark"><div class="dot" style="background:#F5E6B8;"></div><div><div class="token-name tn-dark">Accent gold</div><div class="token-hex tx-dark">#F5E6B8</div></div></div>
+        <div class="table-row tr-border-dark"><div class="dot" style="background:#A63248;"></div><div><div class="token-name tn-dark">Accent crimson</div><div class="token-hex tx-dark">#A63248</div></div></div>
+        <div class="table-row tr-border-dark"><div class="dot" style="background:#0E0A04; border:1px solid #3A2E18;"></div><div><div class="token-name tn-dark">Background</div><div class="token-hex tx-dark">#0E0A04</div></div></div>
+        <div class="table-row tr-border-dark"><div class="dot" style="background:#1C1508; border:1px solid #3A2E18;"></div><div><div class="token-name tn-dark">Surface</div><div class="token-hex tx-dark">#1C1508</div></div></div>
+        <div class="table-row tr-border-dark"><div class="dot" style="background:#F5E6B8;"></div><div><div class="token-name tn-dark">Text primary</div><div class="token-hex tx-dark">#F5E6B8</div></div></div>
+        <div class="table-row tr-border-dark"><div class="dot" style="background:#8C7850;"></div><div><div class="token-name tn-dark">Text muted</div><div class="token-hex tx-dark">#8C7850</div></div></div>
+        <div class="table-row"><div class="dot" style="background:#3A2E18;"></div><div><div class="token-name tn-dark">Border</div><div class="token-hex tx-dark">#3A2E18</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TYPOGRAPHY -->
+  <div class="section">
+    <div class="sec-label">Typography</div>
+    <div class="type-showcase">
+      <div class="type-display">Sing to the Lord a <span>new song</span></div>
+      <div class="type-body-sample">Browse thousands of devotional lyrics across Telugu, Tamil, Hindi and English. Your complete keertana companion.</div>
+      <div class="type-pair">
+        <span class="type-pill">Cormorant Garamond — Display</span>
+        <span class="type-pill">DM Sans — Body</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP PREVIEW -->
+  <div class="section">
+    <div class="sec-label">App preview</div>
+    <div class="app-preview-wrap">
+      <div class="app-frame">
+        <div class="app-topbar atb-light">
+          <div class="app-icon-sm">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#D4A92A"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#D4A92A"/><circle cx="10.5" cy="11.5" r="1.5" fill="#A63248"/><rect x="11" y="7" width="1" height="5" rx="0.5" fill="#A63248"/></svg>
+          </div>
+          <div class="atb-title atb-title-light">Keertanalu</div>
+        </div>
+        <div class="app-body ab-light">
+          <div class="chip-row">
+            <span class="chip chip-active-light">Telugu</span>
+            <span class="chip chip-inactive-light">Tamil</span>
+            <span class="chip chip-inactive-light">Hindi</span>
+          </div>
+          <div class="song-card sc-light">
+            <div class="sc-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#D4A92A"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#D4A92A"/></svg></div>
+            <div><div class="sc-title sc-title-light">Yesuve Nee Enthina</div><div class="sc-sub sc-sub-light">Worship · Telugu</div></div>
+          </div>
+          <div class="song-card sc-light">
+            <div class="sc-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#D4A92A"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#D4A92A"/></svg></div>
+            <div><div class="sc-title sc-title-light">Naa Jeevamu Neevu</div><div class="sc-sub sc-sub-light">Hymn · Telugu</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="app-frame app-frame-dark">
+        <div class="app-topbar atb-dark">
+          <div class="app-icon-sm app-icon-sm-dark">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#D4A92A"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#D4A92A"/><circle cx="10.5" cy="11.5" r="1.5" fill="#A63248"/><rect x="11" y="7" width="1" height="5" rx="0.5" fill="#A63248"/></svg>
+          </div>
+          <div class="atb-title atb-title-dark">Keertanalu</div>
+        </div>
+        <div class="app-body ab-dark">
+          <div class="chip-row">
+            <span class="chip chip-active-dark">Telugu</span>
+            <span class="chip chip-inactive-dark">Tamil</span>
+            <span class="chip chip-inactive-dark">Hindi</span>
+          </div>
+          <div class="song-card sc-dark">
+            <div class="sc-icon sc-icon-dark"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#1C1508"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#1C1508"/></svg></div>
+            <div><div class="sc-title sc-title-dark">Yesuve Nee Enthina</div><div class="sc-sub sc-sub-dark">Worship · Telugu</div></div>
+          </div>
+          <div class="song-card sc-dark">
+            <div class="sc-icon sc-icon-dark"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#1C1508"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#1C1508"/></svg></div>
+            <div><div class="sc-title sc-title-dark">Naa Jeevamu Neevu</div><div class="sc-sub sc-sub-dark">Hymn · Telugu</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MERCHANDISE -->
+  <div class="section">
+    <div class="sec-label">Merchandise</div>
+    <div class="merch-strip">
+      <div class="merch-item mi-black">
+        <div class="merch-logo-small">
+          <div class="mls-icon" style="background:#3A2E18;">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="5" y="1" width="2" height="8" rx="1" fill="#D4A92A"/><rect x="2" y="3.5" width="8" height="2" rx="1" fill="#D4A92A"/></svg>
+          </div>
+          <span class="mls-name" style="color:#F5E6B8;">Keertanalu</span>
+        </div>
+        <span class="merch-label" style="color:#8C7850; font-size:9px;">Black tee</span>
+      </div>
+      <div class="merch-item mi-gold">
+        <div class="merch-logo-small">
+          <div class="mls-icon" style="background:#8C6A10;">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="5" y="1" width="2" height="8" rx="1" fill="#F5E6B8"/><rect x="2" y="3.5" width="8" height="2" rx="1" fill="#F5E6B8"/></svg>
+          </div>
+          <span class="mls-name" style="color:#1A1208;">Keertanalu</span>
+        </div>
+        <span class="merch-label" style="color:#6B4E08; font-size:9px;">Gold tee</span>
+      </div>
+      <div class="merch-item mi-ivory">
+        <div class="merch-logo-small">
+          <div class="mls-icon" style="background:#1A1208;">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="5" y="1" width="2" height="8" rx="1" fill="#D4A92A"/><rect x="2" y="3.5" width="8" height="2" rx="1" fill="#D4A92A"/></svg>
+          </div>
+          <span class="mls-name" style="color:#1A1208;">Keertanalu</span>
+        </div>
+        <span class="merch-label" style="color:#8C8070; font-size:9px;">Ivory tee</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- USAGE GUIDE -->
+  <div class="section" style="padding-bottom:32px;">
+    <div class="sec-label">When to use each color</div>
+    <div class="usage-grid">
+      <div class="usage-card uc-ink">
+        <div class="uc-title" style="color:#D4A92A;">Ink #1A1208</div>
+        <div class="uc-value" style="color:#8C7850;">Primary buttons, icon bg, bold text</div>
+        <div class="uc-desc" style="color:#8C7850; font-size:11px;">Your dominant dark. Use for anything that needs the most weight and authority.</div>
+      </div>
+      <div class="usage-card uc-gold">
+        <div class="uc-title" style="color:#8C6A10;">Gold #B8860B</div>
+        <div class="uc-value" style="color:#8C6A10; font-family:monospace; font-size:10px;">Highlights, active state, logo accent</div>
+        <div class="uc-desc" style="color:#8C6A10;">Sparingly — gold loses power when overused. Reserve for CTAs and key moments.</div>
+      </div>
+      <div class="usage-card uc-crimson">
+        <div class="uc-title" style="color:#7B1E2E;">Crimson #7B1E2E</div>
+        <div class="uc-value" style="color:#7B1E2E; font-family:monospace; font-size:10px;">Tags, badges, featured labels</div>
+        <div class="uc-desc" style="color:#7B1E2E;">Secondary accent. Creates warmth and depth alongside gold.</div>
+      </div>
+      <div class="usage-card uc-ivory" style="background:#FAF7F0;">
+        <div class="uc-title" style="color:#1A1208;">Ivory #FAF7F0</div>
+        <div class="uc-value" style="color:#8C8070; font-family:monospace; font-size:10px;">Page bg, large surfaces</div>
+        <div class="uc-desc" style="color:#8C8070;">Warmer than white — gives the app a parchment / scripture feel.</div>
+      </div>
+    </div>
+  </div>
+
+</div>

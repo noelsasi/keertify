@@ -1,9 +1,11 @@
 import { useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { ArrowLeft, Music, Disc3, ListMusic } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Breadcrumbs } from "@/components/ui/breadcrumbs"
+import { AvatarImage } from "@/components/AvatarImage"
+import { SectionHeader } from "@/components/SectionHeader"
 import { useArtist } from "@/hooks/useSongs"
-import { CATEGORY_COLORS, LANGUAGE_LABELS } from "@/lib/constants"
+import { LANGUAGE_LABELS } from "@/lib/constants"
 import type { ArtistSongItem, ArtistAlbumItem } from "@/types/song.types"
 
 const TOP_SONGS_LIMIT = 5
@@ -29,30 +31,33 @@ export function ArtistPage() {
   return (
     <div className="flex min-h-screen flex-col md:min-h-0">
       {/* ── Mobile header ── */}
-      <div className="bg-brand-navy dark:bg-nav-bg px-4 pt-12 pb-5 md:hidden">
+      <div className="border-b border-[var(--k-border)] bg-[var(--k-surface)] px-4 pt-12 pb-5 md:hidden">
         <button onClick={() => navigate(-1)} className="mb-4">
-          <ArrowLeft size={22} className="text-white" />
+          <ArrowLeft size={22} className="text-[var(--k-text-1)]" />
         </button>
         <div className="flex items-center gap-4">
-          <div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-full ring-2 ring-white/20">
-            {artist.avatarUrl ? (
-              <img
-                src={artist.avatarUrl}
-                alt={artist.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-white/10">
-                <Music size={28} className="text-white/60" />
+          <AvatarImage
+            src={artist.avatarUrl}
+            alt={artist.name}
+            size={64}
+            fallback={
+              <div className="flex h-full w-full items-center justify-center">
+                <Music size={28} className="text-[var(--k-text-3)]" />
               </div>
-            )}
-          </div>
+            }
+            className="ring-2 ring-[var(--k-border)]"
+          />
           <div className="min-w-0">
-            <h1 className="text-xl leading-tight font-bold text-white">{artist.name}</h1>
+            <h1
+              className="leading-tight text-[var(--k-text-1)]"
+              style={{ fontFamily: "var(--k-font-display)", fontSize: 22, fontWeight: 500 }}
+            >
+              {artist.name}
+            </h1>
             {artist.nameTelugu && (
-              <p className="font-telugu text-sm text-white/60">{artist.nameTelugu}</p>
+              <p className="font-telugu text-sm text-[var(--k-text-3)]">{artist.nameTelugu}</p>
             )}
-            <p className="mt-1 text-xs text-white/50">
+            <p className="mt-1 text-xs text-[var(--k-text-3)]">
               {artist.songs.length} songs · {artist.albums.length} albums
             </p>
           </div>
@@ -61,28 +66,28 @@ export function ArtistPage() {
 
       {/* ── Desktop header ── */}
       <div className="mb-6 hidden md:block">
-        <button
-          onClick={() => navigate(-1)}
-          className="text-muted-foreground hover:text-foreground mb-5 flex items-center gap-2 text-sm transition-colors"
-        >
-          <ArrowLeft size={16} /> Back
-        </button>
+        <div className="text-muted-foreground mb-5">
+          <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: artist.name }]} />
+        </div>
         <div className="flex items-center gap-6">
-          <div className="ring-border h-24 w-24 flex-shrink-0 overflow-hidden rounded-full ring-2">
-            {artist.avatarUrl ? (
-              <img
-                src={artist.avatarUrl}
-                alt={artist.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="bg-muted flex h-full w-full items-center justify-center">
-                <Music size={36} className="text-muted-foreground" />
+          <AvatarImage
+            src={artist.avatarUrl}
+            alt={artist.name}
+            size={96}
+            fallback={
+              <div className="flex h-full w-full items-center justify-center">
+                <Music size={36} className="text-[var(--k-text-3)]" />
               </div>
-            )}
-          </div>
+            }
+            className="ring-border ring-2"
+          />
           <div>
-            <h1 className="text-foreground text-3xl font-bold">{artist.name}</h1>
+            <h1
+              className="leading-none text-[var(--k-text-1)]"
+              style={{ fontFamily: "var(--k-font-display)", fontSize: 36, fontWeight: 400 }}
+            >
+              {artist.name}
+            </h1>
             {artist.nameTelugu && (
               <p className="text-muted-foreground font-telugu text-base">{artist.nameTelugu}</p>
             )}
@@ -97,12 +102,7 @@ export function ArtistPage() {
         {/* ── Albums section ── */}
         {artist.albums.length > 0 && (
           <section>
-            <div className="mb-3 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Disc3 size={16} className="text-brand-gold" />
-                <h2 className="text-foreground text-base font-semibold">Albums</h2>
-              </div>
-            </div>
+            <SectionHeader title="Albums" icon={Disc3} />
             <div className="flex gap-3 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {artist.albums.map((album: ArtistAlbumItem) => (
                 <ArtistAlbumCard key={album.id} album={album} />
@@ -116,13 +116,13 @@ export function ArtistPage() {
           <section>
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <ListMusic size={16} className="text-brand-gold" />
+                <ListMusic size={16} className="text-[var(--k-gold)]" />
                 <h2 className="text-foreground text-base font-semibold">Songs</h2>
               </div>
               {artist.songs.length > TOP_SONGS_LIMIT && (
                 <button
                   onClick={() => setShowAllSongs((v) => !v)}
-                  className="text-brand-gold text-xs font-semibold transition-opacity hover:opacity-70"
+                  className="text-xs font-semibold text-[var(--k-gold)] transition-opacity hover:opacity-70"
                 >
                   {showAllSongs ? "Show less" : `See all ${artist.songs.length}`}
                 </button>
@@ -151,8 +151,8 @@ function ArtistAlbumCard({ album }: { album: ArtistAlbumItem }) {
         {album.albumCoverUrl ? (
           <img src={album.albumCoverUrl} alt={album.title} className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-neutral-100 to-neutral-300 dark:from-neutral-700 dark:to-neutral-900">
-            <Disc3 size={36} className="text-black/20 dark:text-white/30" />
+          <div className="flex h-full w-full items-center justify-center bg-[var(--k-surface-2)]">
+            <Disc3 size={36} className="text-[var(--k-text-4)]" />
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
@@ -166,20 +166,30 @@ function ArtistAlbumCard({ album }: { album: ArtistAlbumItem }) {
 
 function ArtistSongRow({ song }: { song: ArtistSongItem }) {
   const navigate = useNavigate()
-  const accentColor =
-    CATEGORY_COLORS[song.category as keyof typeof CATEGORY_COLORS] ?? CATEGORY_COLORS.Default
 
   return (
     <div
       onClick={() => navigate(`/song/${song.slug}`)}
-      className="border-border bg-card hover:border-brand-gold/30 flex cursor-pointer items-center gap-0 overflow-hidden rounded-xl border transition-all duration-150 hover:shadow-md active:scale-[0.98]"
+      className="border-border bg-card flex cursor-pointer items-center gap-0 overflow-hidden rounded-xl border transition-all duration-150 hover:border-[var(--k-gold)]/30 hover:shadow-md active:scale-[0.98]"
     >
-      <div className={cn("w-1.5 flex-shrink-0 self-stretch", accentColor)} />
-      <div className="min-w-0 flex-1 px-4 py-3.5">
+      {/* Song icon box */}
+      <div className="mx-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[8px] bg-[var(--k-ink)] dark:bg-[var(--k-surface-2)]">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect x="9" y="1" width="2.5" height="14" rx="1.25" fill="var(--k-gold-light)" />
+          <rect x="3" y="6" width="14" height="2.5" rx="1.25" fill="var(--k-gold-light)" />
+        </svg>
+      </div>
+      <div className="min-w-0 flex-1 py-3.5 pr-4">
         <p className="text-foreground truncate text-sm leading-snug font-semibold">{song.title}</p>
         <p className="text-muted-foreground mt-0.5 text-xs">
           {song.category} ·{" "}
-          <span className="text-brand-blue">
+          <span className="text-[var(--k-gold)]">
             {LANGUAGE_LABELS[song.language as keyof typeof LANGUAGE_LABELS] ?? song.language}
           </span>
         </p>

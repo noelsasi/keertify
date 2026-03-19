@@ -1,16 +1,4 @@
-import { Sun, Flame, Moon } from "lucide-react"
-import type React from "react"
-
-export type ReadingMode = "light" | "warm" | "night"
 export type LyricsTab = "native" | "english"
-
-export interface ReadingModeConfig {
-  label: string
-  icon: typeof Sun
-  swatch: string
-  containerStyle: React.CSSProperties
-  dividerColor: string
-}
 
 export const CATEGORY_HERO_GRADIENTS: Record<string, string> = {
   Praise:         "from-blue-100 via-blue-200 to-indigo-300 dark:from-blue-900 dark:via-blue-950 dark:to-indigo-950",
@@ -48,30 +36,6 @@ export const CATEGORY_THUMB_GRADIENTS: Record<string, string> = {
   Marriage:       "from-fuchsia-200 to-fuchsia-400 dark:from-fuchsia-800 dark:to-fuchsia-950",
   Offering:       "from-lime-200 to-lime-400 dark:from-lime-800 dark:to-lime-950",
   Default:        "from-stone-200 to-stone-300 dark:from-stone-700 dark:to-stone-900",
-}
-
-export const READING_MODES: Record<ReadingMode, ReadingModeConfig> = {
-  light: {
-    label: "Light",
-    icon: Sun,
-    swatch: "#FAFAF7",
-    containerStyle: { backgroundColor: "#FAFAF7", color: "#1C1917" },
-    dividerColor: "#E7E5E4",
-  },
-  warm: {
-    label: "Warm",
-    icon: Flame,
-    swatch: "#FFF8EE",
-    containerStyle: { backgroundColor: "#FFF8EE", color: "#3B2000" },
-    dividerColor: "#EDD9A3",
-  },
-  night: {
-    label: "Night",
-    icon: Moon,
-    swatch: "#141210",
-    containerStyle: { backgroundColor: "#141210", color: "#F5F0E8" },
-    dividerColor: "#2C2420",
-  },
 }
 
 export const STREAMING_PLATFORMS: Record<

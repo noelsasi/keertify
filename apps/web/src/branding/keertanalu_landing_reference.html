@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keertanalu — Brand Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════════ */
+:root {
+  --ink:         #1A1208;
+  --ink-soft:    #3A2E18;
+  --gold:        #B8860B;
+  --gold-light:  #D4A92A;
+  --gold-pale:   #F5E6B8;
+  --gold-faint:  #FDF8EC;
+  --crimson:     #7B1E2E;
+  --crimson-lt:  #A63248;
+  --ivory:       #FAF7F0;
+  --ivory-deep:  #F0EBE0;
+  --ivory-card:  #FFFFFF;
+  --stone:       #8C8070;
+  --stone-lt:    #BEB4A8;
+  --border:      #E0D8C8;
+
+  --night:       #0E0A04;
+  --night-surf:  #1C1508;
+  --night-card:  #251C0A;
+  --night-bdr:   #3A2E18;
+  --night-gold:  #D4A92A;
+  --night-gdim:  #8C6A10;
+  --night-text:  #F5E6B8;
+  --night-mute:  #8C7850;
+  --night-stone: #5A4E38;
+
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body { font-family: var(--font-body); background: #2C2820; min-height: 100vh; padding: 40px 20px; }
+
+/* ══════════════════════════════════════════
+   PAGE LAYOUT
+══════════════════════════════════════════ */
+.page-title {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--stone-lt);
+  text-align: center;
+  margin-bottom: 8px;
+}
+.page-sub {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #5A5040;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.views-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  max-width: 1400px;
+  margin: 0 auto 60px;
+}
+
+.view-label {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #5A5040;
+  margin-bottom: 12px;
+  padding-left: 4px;
+}
+
+/* Mobile views side by side */
+.mobile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  max-width: 900px;
+  margin: 0 auto 60px;
+}
+
+/* ══════════════════════════════════════════
+   SHARED COMPONENTS
+══════════════════════════════════════════ */
+.logo-icon {
+  width: 40px; height: 40px;
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; flex-shrink: 0;
+}
+.logo-icon .cv { position: absolute; width: 4px; height: 22px; border-radius: 2px; }
+.logo-icon .ch { position: absolute; width: 18px; height: 4px; border-radius: 2px; top: calc(50% - 4px); }
+.logo-icon .nd { position: absolute; width: 5px; height: 5px; border-radius: 50%; bottom: 8px; right: 8px; }
+.logo-icon .ns { position: absolute; width: 1.5px; height: 8px; border-radius: 1px; bottom: 12px; right: 9.5px; }
+
+.logo-name { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.5px; line-height: 1; }
+.logo-tagline { font-family: var(--font-body); font-weight: 400; letter-spacing: 3px; text-transform: uppercase; }
+
+/* Song card */
+.song-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-radius: var(--r-md);
+  cursor: pointer; transition: opacity 0.15s;
+}
+.song-card:hover { opacity: 0.8; }
+.song-icon { width: 38px; height: 38px; border-radius: 9px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.song-title { font-size: 14px; font-weight: 500; line-height: 1.2; }
+.song-meta { font-size: 12px; margin-top: 3px; }
+.heart-btn { width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; background: transparent; margin-left: auto; flex-shrink: 0; transition: transform 0.15s; }
+.heart-btn:hover { transform: scale(1.15); }
+
+/* Category chip */
+.chip { display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 400; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; white-space: nowrap; }
+
+/* Section header */
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.section-title-text { font-family: var(--font-body); font-size: 16px; font-weight: 500; }
+.see-all { font-size: 12px; font-weight: 400; cursor: pointer; }
+
+/* Search bar */
+.search-bar { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 50px; border: 1px solid; width: 100%; }
+.search-bar input { background: transparent; border: none; outline: none; font-family: var(--font-body); font-size: 14px; flex: 1; }
+
+/* Artist pill */
+.artist-pill { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: var(--r-md); cursor: pointer; transition: opacity 0.15s; }
+.artist-pill:hover { opacity: 0.8; }
+.artist-avatar { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; }
+
+/* Nav item */
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; font-weight: 400; letter-spacing: 0.5px; cursor: pointer; padding: 0 12px; }
+
+/* ══════════════════════════════════════════
+   LIGHT MODE — WEB
+══════════════════════════════════════════ */
+.web-light {
+  background: var(--ivory);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  font-family: var(--font-body);
+}
+
+/* Navbar */
+.wl-nav {
+  background: var(--ivory-card);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 64px;
+  display: flex; align-items: center; gap: 40px;
+}
+.wl-nav .logo-icon { background: var(--ink); }
+.wl-nav .logo-icon .cv, .wl-nav .logo-icon .ch { background: var(--gold-light); }
+.wl-nav .logo-icon .nd, .wl-nav .logo-icon .ns { background: var(--crimson-lt); }
+.wl-nav .logo-name { font-size: 22px; color: var(--ink); }
+.wl-nav .logo-name span { color: var(--gold); }
+.wl-nav-links { display: flex; gap: 32px; margin-left: auto; }
+.wl-nav-link { font-size: 14px; color: var(--stone); cursor: pointer; transition: color 0.15s; }
+.wl-nav-link:hover { color: var(--ink); }
+.wl-nav-link.active { color: var(--ink); font-weight: 500; border-bottom: 2px solid var(--gold); padding-bottom: 2px; }
+.wl-search-nav { display: flex; align-items: center; gap: 8px; background: var(--ivory-deep); border: 1px solid var(--border); border-radius: 24px; padding: 8px 14px; width: 200px; }
+.wl-search-nav input { background: transparent; border: none; outline: none; font-size: 13px; color: var(--ink); font-family: var(--font-body); width: 100%; }
+.wl-search-nav input::placeholder { color: var(--stone-lt); }
+
+/* Hero */
+.wl-hero {
+  padding: 48px 40px 36px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 40px;
+}
+.wl-hero-left { flex: 1; }
+.wl-greeting { font-size: 12px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: var(--stone); margin-bottom: 10px; }
+.wl-headline { font-family: var(--font-display); font-size: 52px; font-weight: 400; line-height: 1.1; color: var(--ink); letter-spacing: -1px; margin-bottom: 8px; }
+.wl-headline em { color: var(--gold); font-style: italic; }
+.wl-tagline { font-size: 15px; color: var(--stone); line-height: 1.6; max-width: 400px; margin-bottom: 28px; }
+.wl-hero-search { max-width: 480px; }
+.wl-hero-search .search-bar { background: var(--ivory-card); border-color: var(--border); }
+.wl-hero-search .search-bar input { color: var(--ink); }
+.wl-hero-search .search-bar input::placeholder { color: var(--stone-lt); }
+
+.wl-stats { display: flex; gap: 32px; margin-top: 28px; }
+.wl-stat-num { font-family: var(--font-display); font-size: 28px; font-weight: 500; color: var(--ink); }
+.wl-stat-num span { color: var(--gold); }
+.wl-stat-label { font-size: 11px; color: var(--stone); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+.wl-hero-right { flex-shrink: 0; }
+.wl-verse-card {
+  background: var(--ink);
+  border-radius: var(--r-lg);
+  padding: 28px 28px 24px;
+  width: 280px;
+}
+.wl-verse-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--night-gdim); margin-bottom: 14px; }
+.wl-verse-text { font-family: var(--font-display); font-size: 17px; font-weight: 400; font-style: italic; color: var(--gold-pale); line-height: 1.6; margin-bottom: 14px; }
+.wl-verse-ref { font-size: 11px; color: var(--night-mute); letter-spacing: 1px; }
+
+/* Chips */
+.wl-chips { padding: 0 40px 24px; display: flex; gap: 8px; flex-wrap: wrap; }
+.wl-chips .chip { background: var(--ivory-card); border-color: var(--border); color: var(--stone); }
+.wl-chips .chip.active { background: var(--ink); border-color: var(--ink); color: var(--gold-pale); }
+.wl-chips .chip:hover:not(.active) { border-color: var(--ink); color: var(--ink); }
+
+/* Content area */
+.wl-content { padding: 0 40px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.wl-section { }
+.wl-section .section-title-text { color: var(--ink); }
+.wl-section .see-all { color: var(--gold); }
+
+.wl-song-card { background: var(--ivory-card); border: 1px solid var(--border); }
+.wl-song-card .song-icon { background: var(--ink); }
+.wl-song-card .song-title { color: var(--ink); }
+.wl-song-card .song-meta { color: var(--stone); }
+.wl-song-card .song-meta .lang { color: var(--gold); font-weight: 500; }
+.wl-song-card .heart-btn { color: var(--stone-lt); }
+.wl-song-card .heart-btn:hover { color: var(--crimson); }
+
+/* Artists */
+.wl-artists-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.wl-artist-pill { background: var(--ivory-card); border: 1px solid var(--border); }
+.wl-artist-pill .artist-avatar { background: var(--gold-faint); color: var(--gold); border: 1px solid var(--gold-pale); }
+.wl-artist-pill .artist-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.wl-artist-pill .artist-count { font-size: 11px; color: var(--stone); }
+
+/* ══════════════════════════════════════════
+   DARK MODE — WEB
+══════════════════════════════════════════ */
+.web-dark {
+  background: var(--night);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid var(--night-bdr);
+  font-family: var(--font-body);
+}
+
+.wd-nav {
+  background: var(--night-surf);
+  border-bottom: 1px solid var(--night-bdr);
+  padding: 0 40px;
+  height: 64px;
+  display: flex; align-items: center; gap: 40px;
+}
+.wd-nav .logo-icon { background: var(--night-card); border: 1px solid var(--night-bdr); }
+.wd-nav .logo-icon .cv, .wd-nav .logo-icon .ch { background: var(--night-gold); }
+.wd-nav .logo-icon .nd, .wd-nav .logo-icon .ns { background: var(--crimson-lt); }
+.wd-nav .logo-name { font-size: 22px; color: var(--night-text); }
+.wd-nav .logo-name span { color: var(--night-gold); }
+.wd-nav-links { display: flex; gap: 32px; margin-left: auto; }
+.wd-nav-link { font-size: 14px; color: var(--night-mute); cursor: pointer; }
+.wd-nav-link.active { color: var(--night-text); font-weight: 500; border-bottom: 2px solid var(--night-gold); padding-bottom: 2px; }
+.wd-search-nav { display: flex; align-items: center; gap: 8px; background: var(--night-card); border: 1px solid var(--night-bdr); border-radius: 24px; padding: 8px 14px; width: 200px; }
+.wd-search-nav input { background: transparent; border: none; outline: none; font-size: 13px; color: var(--night-text); font-family: var(--font-body); width: 100%; }
+.wd-search-nav input::placeholder { color: var(--night-stone); }
+
+.wd-hero { padding: 48px 40px 36px; display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; }
+.wd-hero-left { flex: 1; }
+.wd-greeting { font-size: 12px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: var(--night-mute); margin-bottom: 10px; }
+.wd-headline { font-family: var(--font-display); font-size: 52px; font-weight: 400; line-height: 1.1; color: var(--night-text); letter-spacing: -1px; margin-bottom: 8px; }
+.wd-headline em { color: var(--night-gold); font-style: italic; }
+.wd-tagline { font-size: 15px; color: var(--night-mute); line-height: 1.6; max-width: 400px; margin-bottom: 28px; }
+.wd-hero-search .search-bar { background: var(--night-surf); border-color: var(--night-bdr); }
+.wd-hero-search .search-bar input { color: var(--night-text); }
+.wd-hero-search .search-bar input::placeholder { color: var(--night-stone); }
+
+.wd-stats { display: flex; gap: 32px; margin-top: 28px; }
+.wd-stat-num { font-family: var(--font-display); font-size: 28px; font-weight: 500; color: var(--night-text); }
+.wd-stat-num span { color: var(--night-gold); }
+.wd-stat-label { font-size: 11px; color: var(--night-mute); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+.wd-verse-card { background: var(--night-card); border: 1px solid var(--night-bdr); border-radius: var(--r-lg); padding: 28px 28px 24px; width: 280px; }
+.wd-verse-eyebrow { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--night-gdim); margin-bottom: 14px; }
+.wd-verse-text { font-family: var(--font-display); font-size: 17px; font-weight: 400; font-style: italic; color: var(--night-gold); line-height: 1.6; margin-bottom: 14px; }
+.wd-verse-ref { font-size: 11px; color: var(--night-stone); letter-spacing: 1px; }
+
+.wd-chips { padding: 0 40px 24px; display: flex; gap: 8px; flex-wrap: wrap; }
+.wd-chips .chip { background: transparent; border-color: var(--night-bdr); color: var(--night-mute); }
+.wd-chips .chip.active { background: var(--night-gold); border-color: var(--night-gold); color: var(--night); }
+
+.wd-content { padding: 0 40px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.wd-section .section-title-text { color: var(--night-text); }
+.wd-section .see-all { color: var(--night-gold); }
+
+.wd-song-card { background: var(--night-surf); border: 1px solid var(--night-bdr); }
+.wd-song-card .song-icon { background: var(--night-gdim); }
+.wd-song-card .song-title { color: var(--night-text); }
+.wd-song-card .song-meta { color: var(--night-mute); }
+.wd-song-card .song-meta .lang { color: var(--night-gold); font-weight: 500; }
+.wd-song-card .heart-btn { color: var(--night-stone); }
+.wd-song-card .heart-btn:hover { color: var(--crimson-lt); }
+
+.wd-artist-pill { background: var(--night-surf); border: 1px solid var(--night-bdr); }
+.wd-artist-pill .artist-avatar { background: var(--night-card); color: var(--night-gold); border: 1px solid var(--night-gdim); }
+.wd-artist-pill .artist-name { font-size: 13px; font-weight: 500; color: var(--night-text); }
+.wd-artist-pill .artist-count { font-size: 11px; color: var(--night-mute); }
+
+/* ══════════════════════════════════════════
+   MOBILE — LIGHT
+══════════════════════════════════════════ */
+.mobile-frame {
+  width: 390px; max-width: 100%;
+  background: var(--ivory);
+  border-radius: 32px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  font-family: var(--font-body);
+  display: flex; flex-direction: column;
+}
+.mobile-frame-dark {
+  background: var(--night);
+  border-color: var(--night-bdr);
+}
+
+/* Mobile top bar */
+.mob-topbar {
+  background: var(--ivory-card);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.mob-topbar-dark { background: var(--night-surf); border-color: var(--night-bdr); }
+
+.mob-logo-icon {
+  width: 32px; height: 32px; border-radius: 9px; background: var(--ink);
+  display: flex; align-items: center; justify-content: center; position: relative; flex-shrink: 0;
+}
+.mob-logo-icon .cv { position: absolute; width: 3px; height: 17px; border-radius: 2px; background: var(--gold-light); }
+.mob-logo-icon .ch { position: absolute; width: 14px; height: 3px; border-radius: 2px; background: var(--gold-light); top: calc(50% - 3px); }
+.mob-logo-icon .nd { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--crimson-lt); bottom: 6px; right: 6px; }
+.mob-logo-icon .ns { position: absolute; width: 1.5px; height: 6px; border-radius: 1px; background: var(--crimson-lt); bottom: 9px; right: 7px; }
+.mob-logo-icon-dark { background: var(--night-card); border: 1px solid var(--night-bdr); }
+.mob-logo-icon-dark .cv, .mob-logo-icon-dark .ch { background: var(--night-gold); }
+
+.mob-logo-name { font-family: var(--font-display); font-size: 18px; font-weight: 500; color: var(--ink); letter-spacing: -0.3px; }
+.mob-logo-name span { color: var(--gold); }
+.mob-logo-name-dark { color: var(--night-text); }
+.mob-logo-name-dark span { color: var(--night-gold); }
+
+.mob-settings-btn { width: 32px; height: 32px; border-radius: 8px; background: var(--ivory-deep); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.mob-settings-btn-dark { background: var(--night-card); border-color: var(--night-bdr); }
+
+/* Mobile hero */
+.mob-hero { padding: 24px 20px 16px; }
+.mob-greeting { font-size: 11px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; color: var(--stone); margin-bottom: 6px; }
+.mob-greeting-dark { color: var(--night-mute); }
+.mob-headline { font-family: var(--font-display); font-size: 34px; font-weight: 400; line-height: 1.1; color: var(--ink); letter-spacing: -0.5px; margin-bottom: 18px; }
+.mob-headline em { color: var(--gold); font-style: italic; }
+.mob-headline-dark { color: var(--night-text); }
+.mob-headline-dark em { color: var(--night-gold); }
+
+.mob-search { display: flex; align-items: center; gap: 10px; background: var(--ivory-card); border: 1px solid var(--border); border-radius: 50px; padding: 11px 16px; }
+.mob-search input { background: transparent; border: none; outline: none; font-size: 14px; color: var(--ink); font-family: var(--font-body); flex: 1; }
+.mob-search input::placeholder { color: var(--stone-lt); }
+.mob-search-dark { background: var(--night-surf); border-color: var(--night-bdr); }
+.mob-search-dark input { color: var(--night-text); }
+.mob-search-dark input::placeholder { color: var(--night-stone); }
+
+/* Mobile chips */
+.mob-chips { padding: 16px 20px 0; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.mob-chips::-webkit-scrollbar { display: none; }
+.mob-chips .chip { font-size: 12px; padding: 6px 14px; background: var(--ivory-card); border-color: var(--border); color: var(--stone); }
+.mob-chips .chip.active { background: var(--ink); border-color: var(--ink); color: var(--gold-pale); }
+.mob-chips-dark .chip { background: transparent; border-color: var(--night-bdr); color: var(--night-mute); }
+.mob-chips-dark .chip.active { background: var(--night-gold); border-color: var(--night-gold); color: var(--night); }
+
+/* Mobile content */
+.mob-content { padding: 20px; display: flex; flex-direction: column; gap: 24px; flex: 1; }
+
+.mob-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.mob-section-title { font-size: 15px; font-weight: 500; color: var(--ink); }
+.mob-section-title-dark { color: var(--night-text); }
+.mob-see-all { font-size: 12px; color: var(--gold); cursor: pointer; }
+.mob-see-all-dark { color: var(--night-gold); }
+
+.mob-song { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: var(--r-md); background: var(--ivory-card); border: 1px solid var(--border); margin-bottom: 8px; }
+.mob-song-dark { background: var(--night-surf); border-color: var(--night-bdr); }
+.mob-song-icon { width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.mob-song-icon-light { background: var(--ink); }
+.mob-song-icon-dark { background: var(--night-gdim); }
+.mob-song-title { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.2; }
+.mob-song-title-dark { color: var(--night-text); }
+.mob-song-meta { font-size: 11px; color: var(--stone); margin-top: 2px; }
+.mob-song-meta-dark { color: var(--night-mute); }
+.mob-song-meta .lang { color: var(--gold); font-weight: 500; }
+.mob-song-meta-dark .lang { color: var(--night-gold); }
+.mob-heart { margin-left: auto; flex-shrink: 0; color: var(--stone-lt); }
+.mob-heart-dark { color: var(--night-stone); }
+
+/* Mobile bottom nav */
+.mob-bottomnav {
+  background: var(--ivory-card);
+  border-top: 1px solid var(--border);
+  padding: 10px 0 16px;
+  display: flex; justify-content: space-around;
+}
+.mob-bottomnav-dark { background: var(--night-surf); border-color: var(--night-bdr); }
+.mob-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+.mob-nav-label { font-size: 10px; font-weight: 400; letter-spacing: 0.5px; }
+.mob-nav-active .mob-nav-label { color: var(--gold); }
+.mob-nav-active-dark .mob-nav-label { color: var(--night-gold); }
+.mob-nav-inactive .mob-nav-label { color: var(--stone-lt); }
+.mob-nav-inactive-dark .mob-nav-label { color: var(--night-stone); }
+
+/* SVG icons */
+.icon-cross { display: block; }
+.icon-search, .icon-heart, .icon-bookmark, .icon-settings, .icon-home, .icon-browse { display: block; }
+
+/* Section divider label */
+.section-divider {
+  font-size: 10px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase;
+  color: #4A3E28; text-align: center; margin: 48px 0 24px; position: relative;
+}
+.section-divider::before, .section-divider::after {
+  content: ''; position: absolute; top: 50%; width: calc(50% - 80px);
+  height: 1px; background: #3A3020;
+}
+.section-divider::before { left: 0; }
+.section-divider::after { right: 0; }
+</style>
+</head>
+<body>
+
+<div style="max-width:1500px; margin:0 auto;">
+
+<p class="page-title">Keertanalu</p>
+<p class="page-sub">Brand Reference · Landing Page · Web &amp; Mobile</p>
+
+<!-- ══ WEB VIEWS ══ -->
+<div class="section-divider">Web — Light Mode</div>
+
+<div style="margin-bottom: 40px;">
+  <p class="view-label">Web · Light Mode · 1440px</p>
+  <div class="web-light">
+
+    <!-- Navbar -->
+    <nav class="wl-nav">
+      <div class="logo-icon">
+        <div class="cv"></div><div class="ch"></div>
+        <div class="ns"></div><div class="nd"></div>
+      </div>
+      <div style="display:flex; align-items:baseline; gap:2px;">
+        <span class="logo-name" style="font-size:22px; color:var(--ink);">Keert<span style="color:var(--gold);">a</span>nalu</span>
+      </div>
+      <div class="wl-nav-links">
+        <span class="wl-nav-link active">Home</span>
+        <span class="wl-nav-link">Browse</span>
+        <span class="wl-nav-link">Artists</span>
+        <span class="wl-nav-link">Collections</span>
+      </div>
+      <div class="wl-search-nav" style="margin-left:auto;">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#8C8070" stroke-width="1.2"/><path d="M9.5 9.5L12 12" stroke="#8C8070" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <input type="text" placeholder="Search lyrics…">
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="wl-hero">
+      <div class="wl-hero-left">
+        <p class="wl-greeting">Good morning</p>
+        <h1 class="wl-headline">Telugu Christian<br><em>Lyrics & Songs</em></h1>
+        <p class="wl-tagline">Your complete keertana companion. Browse thousands of devotional lyrics in Telugu, Tamil, Hindi and English.</p>
+        <div class="wl-hero-search">
+          <div class="search-bar">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#8C8070" stroke-width="1.4"/><path d="M11 11L14 14" stroke="#8C8070" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <input type="text" placeholder="Search songs, artists, categories…" style="font-size:14px; color:var(--ink); background:transparent; border:none; outline:none; flex:1; font-family:var(--font-body);">
+            <span style="font-size:11px; color:var(--stone-lt); padding:3px 8px; border:1px solid var(--border); border-radius:4px; letter-spacing:0.5px;">⌘K</span>
+          </div>
+        </div>
+        <div class="wl-stats">
+          <div>
+            <div class="wl-stat-num">2<span>,400+</span></div>
+            <div class="wl-stat-label">Songs</div>
+          </div>
+          <div style="width:1px; background:var(--border);"></div>
+          <div>
+            <div class="wl-stat-num">4 <span style="font-size:18px;">Languages</span></div>
+            <div class="wl-stat-label">Telugu · Tamil · Hindi · English</div>
+          </div>
+          <div style="width:1px; background:var(--border);"></div>
+          <div>
+            <div class="wl-stat-num">120<span>+</span></div>
+            <div class="wl-stat-label">Artists</div>
+          </div>
+        </div>
+      </div>
+      <div class="wl-hero-right">
+        <div class="wl-verse-card">
+          <p class="wl-verse-eyebrow">Verse of the day</p>
+          <p class="wl-verse-text">"Sing to the Lord a new song; sing to the Lord, all the earth."</p>
+          <p class="wl-verse-ref">Psalm 96:1</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chips -->
+    <div class="wl-chips">
+      <span class="chip active">All</span>
+      <span class="chip">Praise</span>
+      <span class="chip">Worship</span>
+      <span class="chip">Good Friday</span>
+      <span class="chip">Easter</span>
+      <span class="chip">Marriage</span>
+      <span class="chip">Repentance</span>
+      <span class="chip">Gospel</span>
+    </div>
+
+    <!-- Content grid -->
+    <div class="wl-content">
+      <div class="wl-section">
+        <div class="section-header">
+          <span class="section-title-text">Recently Added</span>
+          <span class="see-all" style="color:var(--gold);">See all →</span>
+        </div>
+        <div class="song-card wl-song-card"><div class="song-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#D4A92A"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#D4A92A"/></svg></div><div><div class="song-title">Prabhu Naamam</div><div class="song-meta">Bro Anil Kumar · Praise · <span class="lang">Telugu</span></div></div><button class="heart-btn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+        <div class="song-card wl-song-card" style="margin-top:8px;"><div class="song-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#D4A92A"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#D4A92A"/></svg></div><div><div class="song-title">Yuddamu Yehovaade</div><div class="song-meta">Bro Anil Kumar · Praise · <span class="lang">Telugu</span></div></div><button class="heart-btn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+        <div class="song-card wl-song-card" style="margin-top:8px;"><div class="song-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#D4A92A"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#D4A92A"/></svg></div><div><div class="song-title">Rosham Kaligina</div><div class="song-meta">Bro Anil Kumar · Praise · <span class="lang">Telugu</span></div></div><button class="heart-btn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+      </div>
+
+      <div class="wl-section">
+        <div class="section-header">
+          <span class="section-title-text">Trending this week</span>
+          <span class="see-all" style="color:var(--gold);">See all →</span>
+        </div>
+        <div class="song-card wl-song-card"><div class="song-icon" style="background:var(--crimson);"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#F5E0E4"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#F5E0E4"/></svg></div><div><div class="song-title">Shudda Hrudayam</div><div class="song-meta">Bro Anil Kumar · Repentance · <span class="lang">Telugu</span></div></div><button class="heart-btn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+        <div class="song-card wl-song-card" style="margin-top:8px;"><div class="song-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#D4A92A"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#D4A92A"/></svg></div><div><div class="song-title">Yesu Devuni Aaraadhikulam</div><div class="song-meta">Bro Anil Kumar · Worship · <span class="lang">Telugu</span></div></div><button class="heart-btn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.07 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+        <div class="song-card wl-song-card" style="margin-top:8px;"><div class="song-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#D4A92A"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#D4A92A"/></svg></div><div><div class="song-title">Yudda Veeruda</div><div class="song-meta">Bro Anil Kumar · Praise · <span class="lang">Telugu</span></div></div><button class="heart-btn"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+      </div>
+
+      <div class="wl-section">
+        <div class="section-header">
+          <span class="section-title-text">Top Artists</span>
+          <span class="see-all" style="color:var(--gold);">See all →</span>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <div class="artist-pill wl-artist-pill"><div class="artist-avatar">AK</div><div><div class="artist-name">Bro Anil Kumar</div><div class="artist-count">340 songs</div></div></div>
+          <div class="artist-pill wl-artist-pill"><div class="artist-avatar">HP</div><div><div class="artist-name">Hosanna Praise</div><div class="artist-count">210 songs</div></div></div>
+          <div class="artist-pill wl-artist-pill"><div class="artist-avatar">PK</div><div><div class="artist-name">Paul Kumar</div><div class="artist-count">180 songs</div></div></div>
+        </div>
+      </div>
+
+      <div class="wl-section">
+        <div class="section-header">
+          <span class="section-title-text">Browse by language</span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div style="background:var(--ink); border-radius:var(--r-md); padding:18px; cursor:pointer;">
+            <div style="font-family:var(--font-display); font-size:22px; color:var(--gold-light); margin-bottom:4px;">తెలుగు</div>
+            <div style="font-size:12px; color:var(--night-mute);">Telugu · 1,200 songs</div>
+          </div>
+          <div style="background:var(--gold-faint); border:1px solid var(--gold-pale); border-radius:var(--r-md); padding:18px; cursor:pointer;">
+            <div style="font-family:var(--font-display); font-size:22px; color:var(--ink); margin-bottom:4px;">தமிழ்</div>
+            <div style="font-size:12px; color:var(--stone);">Tamil · 680 songs</div>
+          </div>
+          <div style="background:var(--crimson-pale); border:1px solid #E8C0C8; border-radius:var(--r-md); padding:18px; cursor:pointer;">
+            <div style="font-family:var(--font-display); font-size:22px; color:var(--crimson); margin-bottom:4px;">हिन्दी</div>
+            <div style="font-size:12px; color:var(--crimson);">Hindi · 420 songs</div>
+          </div>
+          <div style="background:var(--ivory-deep); border:1px solid var(--border); border-radius:var(--r-md); padding:18px; cursor:pointer;">
+            <div style="font-family:var(--font-display); font-size:22px; color:var(--stone); margin-bottom:4px;">English</div>
+            <div style="font-size:12px; color:var(--stone-lt);">English · 320 songs</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ WEB DARK ══ -->
+<div class="section-divider">Web — Dark Mode</div>
+
+<div style="margin-bottom:40px;">
+  <p class="view-label">Web · Dark Mode · 1440px</p>
+  <div class="web-dark">
+
+    <nav class="wd-nav">
+      <div class="logo-icon" style="background:var(--night-card); border:1px solid var(--night-bdr);">
+        <div class="cv" style="background:var(--night-gold);"></div>
+        <div class="ch" style="background:var(--night-gold);"></div>
+        <div class="ns" style="background:var(--crimson-lt);"></div>
+        <div class="nd" style="background:var(--crimson-lt);"></div>
+      </div>
+      <span class="logo-name" style="font-size:22px; color:var(--night-text);">Keert<span style="color:var(--night-gold);">a</span>nalu</span>
+      <div class="wd-nav-links">
+        <span class="wd-nav-link active">Home</span>
+        <span class="wd-nav-link">Browse</span>
+        <span class="wd-nav-link">Artists</span>
+        <span class="wd-nav-link">Collections</span>
+      </div>
+      <div class="wd-search-nav" style="margin-left:auto;">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#8C7850" stroke-width="1.2"/><path d="M9.5 9.5L12 12" stroke="#8C7850" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <input type="text" placeholder="Search lyrics…">
+      </div>
+    </nav>
+
+    <div class="wd-hero">
+      <div class="wd-hero-left">
+        <p class="wd-greeting">Good morning</p>
+        <h1 class="wd-headline">Telugu Christian<br><em>Lyrics & Songs</em></h1>
+        <p class="wd-tagline">Your complete keertana companion. Browse thousands of devotional lyrics in Telugu, Tamil, Hindi and English.</p>
+        <div class="wd-hero-search">
+          <div class="search-bar" style="background:var(--night-surf); border-color:var(--night-bdr);">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#8C7850" stroke-width="1.4"/><path d="M11 11L14 14" stroke="#8C7850" stroke-width="1.4" stroke-linecap="round"/></svg>
+            <input type="text" placeholder="Search songs, artists, categories…" style="font-size:14px; color:var(--night-text); background:transparent; border:none; outline:none; flex:1; font-family:var(--font-body);">
+            <span style="font-size:11px; color:var(--night-stone); padding:3px 8px; border:1px solid var(--night-bdr); border-radius:4px; letter-spacing:0.5px;">⌘K</span>
+          </div>
+        </div>
+        <div class="wd-stats">
+          <div><div class="wd-stat-num">2<span>,400+</span></div><div class="wd-stat-label">Songs</div></div>
+          <div style="width:1px; background:var(--night-bdr);"></div>
+          <div><div class="wd-stat-num">4 <span style="font-size:18px;">Languages</span></div><div class="wd-stat-label">Telugu · Tamil · Hindi · English</div></div>
+          <div style="width:1px; background:var(--night-bdr);"></div>
+          <div><div class="wd-stat-num">120<span>+</span></div><div class="wd-stat-label">Artists</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="wd-verse-card">
+          <p class="wd-verse-eyebrow">Verse of the day</p>
+          <p class="wd-verse-text">"Sing to the Lord a new song; sing to the Lord, all the earth."</p>
+          <p class="wd-verse-ref">Psalm 96:1</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="wd-chips">
+      <span class="chip active" style="background:var(--night-gold); border-color:var(--night-gold); color:var(--night);">All</span>
+      <span class="chip" style="background:transparent; border-color:var(--night-bdr); color:var(--night-mute);">Praise</span>
+      <span class="chip" style="background:transparent; border-color:var(--night-bdr); color:var(--night-mute);">Worship</span>
+      <span class="chip" style="background:transparent; border-color:var(--night-bdr); color:var(--night-mute);">Good Friday</span>
+      <span class="chip" style="background:transparent; border-color:var(--night-bdr); color:var(--night-mute);">Easter</span>
+      <span class="chip" style="background:transparent; border-color:var(--night-bdr); color:var(--night-mute);">Marriage</span>
+      <span class="chip" style="background:transparent; border-color:var(--night-bdr); color:var(--night-mute);">Gospel</span>
+    </div>
+
+    <div class="wd-content">
+      <div class="wd-section">
+        <div class="section-header"><span class="section-title-text" style="color:var(--night-text);">Recently Added</span><span class="see-all" style="color:var(--night-gold);">See all →</span></div>
+        <div class="song-card wd-song-card"><div class="song-icon" style="background:var(--night-gdim);"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#1C1508"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#1C1508"/></svg></div><div><div class="song-title" style="color:var(--night-text);">Prabhu Naamam</div><div class="song-meta" style="color:var(--night-mute);">Bro Anil Kumar · Praise · <span style="color:var(--night-gold); font-weight:500;">Telugu</span></div></div><button class="heart-btn" style="color:var(--night-stone);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+        <div class="song-card wd-song-card" style="margin-top:8px;"><div class="song-icon" style="background:var(--night-gdim);"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#1C1508"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#1C1508"/></svg></div><div><div class="song-title" style="color:var(--night-text);">Yuddamu Yehovaade</div><div class="song-meta" style="color:var(--night-mute);">Bro Anil Kumar · Praise · <span style="color:var(--night-gold); font-weight:500;">Telugu</span></div></div><button class="heart-btn" style="color:var(--night-stone);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+        <div class="song-card wd-song-card" style="margin-top:8px;"><div class="song-icon" style="background:var(--night-gdim);"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#1C1508"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#1C1508"/></svg></div><div><div class="song-title" style="color:var(--night-text);">Rosham Kaligina</div><div class="song-meta" style="color:var(--night-mute);">Bro Anil Kumar · Praise · <span style="color:var(--night-gold); font-weight:500;">Telugu</span></div></div><button class="heart-btn" style="color:var(--night-stone);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+      </div>
+
+      <div class="wd-section">
+        <div class="section-header"><span class="section-title-text" style="color:var(--night-text);">Trending this week</span><span class="see-all" style="color:var(--night-gold);">See all →</span></div>
+        <div class="song-card wd-song-card"><div class="song-icon" style="background:var(--crimson);"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#F5E0E4"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#F5E0E4"/></svg></div><div><div class="song-title" style="color:var(--night-text);">Shudda Hrudayam</div><div class="song-meta" style="color:var(--night-mute);">Bro Anil Kumar · Repentance · <span style="color:var(--night-gold); font-weight:500;">Telugu</span></div></div><button class="heart-btn" style="color:var(--night-stone);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+        <div class="song-card wd-song-card" style="margin-top:8px;"><div class="song-icon" style="background:var(--night-gdim);"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#1C1508"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#1C1508"/></svg></div><div><div class="song-title" style="color:var(--night-text);">Yesu Devuni Aaraadhikulam</div><div class="song-meta" style="color:var(--night-mute);">Bro Anil Kumar · Worship · <span style="color:var(--night-gold); font-weight:500;">Telugu</span></div></div><button class="heart-btn" style="color:var(--night-stone);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+        <div class="song-card wd-song-card" style="margin-top:8px;"><div class="song-icon" style="background:var(--night-gdim);"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="6" y="1" width="2" height="10" rx="1" fill="#1C1508"/><rect x="2" y="4" width="10" height="2" rx="1" fill="#1C1508"/></svg></div><div><div class="song-title" style="color:var(--night-text);">Yudda Veeruda</div><div class="song-meta" style="color:var(--night-mute);">Bro Anil Kumar · Praise · <span style="color:var(--night-gold); font-weight:500;">Telugu</span></div></div><button class="heart-btn" style="color:var(--night-stone);"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="currentColor" stroke-width="1.3"/></svg></button></div>
+      </div>
+
+      <div class="wd-section">
+        <div class="section-header"><span class="section-title-text" style="color:var(--night-text);">Top Artists</span><span class="see-all" style="color:var(--night-gold);">See all →</span></div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <div class="artist-pill wd-artist-pill"><div class="artist-avatar" style="background:var(--night-card); color:var(--night-gold); border:1px solid var(--night-gdim);">AK</div><div><div class="artist-name" style="color:var(--night-text);">Bro Anil Kumar</div><div class="artist-count" style="color:var(--night-mute);">340 songs</div></div></div>
+          <div class="artist-pill wd-artist-pill"><div class="artist-avatar" style="background:var(--night-card); color:var(--night-gold); border:1px solid var(--night-gdim);">HP</div><div><div class="artist-name" style="color:var(--night-text);">Hosanna Praise</div><div class="artist-count" style="color:var(--night-mute);">210 songs</div></div></div>
+          <div class="artist-pill wd-artist-pill"><div class="artist-avatar" style="background:var(--night-card); color:var(--night-gold); border:1px solid var(--night-gdim);">PK</div><div><div class="artist-name" style="color:var(--night-text);">Paul Kumar</div><div class="artist-count" style="color:var(--night-mute);">180 songs</div></div></div>
+        </div>
+      </div>
+
+      <div class="wd-section">
+        <div class="section-header"><span class="section-title-text" style="color:var(--night-text);">Browse by language</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div style="background:var(--night-gold); border-radius:var(--r-md); padding:18px; cursor:pointer;">
+            <div style="font-family:var(--font-display); font-size:22px; color:var(--night); margin-bottom:4px;">తెలుగు</div>
+            <div style="font-size:12px; color:#6B5010;">Telugu · 1,200 songs</div>
+          </div>
+          <div style="background:var(--night-card); border:1px solid var(--night-bdr); border-radius:var(--r-md); padding:18px; cursor:pointer;">
+            <div style="font-family:var(--font-display); font-size:22px; color:var(--night-text); margin-bottom:4px;">தமிழ்</div>
+            <div style="font-size:12px; color:var(--night-mute);">Tamil · 680 songs</div>
+          </div>
+          <div style="background:var(--crimson); border-radius:var(--r-md); padding:18px; cursor:pointer;">
+            <div style="font-family:var(--font-display); font-size:22px; color:var(--crimson-pale); margin-bottom:4px;">हिन्दी</div>
+            <div style="font-size:12px; color:#E8C0C8;">Hindi · 420 songs</div>
+          </div>
+          <div style="background:var(--night-surf); border:1px solid var(--night-bdr); border-radius:var(--r-md); padding:18px; cursor:pointer;">
+            <div style="font-family:var(--font-display); font-size:22px; color:var(--night-mute); margin-bottom:4px;">English</div>
+            <div style="font-size:12px; color:var(--night-stone);">English · 320 songs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MOBILE VIEWS ══ -->
+<div class="section-divider">Mobile — Light &amp; Dark Mode</div>
+
+<div class="mobile-grid">
+
+  <!-- Mobile Light -->
+  <div>
+    <p class="view-label">Mobile · Light Mode · 390px</p>
+    <div class="mobile-frame">
+      <div class="mob-topbar">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="mob-logo-icon">
+            <div class="cv"></div><div class="ch"></div>
+            <div class="ns"></div><div class="nd"></div>
+          </div>
+          <span class="mob-logo-name">Keert<span>a</span>nalu</span>
+        </div>
+        <div class="mob-settings-btn">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2" stroke="#8C8070" stroke-width="1.2"/><path d="M7 1V2.5M7 11.5V13M1 7H2.5M11.5 7H13M2.93 2.93L3.99 3.99M10.01 10.01L11.07 11.07M11.07 2.93L10.01 3.99M3.99 10.01L2.93 11.07" stroke="#8C8070" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <div class="mob-hero">
+        <p class="mob-greeting">Good morning</p>
+        <h1 class="mob-headline">Telugu Christian<br><em>Lyrics</em></h1>
+        <div class="mob-search">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="#BEB4A8" stroke-width="1.3"/><path d="M10 10L13 13" stroke="#BEB4A8" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <input type="text" placeholder="Search songs, artists…">
+        </div>
+      </div>
+
+      <div class="mob-chips">
+        <span class="chip active" style="font-size:12px; padding:6px 14px;">All</span>
+        <span class="chip" style="font-size:12px; padding:6px 14px; background:var(--ivory-card); border-color:var(--border); color:var(--stone);">Praise</span>
+        <span class="chip" style="font-size:12px; padding:6px 14px; background:var(--ivory-card); border-color:var(--border); color:var(--stone);">Worship</span>
+        <span class="chip" style="font-size:12px; padding:6px 14px; background:var(--ivory-card); border-color:var(--border); color:var(--stone);">Good Friday</span>
+        <span class="chip" style="font-size:12px; padding:6px 14px; background:var(--ivory-card); border-color:var(--border); color:var(--stone);">Easter</span>
+      </div>
+
+      <div class="mob-content">
+        <div>
+          <div class="mob-section-header">
+            <span class="mob-section-title">Recently Added</span>
+            <span class="mob-see-all">See all →</span>
+          </div>
+          <div class="mob-song mob-song-light">
+            <div class="mob-song-icon mob-song-icon-light"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="5.5" y="1" width="2" height="9" rx="1" fill="#D4A92A"/><rect x="2" y="3.5" width="9" height="2" rx="1" fill="#D4A92A"/></svg></div>
+            <div><div class="mob-song-title">Prabhu Naamam</div><div class="mob-song-meta">Bro Anil Kumar · <span class="lang">Telugu</span></div></div>
+            <svg class="mob-heart" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="#BEB4A8" stroke-width="1.3"/></svg>
+          </div>
+          <div class="mob-song mob-song-light">
+            <div class="mob-song-icon mob-song-icon-light"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="5.5" y="1" width="2" height="9" rx="1" fill="#D4A92A"/><rect x="2" y="3.5" width="9" height="2" rx="1" fill="#D4A92A"/></svg></div>
+            <div><div class="mob-song-title">Yuddamu Yehovaade</div><div class="mob-song-meta">Bro Anil Kumar · <span class="lang">Telugu</span></div></div>
+            <svg class="mob-heart" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="#BEB4A8" stroke-width="1.3"/></svg>
+          </div>
+        </div>
+
+        <div>
+          <div class="mob-section-header">
+            <span class="mob-section-title">Trending this week</span>
+            <span class="mob-see-all">See all →</span>
+          </div>
+          <div class="mob-song mob-song-light">
+            <div class="mob-song-icon" style="background:var(--crimson);"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="5.5" y="1" width="2" height="9" rx="1" fill="#F5E0E4"/><rect x="2" y="3.5" width="9" height="2" rx="1" fill="#F5E0E4"/></svg></div>
+            <div><div class="mob-song-title">Shudda Hrudayam</div><div class="mob-song-meta">Bro Anil Kumar · <span class="lang">Telugu</span></div></div>
+            <svg class="mob-heart" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="#BEB4A8" stroke-width="1.3"/></svg>
+          </div>
+          <div class="mob-song mob-song-light">
+            <div class="mob-song-icon mob-song-icon-light"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="5.5" y="1" width="2" height="9" rx="1" fill="#D4A92A"/><rect x="2" y="3.5" width="9" height="2" rx="1" fill="#D4A92A"/></svg></div>
+            <div><div class="mob-song-title">Yesu Devuni Aaraadhikulam</div><div class="mob-song-meta">Bro Anil Kumar · <span class="lang">Telugu</span></div></div>
+            <svg class="mob-heart" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="#BEB4A8" stroke-width="1.3"/></svg>
+          </div>
+        </div>
+
+        <!-- Verse card mobile -->
+        <div style="background:var(--ink); border-radius:var(--r-lg); padding:20px;">
+          <p style="font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--night-gdim); margin-bottom:10px;">Verse of the day</p>
+          <p style="font-family:var(--font-display); font-size:16px; font-weight:400; font-style:italic; color:var(--gold-pale); line-height:1.6; margin-bottom:10px;">"Sing to the Lord a new song"</p>
+          <p style="font-size:11px; color:var(--night-mute); letter-spacing:1px;">Psalm 96:1</p>
+        </div>
+
+      </div>
+
+      <!-- Bottom nav -->
+      <div class="mob-bottomnav">
+        <div class="mob-nav-item mob-nav-active">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 9L10 3L17 9V17H13V13H7V17H3V9Z" stroke="#B8860B" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          <span class="mob-nav-label">Home</span>
+        </div>
+        <div class="mob-nav-item mob-nav-inactive">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="#BEB4A8" stroke-width="1.4"/><path d="M14 14L17.5 17.5" stroke="#BEB4A8" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span class="mob-nav-label">Browse</span>
+        </div>
+        <div class="mob-nav-item mob-nav-inactive">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 17.5C10 17.5 2.5 13 2.5 7.5C2.5 5.02 4.52 3 7 3C8.39 3 9.64 3.63 10.5 4.63C11.36 3.63 12.61 3 14 3C16.48 3 18.5 5.02 18.5 7.5C18.5 13 10 17.5 10 17.5Z" stroke="#BEB4A8" stroke-width="1.4"/></svg>
+          <span class="mob-nav-label">Saved</span>
+        </div>
+        <div class="mob-nav-item mob-nav-inactive">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3" stroke="#BEB4A8" stroke-width="1.4"/><path d="M10 2V4M10 16V18M2 10H4M16 10H18M4.22 4.22L5.64 5.64M14.36 14.36L15.78 15.78M15.78 4.22L14.36 5.64M5.64 14.36L4.22 15.78" stroke="#BEB4A8" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span class="mob-nav-label">Settings</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Dark -->
+  <div>
+    <p class="view-label">Mobile · Dark Mode · 390px</p>
+    <div class="mobile-frame mobile-frame-dark">
+      <div class="mob-topbar mob-topbar-dark">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="mob-logo-icon mob-logo-icon-dark">
+            <div class="cv" style="background:var(--night-gold);"></div>
+            <div class="ch" style="background:var(--night-gold);"></div>
+            <div class="ns" style="background:var(--crimson-lt);"></div>
+            <div class="nd" style="background:var(--crimson-lt);"></div>
+          </div>
+          <span class="mob-logo-name mob-logo-name-dark">Keert<span>a</span>nalu</span>
+        </div>
+        <div class="mob-settings-btn mob-settings-btn-dark">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2" stroke="#8C7850" stroke-width="1.2"/><path d="M7 1V2.5M7 11.5V13M1 7H2.5M11.5 7H13M2.93 2.93L3.99 3.99M10.01 10.01L11.07 11.07M11.07 2.93L10.01 3.99M3.99 10.01L2.93 11.07" stroke="#8C7850" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+
+      <div class="mob-hero" style="background:var(--night);">
+        <p class="mob-greeting mob-greeting-dark">Good morning</p>
+        <h1 class="mob-headline mob-headline-dark">Telugu Christian<br><em>Lyrics</em></h1>
+        <div class="mob-search mob-search-dark">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="#5A4E38" stroke-width="1.3"/><path d="M10 10L13 13" stroke="#5A4E38" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <input type="text" placeholder="Search songs, artists…">
+        </div>
+      </div>
+
+      <div class="mob-chips mob-chips-dark" style="background:var(--night);">
+        <span class="chip active" style="font-size:12px; padding:6px 14px; background:var(--night-gold); border-color:var(--night-gold); color:var(--night);">All</span>
+        <span class="chip" style="font-size:12px; padding:6px 14px; background:transparent; border-color:var(--night-bdr); color:var(--night-mute);">Praise</span>
+        <span class="chip" style="font-size:12px; padding:6px 14px; background:transparent; border-color:var(--night-bdr); color:var(--night-mute);">Worship</span>
+        <span class="chip" style="font-size:12px; padding:6px 14px; background:transparent; border-color:var(--night-bdr); color:var(--night-mute);">Good Friday</span>
+      </div>
+
+      <div class="mob-content" style="background:var(--night);">
+        <div>
+          <div class="mob-section-header">
+            <span class="mob-section-title mob-section-title-dark">Recently Added</span>
+            <span class="mob-see-all mob-see-all-dark">See all →</span>
+          </div>
+          <div class="mob-song mob-song-dark">
+            <div class="mob-song-icon mob-song-icon-dark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="5.5" y="1" width="2" height="9" rx="1" fill="#1C1508"/><rect x="2" y="3.5" width="9" height="2" rx="1" fill="#1C1508"/></svg></div>
+            <div><div class="mob-song-title mob-song-title-dark">Prabhu Naamam</div><div class="mob-song-meta mob-song-meta-dark">Bro Anil Kumar · <span class="lang">Telugu</span></div></div>
+            <svg class="mob-heart mob-heart-dark" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="#5A4E38" stroke-width="1.3"/></svg>
+          </div>
+          <div class="mob-song mob-song-dark">
+            <div class="mob-song-icon mob-song-icon-dark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="5.5" y="1" width="2" height="9" rx="1" fill="#1C1508"/><rect x="2" y="3.5" width="9" height="2" rx="1" fill="#1C1508"/></svg></div>
+            <div><div class="mob-song-title mob-song-title-dark">Yuddamu Yehovaade</div><div class="mob-song-meta mob-song-meta-dark">Bro Anil Kumar · <span class="lang">Telugu</span></div></div>
+            <svg class="mob-heart mob-heart-dark" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="#5A4E38" stroke-width="1.3"/></svg>
+          </div>
+        </div>
+
+        <div>
+          <div class="mob-section-header">
+            <span class="mob-section-title mob-section-title-dark">Trending this week</span>
+            <span class="mob-see-all mob-see-all-dark">See all →</span>
+          </div>
+          <div class="mob-song mob-song-dark">
+            <div class="mob-song-icon" style="background:var(--crimson);"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="5.5" y="1" width="2" height="9" rx="1" fill="#F5E0E4"/><rect x="2" y="3.5" width="9" height="2" rx="1" fill="#F5E0E4"/></svg></div>
+            <div><div class="mob-song-title mob-song-title-dark">Shudda Hrudayam</div><div class="mob-song-meta mob-song-meta-dark">Bro Anil Kumar · <span class="lang">Telugu</span></div></div>
+            <svg class="mob-heart mob-heart-dark" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.57 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="#5A4E38" stroke-width="1.3"/></svg>
+          </div>
+          <div class="mob-song mob-song-dark">
+            <div class="mob-song-icon mob-song-icon-dark"><svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="5.5" y="1" width="2" height="9" rx="1" fill="#1C1508"/><rect x="2" y="3.5" width="9" height="2" rx="1" fill="#1C1508"/></svg></div>
+            <div><div class="mob-song-title mob-song-title-dark">Yesu Devuni Aaraadhikulam</div><div class="mob-song-meta mob-song-meta-dark">Bro Anil Kumar · <span class="lang">Telugu</span></div></div>
+            <svg class="mob-heart mob-heart-dark" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 13.5C8 13.5 1.5 9.5 1.5 5.5C1.5 3.07 3.07 2 5 2C6.19 2 7.24 2.6 8 3.5C8.76 2.6 9.81 2 11 2C12.93 2 14.5 3.57 14.5 5.5C14.5 9.5 8 13.5 8 13.5Z" stroke="#5A4E38" stroke-width="1.3"/></svg>
+          </div>
+        </div>
+
+        <!-- Verse card dark -->
+        <div style="background:var(--night-card); border:1px solid var(--night-bdr); border-radius:var(--r-lg); padding:20px;">
+          <p style="font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--night-gdim); margin-bottom:10px;">Verse of the day</p>
+          <p style="font-family:var(--font-display); font-size:16px; font-weight:400; font-style:italic; color:var(--night-gold); line-height:1.6; margin-bottom:10px;">"Sing to the Lord a new song"</p>
+          <p style="font-size:11px; color:var(--night-stone); letter-spacing:1px;">Psalm 96:1</p>
+        </div>
+
+      </div>
+
+      <!-- Bottom nav dark -->
+      <div class="mob-bottomnav mob-bottomnav-dark">
+        <div class="mob-nav-item mob-nav-active-dark">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 9L10 3L17 9V17H13V13H7V17H3V9Z" stroke="#D4A92A" stroke-width="1.4" stroke-linejoin="round"/></svg>
+          <span class="mob-nav-label" style="color:var(--night-gold);">Home</span>
+        </div>
+        <div class="mob-nav-item mob-nav-inactive-dark">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="#5A4E38" stroke-width="1.4"/><path d="M14 14L17.5 17.5" stroke="#5A4E38" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span class="mob-nav-label" style="color:var(--night-stone);">Browse</span>
+        </div>
+        <div class="mob-nav-item mob-nav-inactive-dark">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 17.5C10 17.5 2.5 13 2.5 7.5C2.5 5.02 4.52 3 7 3C8.39 3 9.64 3.63 10.5 4.63C11.36 3.63 12.61 3 14 3C16.48 3 18.5 5.02 18.5 7.5C18.5 13 10 17.5 10 17.5Z" stroke="#5A4E38" stroke-width="1.4"/></svg>
+          <span class="mob-nav-label" style="color:var(--night-stone);">Saved</span>
+        </div>
+        <div class="mob-nav-item mob-nav-inactive-dark">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3" stroke="#5A4E38" stroke-width="1.4"/><path d="M10 2V4M10 16V18M2 10H4M16 10H18M4.22 4.22L5.64 5.64M14.36 14.36L15.78 15.78M15.78 4.22L14.36 5.64M5.64 14.36L4.22 15.78" stroke="#5A4E38" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span class="mob-nav-label" style="color:var(--night-stone);">Settings</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</div><!-- end max-width -->
+</body>
+</html>

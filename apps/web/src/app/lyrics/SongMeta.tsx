@@ -21,8 +21,8 @@ function formatDate(iso: string) {
 
 export function SongMeta({ song, catConfig, streamingLinks }: Props) {
   return (
-    <div className="rounded-none border-t border-border/60 bg-card px-5 py-5 md:rounded-2xl md:border md:border-border/60">
-      <div className="grid grid-cols-2 gap-x-6 gap-y-3.5 md:grid-cols-4">
+    <div className="rounded-2xl border border-[var(--k-border)] bg-[var(--k-surface)] px-5 py-4">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-4 md:grid-cols-4">
         {[
           { label: "Artist", value: song.artist || "NA" },
           { label: "Category", value: `${catConfig.emoji} ${catConfig.label}` },
@@ -30,18 +30,21 @@ export function SongMeta({ song, catConfig, streamingLinks }: Props) {
           { label: "Added", value: formatDate(song.createdAt) },
         ].map(({ label, value }) => (
           <div key={label}>
-            <p className="mb-0.5 text-[10px] font-semibold tracking-widest text-muted-foreground/70 uppercase">
+            <p className="mb-1 text-[10px] font-medium uppercase tracking-[2px] text-[var(--k-text-3)]">
               {label}
             </p>
-            <p className="text-sm font-semibold text-foreground">{value}</p>
+            <p className="text-[14px] font-medium text-[var(--k-ink)] dark:text-[var(--k-text-1)]">
+              {value}
+            </p>
           </div>
         ))}
       </div>
+
       {/* Streaming */}
       {streamingLinks.length > 0 && (
         <>
-          <div className="my-4 h-px bg-border/50" />
-          <p className="mb-2.5 text-[10px] font-semibold tracking-widest text-muted-foreground/70 uppercase">
+          <div className="my-4 h-px bg-[var(--k-border)]" />
+          <p className="mb-3 text-[10px] font-medium uppercase tracking-[2px] text-[var(--k-text-3)]">
             Listen on
           </p>
           <div className="flex flex-wrap gap-2">
@@ -55,7 +58,7 @@ export function SongMeta({ song, catConfig, streamingLinks }: Props) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
-                    "flex items-center gap-2 rounded-xl border px-3.5 py-1.5 text-sm font-medium transition-all duration-150 hover:scale-[1.02] hover:shadow-sm",
+                    "flex items-center gap-2 rounded-lg border px-3.5 py-1.5 text-[13px] font-medium transition-all duration-150 hover:scale-[1.02] hover:shadow-sm",
                     p.bg,
                     p.border,
                     p.textColor
@@ -66,7 +69,7 @@ export function SongMeta({ song, catConfig, streamingLinks }: Props) {
                     alt={p.label}
                     className="h-3.5 w-3.5"
                     onError={(e) => {
-                      ; (e.target as HTMLImageElement).style.display = "none"
+                      ;(e.target as HTMLImageElement).style.display = "none"
                     }}
                   />
                   {p.label}
@@ -77,15 +80,16 @@ export function SongMeta({ song, catConfig, streamingLinks }: Props) {
           </div>
         </>
       )}
+
       {/* Source */}
       {song.sourceUrl && (
         <>
-          <div className="my-4 h-px bg-border/50" />
+          <div className="my-4 h-px bg-[var(--k-border)]" />
           <a
             href={song.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground/60 transition-colors hover:text-muted-foreground"
+            className="inline-flex items-center gap-1.5 text-[12px] text-[var(--k-text-3)] transition-colors hover:text-[var(--k-text-2)]"
           >
             <ExternalLink size={11} />
             View original source

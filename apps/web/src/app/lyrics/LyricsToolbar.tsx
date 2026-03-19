@@ -1,15 +1,12 @@
-import { Minus, Plus, Type, Bold, Copy, Presentation } from "lucide-react"
+import { Minus, Plus, Type, Bold, Presentation } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { READING_MODES, type ReadingMode } from "./constants"
 
 interface Props {
   fontSize: number
   bold: boolean
-  readingMode: ReadingMode
   onFontDecrease: () => void
   onFontIncrease: () => void
   onBoldToggle: () => void
-  onReadingModeChange: (mode: ReadingMode) => void
   onCopy: () => void
   onPresent: () => void
 }
@@ -17,95 +14,56 @@ interface Props {
 export function LyricsToolbar({
   fontSize,
   bold,
-  readingMode,
   onFontDecrease,
   onFontIncrease,
   onBoldToggle,
-  onReadingModeChange,
-  onCopy,
   onPresent,
 }: Props) {
   return (
-    <div className="border-border bg-background/95 sticky top-0 z-20 flex items-center gap-2.5 border-b px-4 py-2 backdrop-blur-sm md:hidden">
-      {/* Font size */}
-      <div className="flex items-center gap-1">
+    <div className="border-k-border sticky top-0 z-20 mt-5 flex items-center gap-2.5 border-t border-b px-4 py-2.5 md:hidden">
+      {/* Font size pill */}
+      <div
+        className="flex items-center overflow-hidden rounded-sm border border-[var(--k-border)]"
+        style={{ height: 28 }}
+      >
         <button
           onClick={onFontDecrease}
-          className="hover:bg-muted rounded-lg p-1.5 transition-colors"
+          className="flex h-full w-8 items-center justify-center bg-[var(--k-surface-2)] text-[var(--k-text-2)] transition-colors hover:bg-[var(--k-border)]"
         >
-          <Minus size={12} className="text-muted-foreground" />
+          <Minus size={11} />
         </button>
-        <span className="text-muted-foreground flex w-9 items-center justify-center gap-1 text-xs">
-          <Type size={10} /> {fontSize}
+        <span className="flex h-full min-w-[44px] items-center justify-center gap-1 border-x border-[var(--k-border)] text-[11px] font-medium text-[var(--k-text-2)]">
+          <Type size={9} /> {fontSize}
         </span>
         <button
           onClick={onFontIncrease}
-          className="hover:bg-muted rounded-lg p-1.5 transition-colors"
+          className="bg-k-surface-2 flex h-full w-8 items-center justify-center text-[var(--k-text-2)] transition-colors hover:bg-[var(--k-border)]"
         >
-          <Plus size={12} className="text-muted-foreground" />
+          <Plus size={11} />
         </button>
       </div>
-
-      <div className="bg-border h-4 w-px" />
-
-      {/* Reading mode swatches */}
-      <div className="flex items-center gap-1">
-        {(["light", "warm", "night"] as ReadingMode[]).map((mode) => {
-          const cfg = READING_MODES[mode]
-          const Icon = cfg.icon
-          return (
-            <button
-              key={mode}
-              onClick={() => onReadingModeChange(mode)}
-              title={cfg.label}
-              className={cn(
-                "flex h-6 w-6 items-center justify-center rounded-full border transition-all duration-200",
-                readingMode === mode ? "border-primary/60 scale-110 shadow-sm" : "border-border/60"
-              )}
-              style={{ backgroundColor: cfg.swatch }}
-            >
-              <Icon
-                size={11}
-                style={{
-                  color: mode === "night" ? "#9D8FCC" : mode === "warm" ? "#A06820" : "#9CA3AF",
-                }}
-              />
-            </button>
-          )
-        })}
-      </div>
-
-      <div className="bg-border h-4 w-px" />
 
       {/* Bold */}
       <button
         onClick={onBoldToggle}
         className={cn(
-          "flex h-6 w-6 items-center justify-center rounded-lg border transition-all duration-150",
+          "flex h-7 items-center rounded-sm border px-2.5 text-[11px] font-bold transition-all duration-150",
           bold
-            ? "border-primary/50 bg-primary/8 text-primary"
-            : "border-border/60 text-muted-foreground"
+            ? "border-[var(--k-ink)] bg-[var(--k-ink)] text-[var(--k-gold-pale)]"
+            : "border-[var(--k-border)] bg-[var(--k-surface-2)] text-[var(--k-text-2)]"
         )}
       >
-        <Bold size={12} />
+        <Bold size={11} />
       </button>
 
-      {/* Present button */}
+      {/* Present */}
       <button
         onClick={onPresent}
-        className="bg-brand-blue/10 text-brand-blue hover:bg-brand-blue/20 ml-auto flex items-center gap-1 rounded-lg px-2 py-1.5 text-xs font-medium transition-colors"
+        className="bg-k-bg dark:bg-k-gold text-k-ink border-k-border ml-auto flex cursor-pointer items-center gap-1.5 rounded-sm border px-2.5 py-1.5 text-[11px] font-medium transition-opacity hover:opacity-85"
         title="Present mode (P)"
       >
-        <Presentation size={12} />
-        <span className="">Present</span>
-      </button>
-
-      {/* Copy — far right */}
-      <button
-        onClick={onCopy}
-        className="text-brand-blue hover:bg-brand-blue/20 flex items-center gap-1 rounded-lg px-2 py-1.5 text-xs font-medium"
-      >
-        <Copy size={12} /> Copy
+        <Presentation size={11} />
+        Present
       </button>
     </div>
   )

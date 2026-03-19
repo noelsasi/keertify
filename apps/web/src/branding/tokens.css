@@ -1,0 +1,85 @@
+/* ══════════════════════════════════════════════════
+   KEERTANALU — Design Tokens
+   Copy this into your src/index.css or App.css
+   ══════════════════════════════════════════════════ */
+
+:root {
+  /* ── Brand Core ── */
+  --k-ink:          #1A1208;   /* Primary dark — text, icon bg */
+  --k-ink-soft:     #3A2E18;   /* Secondary dark — borders on dark bg */
+  --k-gold:         #B8860B;   /* Primary accent — links, active */
+  --k-gold-light:   #D4A92A;   /* Hover states, dark-mode primary */
+  --k-gold-pale:    #F5E6B8;   /* Dark-mode text, light fills */
+  --k-gold-faint:   #FDF8EC;   /* Tinted backgrounds */
+  --k-crimson:      #7B1E2E;   /* Secondary accent — badges, tags */
+  --k-crimson-lt:   #A63248;   /* Hover of crimson, dark-mode crimson */
+  --k-crimson-pale: #F5E0E4;   /* Light crimson fill */
+
+  /* ── Light Mode Semantic ── */
+  --k-bg:           #FAF7F0;   /* Page background */
+  --k-surface:      #FFFFFF;   /* Cards, modals */
+  --k-surface-2:    #F0EBE0;   /* Nested surfaces, inputs */
+  --k-border:       #E0D8C8;   /* Default borders */
+  --k-border-soft:  #EDE7DC;   /* Subtle borders */
+  --k-text-1:       #1A1208;   /* Primary text */
+  --k-text-2:       #5A4E38;   /* Secondary text */
+  --k-text-3:       #8C8070;   /* Muted / placeholder */
+  --k-text-4:       #BEB4A8;   /* Very muted / disabled */
+
+  /* ── Typography ── */
+  --k-font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --k-font-body:    'DM Sans', system-ui, -apple-system, sans-serif;
+  --k-font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ── Radii ── */
+  --k-r-xs: 4px;
+  --k-r-sm: 8px;
+  --k-r-md: 12px;
+  --k-r-lg: 16px;
+  --k-r-xl: 24px;
+
+  /* ── Spacing (8pt grid) ── */
+  --k-space-1: 4px;
+  --k-space-2: 8px;
+  --k-space-3: 12px;
+  --k-space-4: 16px;
+  --k-space-5: 20px;
+  --k-space-6: 24px;
+  --k-space-8: 32px;
+  --k-space-10: 40px;
+  --k-space-12: 48px;
+
+  /* ── Transitions ── */
+  --k-transition: 150ms ease;
+}
+
+/* ── Dark Mode ── */
+[data-theme="dark"],
+.dark {
+  --k-bg:          #0E0A04;
+  --k-surface:     #1C1508;
+  --k-surface-2:   #251C0A;
+  --k-border:      #3A2E18;
+  --k-border-soft: #2A2010;
+  --k-text-1:      #F5E6B8;
+  --k-text-2:      #C4A86A;
+  --k-text-3:      #8C7850;
+  --k-text-4:      #5A4E38;
+  --k-gold:        #D4A92A;   /* Brighter in dark mode */
+  --k-gold-light:  #F5E6B8;
+  --k-crimson:     #A63248;
+}
+
+/* ── Tailwind-compatible utility classes ── */
+.k-bg            { background-color: var(--k-bg); }
+.k-surface       { background-color: var(--k-surface); }
+.k-surface-2     { background-color: var(--k-surface-2); }
+.k-border        { border-color: var(--k-border); }
+.k-text-1        { color: var(--k-text-1); }
+.k-text-2        { color: var(--k-text-2); }
+.k-text-3        { color: var(--k-text-3); }
+.k-text-4        { color: var(--k-text-4); }
+.k-gold          { color: var(--k-gold); }
+.k-crimson       { color: var(--k-crimson); }
+.k-font-display  { font-family: var(--k-font-display); }
+.k-font-body     { font-family: var(--k-font-body); }

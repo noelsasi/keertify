@@ -1,8 +1,10 @@
 import { useParams, useNavigate } from "react-router-dom"
 import { ArrowLeft, Music, Disc3 } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Breadcrumbs } from "@/components/ui/breadcrumbs"
+import { AvatarImage } from "@/components/AvatarImage"
+import { SectionHeader } from "@/components/SectionHeader"
 import { useAlbum } from "@/hooks/useSongs"
-import { CATEGORY_COLORS, LANGUAGE_LABELS } from "@/lib/constants"
+import { LANGUAGE_LABELS } from "@/lib/constants"
 import type { AlbumSongItem } from "@/types/song.types"
 
 export function AlbumPage() {
@@ -23,32 +25,36 @@ export function AlbumPage() {
   return (
     <div className="flex min-h-screen flex-col md:min-h-0">
       {/* ── Mobile header ── */}
-      <div className="bg-brand-navy dark:bg-nav-bg md:hidden">
+      <div className="bg-[var(--k-surface)] border-b border-[var(--k-border)] md:hidden">
         <div className="px-4 pt-12 pb-5">
           <button onClick={() => navigate(-1)} className="mb-4">
-            <ArrowLeft size={22} className="text-white" />
+            <ArrowLeft size={22} className="text-[var(--k-text-1)]" />
           </button>
           <div className="flex items-start gap-4">
-            <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-2xl shadow-lg ring-1 ring-white/20">
-              {album.albumCoverUrl ? (
-                <img src={album.albumCoverUrl} alt={album.title} className="h-full w-full object-cover" />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center bg-white/10">
-                  <Disc3 size={28} className="text-white/60" />
-                </div>
-              )}
-            </div>
+            <AvatarImage
+              src={album.albumCoverUrl}
+              alt={album.title}
+              size={80}
+              shape="square"
+              fallback={<div className="flex h-full w-full items-center justify-center"><Disc3 size={28} className="text-[var(--k-text-3)]" /></div>}
+              className="rounded-2xl shadow-lg ring-1 ring-[var(--k-border)]"
+            />
             <div className="min-w-0 flex-1 pt-0.5">
-              <h1 className="text-xl font-bold text-white leading-tight">{album.title}</h1>
+              <h1
+                className="leading-tight text-[var(--k-text-1)]"
+                style={{ fontFamily: "var(--k-font-display)", fontSize: 22, fontWeight: 500 }}
+              >
+                {album.title}
+              </h1>
               {album.artistName && (
                 <button
                   onClick={() => album.artistSlug && navigate(`/artists/${album.artistSlug}`)}
                   className="mt-1.5 flex items-center gap-1.5 transition-opacity hover:opacity-70"
                 >
-                  <span className="text-sm text-white/70">{album.artistName}</span>
+                  <span className="text-sm text-[var(--k-text-2)]">{album.artistName}</span>
                 </button>
               )}
-              <p className="mt-1 text-xs text-white/50">
+              <p className="mt-1 text-xs text-[var(--k-text-3)]">
                 {album.songs.length} tracks · {LANGUAGE_LABELS[album.language as keyof typeof LANGUAGE_LABELS] ?? album.language}
               </p>
             </div>
@@ -58,24 +64,33 @@ export function AlbumPage() {
 
       {/* ── Desktop header ── */}
       <div className="mb-6 hidden md:block">
-        <button
-          onClick={() => navigate(-1)}
-          className="mb-5 flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <ArrowLeft size={16} /> Back
-        </button>
+        <div className="mb-5 text-muted-foreground">
+          <Breadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              ...(album.artistName && album.artistSlug
+                ? [{ label: album.artistName, href: `/artists/${album.artistSlug}` }]
+                : []),
+              { label: album.title },
+            ]}
+          />
+        </div>
         <div className="flex items-center gap-6">
-          <div className="h-36 w-36 flex-shrink-0 overflow-hidden rounded-2xl shadow-xl ring-1 ring-border">
-            {album.albumCoverUrl ? (
-              <img src={album.albumCoverUrl} alt={album.title} className="h-full w-full object-cover" />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-muted">
-                <Disc3 size={48} className="text-muted-foreground" />
-              </div>
-            )}
-          </div>
+          <AvatarImage
+            src={album.albumCoverUrl}
+            alt={album.title}
+            size={144}
+            shape="square"
+            fallback={<div className="flex h-full w-full items-center justify-center"><Disc3 size={48} className="text-[var(--k-text-3)]" /></div>}
+            className="rounded-2xl shadow-xl ring-1 ring-border"
+          />
           <div>
-            <h1 className="text-3xl font-bold text-foreground">{album.title}</h1>
+            <h1
+              className="text-[var(--k-text-1)] leading-none"
+              style={{ fontFamily: "var(--k-font-display)", fontSize: 36, fontWeight: 400 }}
+            >
+              {album.title}
+            </h1>
             {album.artistName && (
               <button
                 onClick={() => album.artistSlug && navigate(`/artists/${album.artistSlug}`)}
@@ -93,10 +108,7 @@ export function AlbumPage() {
 
       {/* ── Track list ── */}
       <div className="flex-1 space-y-2 px-4 py-5 md:px-0 md:py-0">
-        <div className="mb-3 flex items-center gap-2">
-          <Music size={16} className="text-brand-gold" />
-          <h2 className="text-base font-semibold text-foreground">Tracks</h2>
-        </div>
+        <SectionHeader title="Tracks" icon={Music} />
         {album.songs.map((song, index) => (
           <AlbumTrackRow key={song.id} song={song} index={index} />
         ))}
@@ -110,16 +122,15 @@ export function AlbumPage() {
 
 function AlbumTrackRow({ song, index }: { song: AlbumSongItem; index: number }) {
   const navigate = useNavigate()
-  const accentColor = CATEGORY_COLORS[song.category as keyof typeof CATEGORY_COLORS] ?? CATEGORY_COLORS.Default
 
   return (
     <div
       onClick={() => navigate(`/song/${song.slug}`)}
-      className="border-border bg-card hover:border-brand-gold/30 flex cursor-pointer items-center gap-0 overflow-hidden rounded-xl border transition-all duration-150 hover:shadow-md active:scale-[0.98]"
+      className="border-border bg-card hover:border-[var(--k-gold)]/30 flex cursor-pointer items-center gap-0 overflow-hidden rounded-xl border transition-all duration-150 hover:shadow-md active:scale-[0.98]"
     >
-      <div className={cn("w-1.5 flex-shrink-0 self-stretch", accentColor)} />
-      <div className="flex w-9 flex-shrink-0 items-center justify-center py-3.5">
-        <span className="text-xs font-semibold tabular-nums text-muted-foreground">
+      {/* Song icon box */}
+      <div className="mx-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-[8px] bg-[var(--k-ink)] dark:bg-[var(--k-surface-2)]">
+        <span className="text-xs font-semibold tabular-nums text-[var(--k-gold-pale)]">
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>

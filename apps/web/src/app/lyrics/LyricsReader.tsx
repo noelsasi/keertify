@@ -1,13 +1,14 @@
+import type { CSSProperties } from "react"
 import { LANGUAGE_LABELS } from "@/lib/constants"
+import { Pill } from "@/components/Pill"
 import type { Song, SongSection, SectionType } from "@/types/song.types"
-import { READING_MODES, type ReadingMode, type LyricsTab } from "./constants"
+import type { LyricsTab } from "./constants"
 
 interface Props {
   song: Song
   sections: SongSection[]
   fontSize: number
   bold: boolean
-  readingMode: ReadingMode
   lyricsTab: LyricsTab
   onTabChange: (tab: LyricsTab) => void
 }
@@ -23,6 +24,8 @@ const SECTION_LABELS: Record<SectionType, string> = {
   interlude: "Interlude",
 }
 
+const CHORUS_TYPES: SectionType[] = ["pallavi", "chorus"]
+
 function getSectionLabel(section: SongSection): string {
   const base = SECTION_LABELS[section.type] ?? section.type
   const showNumber = (section.type === "charnam" || section.type === "verse") && section.number > 0
@@ -34,15 +37,13 @@ export function LyricsReader({
   sections,
   fontSize,
   bold,
-  readingMode,
   lyricsTab,
   onTabChange,
 }: Props) {
-  const modeConfig = READING_MODES[readingMode]
   const hasSections = sections.length > 0
   const hasEnglish = !!song.lyricsEnglish || sections.some((s) => !!s.contentEnglish)
 
-  const textStyle = {
+  const textStyle: CSSProperties = {
     fontSize: `${fontSize}px`,
     lineHeight: 2.3,
     fontWeight: bold ? 600 : 400,
@@ -51,12 +52,11 @@ export function LyricsReader({
 
   return (
     <div
-      className="rounded-none shadow-none transition-colors duration-300 md:rounded-2xl md:shadow-sm md:ring-1 md:ring-black/5"
-      style={modeConfig.containerStyle}
+      className="bg-[var(--k-surface)] text-[var(--k-text-1)] transition-colors duration-300 md:rounded-2xl md:border md:border-[var(--k-border)]"
     >
       {/* Language tab bar — only when transliteration is available */}
       {hasEnglish && (
-        <div className="flex border-b px-5 pt-4" style={{ borderColor: modeConfig.dividerColor }}>
+        <div className="flex border-b border-[var(--k-border)] px-5 pt-4">
           {(["native", "english"] as LyricsTab[]).map((tab) => {
             const isActive = lyricsTab === tab
             const label = tab === "native" ? LANGUAGE_LABELS[song.language] : "English"
@@ -66,31 +66,13 @@ export function LyricsReader({
                 onClick={() => onTabChange(tab)}
                 className="relative mr-6 pb-3 text-sm font-semibold transition-colors duration-150"
                 style={{
-                  color: isActive
-                    ? readingMode === "night"
-                      ? "#C4B8F0"
-                      : readingMode === "warm"
-                        ? "#7A4A10"
-                        : "var(--brand-navy)"
-                    : readingMode === "night"
-                      ? "#4A4060"
-                      : readingMode === "warm"
-                        ? "#C4A06A"
-                        : "#C4C4C4",
+                  color: isActive ? "var(--k-ink)" : "var(--k-text-3)",
                 }}
               >
                 {label}
                 {isActive && (
                   <span
-                    className="absolute right-0 bottom-0 left-0 h-0.5 rounded-full"
-                    style={{
-                      backgroundColor:
-                        readingMode === "night"
-                          ? "#9D8FCC"
-                          : readingMode === "warm"
-                            ? "#A06820"
-                            : "var(--brand-gold)",
-                    }}
+                    className="absolute right-0 bottom-0 left-0 h-0.5 rounded-full bg-[var(--k-gold)]"
                   />
                 )}
               </button>
@@ -99,35 +81,32 @@ export function LyricsReader({
         </div>
       )}
 
-      <div className="px-6 py-7">
+      <div className="px-5 py-6 md:px-7 md:py-7">
         {hasSections ? (
-          // Structured rendering — one block per section with label
-          <div className="space-y-7">
+          <div className="space-y-8">
             {sections.map((section) => {
               const content =
                 lyricsTab === "english" && section.contentEnglish
                   ? section.contentEnglish
                   : section.content
 
+              const isChorusType = CHORUS_TYPES.includes(section.type)
+              const dotColor = isChorusType ? "var(--k-crimson)" : "var(--k-gold)"
+
+              const lyricStyle: CSSProperties = {
+                ...textStyle,
+                ...(isChorusType
+                  ? { color: "var(--k-crimson)", fontWeight: bold ? 700 : 500 }
+                  : { color: "var(--k-text-1)" }),
+              }
+
               return (
                 <div key={section.id}>
-                  <p
-                    className="mb-2 text-[10px] font-semibold tracking-widest uppercase"
-                    style={{
-                      color:
-                        readingMode === "night"
-                          ? "#6A5F8A"
-                          : readingMode === "warm"
-                            ? "#C4A06A"
-                            : "var(--muted-foreground, #9CA3AF)",
-                    }}
-                  >
+                  <Pill variant="gold" dot={dotColor} className="mb-2.5 tracking-[1.5px]">
                     {getSectionLabel(section)}
-                    {section.repeatCount && section.repeatCount > 1
-                      ? ` ×${section.repeatCount}`
-                      : ""}
-                  </p>
-                  <p className="whitespace-pre-wrap" style={textStyle}>
+                    {section.repeatCount && section.repeatCount > 1 ? ` ×${section.repeatCount}` : ""}
+                  </Pill>
+                  <p className="whitespace-pre-wrap" style={lyricStyle}>
                     {content}
                   </p>
                 </div>
@@ -135,7 +114,6 @@ export function LyricsReader({
             })}
           </div>
         ) : (
-          // Fallback: raw lyrics string for unstructured songs
           <div className="whitespace-pre-wrap" style={textStyle}>
             {lyricsTab === "english" && song.lyricsEnglish ? song.lyricsEnglish : song.lyrics}
           </div>

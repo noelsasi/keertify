@@ -1,6 +1,7 @@
-import { Heart, ArrowLeft } from "lucide-react"
+import { Heart } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { SongCard } from "@/components/SongCard"
+import { MobilePageHeader } from "@/components/MobilePageHeader"
 import { useAppStore } from "@/store/app.store"
 import { MOCK_SONGS, LANGUAGE_LABELS } from "@/lib/mock-data"
 
@@ -12,19 +13,11 @@ export function Favourites() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="bg-brand-navy px-4 pt-12 pb-5">
-        <div className="flex items-center gap-3">
-          <button onClick={() => navigate(-1)}>
-            <ArrowLeft size={22} className="text-white" />
-          </button>
-          <div>
-            <h1 className="text-xl font-bold text-white">Saved Songs</h1>
-            <p className="text-xs text-white/50">
-              {savedSongs.length} saved · {LANGUAGE_LABELS[language]}
-            </p>
-          </div>
-        </div>
-      </div>
+      <MobilePageHeader
+        title="Saved Songs"
+        subtitle={`${savedSongs.length} saved · ${LANGUAGE_LABELS[language]}`}
+        onBack={() => navigate(-1)}
+      />
 
       <div className="flex-1 px-4 py-4">
         {savedSongs.length === 0 ? (

@@ -16,7 +16,7 @@ export function BottomNav() {
   if (isPresenting) return null
 
   return (
-    <nav className="bg-nav-bg border-nav-border fixed right-0 bottom-0 left-0 z-50 rounded-tl-3xl rounded-tr-3xl border-t shadow-[0_-4px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_-8px_40px_rgba(0,0,0,0.6)]">
+    <nav className="bg-nav-bg border-nav-border fixed right-0 bottom-0 left-0 z-50 rounded-t-3xl border-t shadow-[0_-4px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_-8px_40px_rgba(0,0,0,0.6)]">
       <div className="mx-auto w-full max-w-md">
         <div className="flex h-16 items-center justify-around px-2">
           {navItems.map(({ to, icon: Icon, label }) => (
@@ -27,7 +27,7 @@ export function BottomNav() {
               className={({ isActive }) =>
                 cn(
                   "text-nav-foreground flex flex-col items-center gap-1 rounded-xl px-4 py-2 transition-all duration-200",
-                  isActive ? "text-brand-gold" : "opacity-60 hover:opacity-90"
+                  isActive ? "text-[var(--k-gold)]" : "opacity-60 hover:opacity-90"
                 )
               }
             >
