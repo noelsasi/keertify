@@ -24,22 +24,13 @@ const SECTION_LABELS: Record<SectionType, string> = {
   interlude: "Interlude",
 }
 
-const CHORUS_TYPES: SectionType[] = ["pallavi", "chorus"]
-
 function getSectionLabel(section: SongSection): string {
   const base = SECTION_LABELS[section.type] ?? section.type
   const showNumber = (section.type === "charnam" || section.type === "verse") && section.number > 0
   return showNumber ? `${base} ${section.number}` : base
 }
 
-export function LyricsReader({
-  song,
-  sections,
-  fontSize,
-  bold,
-  lyricsTab,
-  onTabChange,
-}: Props) {
+export function LyricsReader({ song, sections, fontSize, bold, lyricsTab, onTabChange }: Props) {
   const hasSections = sections.length > 0
   const hasEnglish = !!song.lyricsEnglish || sections.some((s) => !!s.contentEnglish)
 
@@ -48,15 +39,14 @@ export function LyricsReader({
     lineHeight: 2.3,
     fontWeight: bold ? 600 : 400,
     letterSpacing: "0.01em",
+    color: "var(--k-text-1)",
   }
 
   return (
-    <div
-      className="bg-[var(--k-surface)] text-[var(--k-text-1)] transition-colors duration-300 md:rounded-2xl md:border md:border-[var(--k-border)]"
-    >
+    <div className="md:bg-k-surface text-k-text-1 dark:text-k-text-3 md:border-k-border transition-colors duration-300 md:rounded-2xl md:border">
       {/* Language tab bar — only when transliteration is available */}
       {hasEnglish && (
-        <div className="flex border-b border-[var(--k-border)] px-5 pt-4">
+        <div className="border-k-border flex border-b px-5 pt-4">
           {(["native", "english"] as LyricsTab[]).map((tab) => {
             const isActive = lyricsTab === tab
             const label = tab === "native" ? LANGUAGE_LABELS[song.language] : "English"
@@ -64,16 +54,14 @@ export function LyricsReader({
               <button
                 key={tab}
                 onClick={() => onTabChange(tab)}
-                className="relative mr-6 pb-3 text-sm font-semibold transition-colors duration-150"
+                className="relative mr-6 cursor-pointer pb-3 text-sm font-semibold transition-colors duration-150"
                 style={{
-                  color: isActive ? "var(--k-ink)" : "var(--k-text-3)",
+                  color: isActive ? "var(--k-ink) dark:var(--k-text-3)" : "var(--k-text-3)",
                 }}
               >
                 {label}
                 {isActive && (
-                  <span
-                    className="absolute right-0 bottom-0 left-0 h-0.5 rounded-full bg-[var(--k-gold)]"
-                  />
+                  <span className="bg-k-gold absolute right-0 bottom-0 left-0 h-0.5 rounded-full" />
                 )}
               </button>
             )
@@ -90,23 +78,15 @@ export function LyricsReader({
                   ? section.contentEnglish
                   : section.content
 
-              const isChorusType = CHORUS_TYPES.includes(section.type)
-              const dotColor = isChorusType ? "var(--k-crimson)" : "var(--k-gold)"
-
-              const lyricStyle: CSSProperties = {
-                ...textStyle,
-                ...(isChorusType
-                  ? { color: "var(--k-crimson)", fontWeight: bold ? 700 : 500 }
-                  : { color: "var(--k-text-1)" }),
-              }
-
               return (
                 <div key={section.id}>
-                  <Pill variant="gold" dot={dotColor} className="mb-2.5 tracking-[1.5px]">
+                  <Pill variant="gold" dot="var(--k-gold)" className="mb-2.5 tracking-[1.5px]">
                     {getSectionLabel(section)}
-                    {section.repeatCount && section.repeatCount > 1 ? ` ×${section.repeatCount}` : ""}
+                    {section.repeatCount && section.repeatCount > 1
+                      ? ` ×${section.repeatCount}`
+                      : ""}
                   </Pill>
-                  <p className="whitespace-pre-wrap" style={lyricStyle}>
+                  <p className="whitespace-pre-wrap" style={textStyle}>
                     {content}
                   </p>
                 </div>

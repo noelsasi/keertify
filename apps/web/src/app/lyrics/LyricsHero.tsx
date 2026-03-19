@@ -1,4 +1,4 @@
-import { ArrowLeft, Heart, Share2, Copy, Music2 } from "lucide-react"
+import { Heart, Share2, Copy } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { cn } from "@/lib/utils"
 import { Breadcrumbs } from "@/components/ui/breadcrumbs"
@@ -7,7 +7,7 @@ import { AvatarImage } from "@/components/AvatarImage"
 import { LANGUAGE_LABELS } from "@/lib/constants"
 import type { SongDetail } from "@/types/song.types"
 import type { CategoryConfig } from "@/lib/categories"
-import { CATEGORY_THUMB_GRADIENTS } from "./constants"
+import { MobilePageHeader } from "@/components/MobilePageHeader"
 
 interface Props {
   song: SongDetail
@@ -39,13 +39,11 @@ export function LyricsHero({
   song,
   catConfig,
   favourite,
-  onBack,
   onToggleFavourite,
   onShare,
   onCopy,
 }: Props) {
   const navigate = useNavigate()
-  const thumbGradient = CATEGORY_THUMB_GRADIENTS[song.category] ?? CATEGORY_THUMB_GRADIENTS.Default
   const primaryAlbum = song.albums?.[0] ?? null
   const albumCover = primaryAlbum?.albumCoverUrl ?? null
   const langLabel = LANGUAGE_LABELS[song.language as keyof typeof LANGUAGE_LABELS] ?? song.language
@@ -53,38 +51,45 @@ export function LyricsHero({
   return (
     <>
       {/* ── Mobile: topbar ── */}
-      <div className="border-k-border bg-k-surface flex items-center justify-between border-b px-4 py-3 md:hidden">
-        <button
-          onClick={onBack}
-          className="text-k-text-3 hover:text-k-text-1 flex items-center gap-1.5 text-[13px] transition-colors"
-        >
-          <ArrowLeft size={15} />
-          Back
-        </button>
-        <p
-          className="text-k-text-1 max-w-[180px] truncate text-[15px]"
-          style={{ fontFamily: "var(--k-font-display)", fontWeight: 500 }}
-        >
-          {song.title}
-        </p>
-        <div className="w-12" />
-      </div>
+      <MobilePageHeader title={song.title} onBack={() => navigate(-1)} />
 
       {/* ── Mobile: hero card ── */}
       <div className="mx-3.5 mt-3 mb-0 md:hidden">
-        <div
-          className="border-k-border rounded-[14px] border p-4"
-          style={{ background: "var(--hero-gradient)" }}
-        >
+        <div className="border-k-border bg-k-surface rounded-[14px] border p-4">
           <div className="flex items-start gap-3.5">
             <AvatarImage
               src={albumCover}
               alt={primaryAlbum?.title}
-              size={80}
+              size={75}
               shape="square"
               fallback={
-                <div className={cn("flex h-full w-full items-center justify-center bg-gradient-to-br", thumbGradient)}>
-                  <Music2 size={24} className="text-[var(--k-text-3)]" strokeWidth={1.5} />
+                <div
+                  className={cn(
+                    "border-k-border bg-k-ink flex h-full w-full items-center justify-center rounded-[9px] border bg-linear-to-br p-3"
+                  )}
+                >
+                  <svg className="ico16" viewBox="0 0 36 36" fill="none">
+                    <path
+                      d="M18 7C18 7 9 8 6 12L6 27C9 24 16 23 18 25Z"
+                      fill="#D4A92A"
+                      opacity="0.9"
+                    />
+                    <path
+                      d="M18 7C18 7 27 8 30 12L30 27C27 24 20 23 18 25Z"
+                      fill="#D4A92A"
+                      opacity="0.6"
+                    />
+                    <line
+                      x1="18"
+                      y1="7"
+                      x2="18"
+                      y2="25"
+                      stroke="var(--k-gold-pale)"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                    <path d="M26 6.5L26 15L23.8 13L21.5 15L21.5 6.5Z" fill="#A63248" />
+                  </svg>
                 </div>
               }
               className="shadow-md ring-1 ring-[var(--k-surface-2)]"
@@ -149,13 +154,13 @@ export function LyricsHero({
           <div className="mt-3.5 flex gap-1.5">
             <button
               onClick={onCopy}
-              className="border-k-border bg-k-bg text-k-ink dark:text-k-text-1 flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-[12px] font-medium transition-opacity hover:opacity-80"
+              className="border-k-border bg-k-surface dark:bg-k-ink text-k-ink dark:text-k-text-1 flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-[12px] font-medium transition-opacity hover:opacity-80"
             >
               <Copy size={12} /> Copy
             </button>
             <button
               onClick={onShare}
-              className="border-k-border bg-k-bg text-k-ink dark:text-k-text-1 flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-[12px] font-medium transition-opacity hover:opacity-80"
+              className="border-k-border bg-k-surface dark:bg-k-ink text-k-ink dark:text-k-text-1 flex flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-[12px] font-medium transition-opacity hover:opacity-80"
             >
               <Share2 size={12} /> Share
             </button>
@@ -187,11 +192,8 @@ export function LyricsHero({
           />
         </div>
 
-        <div
-          className="overflow-hidden rounded-2xl border border-[var(--k-border)] px-8 py-7"
-          style={{ background: "var(--hero-gradient)" }}
-        >
-          <div className="flex items-center gap-6">
+        <div className="border-k-border bg-k-surface overflow-hidden rounded-2xl border px-8 py-7">
+          <div className="flex items-start gap-6">
             {/* Thumbnail */}
             <AvatarImage
               src={albumCover}
@@ -199,8 +201,33 @@ export function LyricsHero({
               size={90}
               shape="square"
               fallback={
-                <div className={cn("flex h-full w-full items-center justify-center bg-gradient-to-br", thumbGradient)}>
-                  <Music2 size={36} className="text-[var(--k-text-3)]" strokeWidth={1.4} />
+                <div
+                  className={cn(
+                    "border-k-border bg-k-ink flex h-full w-full items-center justify-center rounded-[12px] border p-3"
+                  )}
+                >
+                  <svg className="ico36" viewBox="0 0 36 36" fill="none">
+                    <path
+                      d="M18 7C18 7 9 8 6 12L6 27C9 24 16 23 18 25Z"
+                      fill="#D4A92A"
+                      opacity="0.9"
+                    />
+                    <path
+                      d="M18 7C18 7 27 8 30 12L30 27C27 24 20 23 18 25Z"
+                      fill="#D4A92A"
+                      opacity="0.6"
+                    />
+                    <line
+                      x1="18"
+                      y1="7"
+                      x2="18"
+                      y2="25"
+                      stroke="var(--k-gold-pale)"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                    <path d="M26 6.5L26 15L23.8 13L21.5 15L21.5 6.5Z" fill="#A63248" />
+                  </svg>
                 </div>
               }
               className="rounded-[12px] shadow-xl ring-1 ring-black/8"
@@ -264,16 +291,16 @@ export function LyricsHero({
             </div>
 
             {/* Desktop action buttons */}
-            <div className="flex flex-shrink-0 items-center gap-2">
+            <div className="flex shrink-0 items-center gap-2">
               <button
                 onClick={onCopy}
-                className="flex items-center gap-1.5 rounded-lg border border-[var(--k-border)] bg-[var(--k-surface)] px-3.5 py-2 text-[12px] font-medium text-[var(--k-ink)] transition-opacity hover:opacity-80 dark:text-[var(--k-text-1)]"
+                className="border-k-border dark:bg-k-ink flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-[12px] font-medium text-[var(--k-ink)] transition-opacity hover:opacity-80 dark:text-[var(--k-text-1)]"
               >
                 <Copy size={13} /> Copy
               </button>
               <button
                 onClick={onShare}
-                className="flex items-center gap-1.5 rounded-lg border border-[var(--k-border)] bg-[var(--k-surface)] px-3.5 py-2 text-[12px] font-medium text-[var(--k-ink)] transition-opacity hover:opacity-80 dark:text-[var(--k-text-1)]"
+                className="border-k-border dark:bg-k-ink flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-[12px] font-medium text-[var(--k-ink)] transition-opacity hover:opacity-80 dark:text-[var(--k-text-1)]"
               >
                 <Share2 size={13} /> Share
               </button>
