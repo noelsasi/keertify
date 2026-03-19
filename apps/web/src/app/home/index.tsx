@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { Search, Settings } from "lucide-react"
+import { useState } from "react"
+import { NavLink, useNavigate } from "react-router-dom"
+import { Search } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { SongCard } from "@/components/SongCard"
 import { LogoIcon } from "@/components/LogoIcon"
@@ -12,6 +12,9 @@ import { LANGUAGE_LABELS } from "@/lib/constants"
 import { cn } from "@/lib/utils"
 import type { Category, Album, Artist } from "@/types/song.types"
 import { CATEGORY_LABELS } from "@/lib/categories"
+import ThemeToggle from "@/components/ThemeToggle"
+import Logo from "@/branding/Logo"
+import { useTheme } from "@/components/layouts/ThemeProvider"
 
 const CATEGORIES = ["All", ...Object.keys(CATEGORY_LABELS)].slice(0, 8)
 
@@ -68,16 +71,10 @@ const LANGUAGE_CARDS = [
 
 export function Home() {
   const navigate = useNavigate()
+  const { theme } = useTheme()
   const { language, setLanguage } = useAppStore()
   const [search, setSearch] = useState("")
   const [activeCategory, setActiveCategory] = useState("All")
-
-  const greetingMessage = useMemo(() => {
-    const hour = new Date().getHours()
-    if (hour < 12) return "Good morning"
-    if (hour < 18) return "Good afternoon"
-    return "Good evening"
-  }, [])
 
   const debouncedSearch = useDebounce(search)
   const isFiltering = !!(debouncedSearch || activeCategory !== "All")
@@ -117,23 +114,27 @@ export function Home() {
       {/* ══════════════════════════════════════
           MOBILE HEADER — logo + settings icon
       ══════════════════════════════════════ */}
-      <div className="flex items-center justify-between border-b border-[var(--k-border)] bg-[var(--k-surface)] px-5 py-3.5 md:hidden">
-        <div className="flex items-center gap-2.5">
-          <LogoIcon size={32} />
+      <div className="dark:bg-k-ink bg-k-surface border-k-border sticky top-0 z-10 flex items-center justify-between border-b px-5 py-3.5 md:hidden">
+        <NavLink to="/" className="flex shrink-0 items-center gap-2.5">
+          <Logo
+            variant="icon"
+            theme={
+              theme === "dark" ||
+              (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+                ? "dark"
+                : "light"
+            }
+            size="sm"
+          />
           <span
-            className="leading-none text-[var(--k-text-1)]"
-            style={{ fontFamily: "var(--k-font-display)", fontSize: 20, fontWeight: 500 }}
+            className="text-k-text-1 tracking-tight"
+            style={{ fontFamily: "var(--k-font-display)", fontSize: 22, fontWeight: 700 }}
           >
-            Keert<span style={{ color: "var(--k-gold)" }}>a</span>nalu
+            Keertanalu
           </span>
-        </div>
-        <button
-          onClick={() => navigate("/settings")}
-          className="flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--k-border)] bg-[var(--k-surface-2)]"
-          aria-label="Settings"
-        >
-          <Settings size={14} className="text-[var(--k-text-3)]" />
-        </button>
+        </NavLink>
+
+        <ThemeToggle />
       </div>
 
       {/* ══════════════════════════════════════
@@ -149,14 +150,14 @@ export function Home() {
             textTransform: "uppercase",
           }}
         >
-          {greetingMessage}
+          Praise the Lord
         </p>
         <h1
           className="mb-4 leading-tight text-[var(--k-text-1)]"
           style={{
             fontFamily: "var(--k-font-display)",
             fontSize: 34,
-            fontWeight: 400,
+            fontWeight: 700,
             letterSpacing: "-0.5px",
           }}
         >
@@ -170,7 +171,7 @@ export function Home() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search songs, artists…"
-            className="flex-1 bg-transparent text-[14px] text-[var(--k-text-1)] outline-none placeholder:text-[var(--k-text-4)]"
+            className="text-k-text-1 placeholder:text-k-text-4 flex-1 bg-transparent text-[14px] outline-none"
           />
         </div>
       </div>
@@ -183,22 +184,22 @@ export function Home() {
           {/* Left column */}
           <div className="min-w-0 flex-1">
             <p
-              className="mb-2.5 text-[var(--k-text-3)]"
+              className="text-k-gold mb-2.5"
               style={{
                 fontSize: 12,
-                fontWeight: 400,
+                fontWeight: 700,
                 letterSpacing: "3px",
                 textTransform: "uppercase",
               }}
             >
-              {greetingMessage}
+              Praise the Lord
             </p>
             <h1
-              className="mb-2 leading-tight text-[var(--k-text-1)]"
+              className="text-k-text-1 mb-2 leading-tight"
               style={{
                 fontFamily: "var(--k-font-display)",
                 fontSize: 52,
-                fontWeight: 400,
+                fontWeight: 500,
                 letterSpacing: "-1px",
               }}
             >
@@ -206,22 +207,22 @@ export function Home() {
               <br />
               <em style={{ color: "var(--k-gold)", fontStyle: "italic" }}>Lyrics &amp; Songs</em>
             </h1>
-            <p className="mb-7 max-w-md text-[15px] leading-relaxed text-[var(--k-text-3)]">
+            <p className="text-k-text-3 mb-7 max-w-md text-[15px] leading-relaxed">
               Your complete keertana companion. Browse thousands of devotional lyrics in Telugu,
               Tamil, Hindi and English.
             </p>
 
             {/* Hero search bar */}
-            <div className="mb-7 flex max-w-lg items-center gap-3 rounded-full border border-[var(--k-border)] bg-[var(--k-surface)] px-5 py-3.5">
-              <Search size={16} className="flex-shrink-0 text-[var(--k-text-3)]" />
+            <div className="border-k-border bg-k-surface mb-7 flex max-w-lg items-center gap-3 rounded-full border px-5 py-3">
+              <Search size={16} className="text-k-text-3 shrink-0" />
               <Input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search songs, artists, categories…"
-                className="flex-1 border-0 bg-transparent p-0 text-[14px] text-[var(--k-text-1)] shadow-none ring-0 outline-none placeholder:text-[var(--k-text-4)] focus-visible:ring-0"
+                className="text-k-text-1 placeholder:text-k-text-4 flex-1 border-0 bg-transparent p-0 text-[14px] shadow-none ring-0 outline-none focus-visible:ring-0"
               />
               <span
-                className="flex-shrink-0 rounded px-2 py-0.5 text-[11px] text-[var(--k-text-4)]"
+                className="text-k-text-4 shrink-0 rounded px-2 py-0.5 text-[11px]"
                 style={{ border: "1px solid var(--k-border)", letterSpacing: "0.5px" }}
               >
                 ⌘K
@@ -306,10 +307,10 @@ export function Home() {
             key={cat}
             onClick={() => setActiveCategory(cat)}
             className={cn(
-              "flex-shrink-0 rounded-full border px-4 py-1.5 text-[13px] transition-all duration-200",
+              "shrink-0 cursor-pointer rounded-full border px-4 py-1.5 text-sm transition-all duration-200",
               activeCategory === cat
-                ? "border-[var(--k-ink)] bg-[var(--k-ink)] text-[var(--k-gold-pale)] dark:border-[var(--k-gold)] dark:bg-[var(--k-gold)] dark:text-[var(--k-ink)]"
-                : "border-[var(--k-border)] bg-[var(--k-surface)] text-[var(--k-text-3)] hover:border-[var(--k-ink)] hover:text-[var(--k-text-1)]"
+                ? "border-k-ink bg-k-ink text-k-gold-pale dark:border-k-gold dark:bg-k-gold dark:text-k-ink"
+                : "border-k-border bg-k-surface text-k-text-3 hover:border-k-ink hover:text-k-text-1"
             )}
           >
             {cat}

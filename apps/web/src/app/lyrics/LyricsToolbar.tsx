@@ -20,7 +20,7 @@ export function LyricsToolbar({
   onPresent,
 }: Props) {
   return (
-    <div className="border-k-border sticky top-0 z-20 mt-5 flex items-center gap-2.5 border-t border-b px-4 py-2.5 md:hidden">
+    <div className="border-k-border bg-k-surface sticky top-0 z-20 mt-3 flex items-center gap-2.5 border-t border-b px-4 py-2.5 md:hidden">
       {/* Font size pill */}
       <div
         className="flex items-center overflow-hidden rounded-sm border border-[var(--k-border)]"
@@ -49,8 +49,8 @@ export function LyricsToolbar({
         className={cn(
           "flex h-7 items-center rounded-sm border px-2.5 text-[11px] font-bold transition-all duration-150",
           bold
-            ? "border-[var(--k-ink)] bg-[var(--k-ink)] text-[var(--k-gold-pale)]"
-            : "border-[var(--k-border)] bg-[var(--k-surface-2)] text-[var(--k-text-2)]"
+            ? "border-k-ink bg-k-ink text-k-gold-pale dark:bg-k-gold dark:text-k-ink"
+            : "border-k-border bg-k-surface-2 text-k-text-2"
         )}
       >
         <Bold size={11} />

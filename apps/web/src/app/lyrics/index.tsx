@@ -70,7 +70,7 @@ export function LyricsPage() {
 
   if (isError || !song) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">
+      <div className="text-muted-foreground flex min-h-screen items-center justify-center text-sm">
         Song not found
       </div>
     )
@@ -104,7 +104,7 @@ export function LyricsPage() {
     <div className="flex min-h-screen flex-col md:min-h-0">
       {/* Scroll progress bar */}
       <div
-        className="fixed top-0 left-0 z-[100] h-0.5 bg-[var(--k-gold)] transition-[width] duration-100"
+        className="bg-k-gold fixed top-0 left-0 z-100 h-0.5 transition-[width] duration-100"
         style={{ width: `${scrollProgress}%` }}
       />
 
@@ -128,7 +128,7 @@ export function LyricsPage() {
         onPresent={handlePresent}
       />
 
-      <div className="flex flex-1 gap-6 px-3.5 py-4 md:items-start md:px-0 md:py-0">
+      <div className="flex flex-1 gap-6 md:items-start md:px-0 md:py-0">
         <div className="min-w-0 flex-1 space-y-3">
           <LyricsReader
             song={song}
@@ -138,11 +138,9 @@ export function LyricsPage() {
             lyricsTab={lyricsTab}
             onTabChange={setLyricsTab}
           />
-          <SongMeta
-            song={song}
-            catConfig={catConfig}
-            streamingLinks={song.streamingLinks}
-          />
+          <div className="mx-3.5 md:mx-0">
+            <SongMeta song={song} catConfig={catConfig} streamingLinks={song.streamingLinks} />
+          </div>
         </div>
 
         <LyricsSidebar
@@ -169,13 +167,13 @@ function LyricsPageSkeleton() {
   return (
     <div className="flex min-h-screen flex-col md:min-h-0">
       {/* Hero skeleton */}
-      <div className="h-48 animate-pulse bg-muted md:h-40 md:rounded-2xl" />
+      <div className="bg-muted h-48 animate-pulse md:h-40 md:rounded-2xl" />
       {/* Toolbar skeleton */}
-      <div className="h-11 animate-pulse border-b border-border bg-muted md:hidden" />
+      <div className="border-border bg-muted h-11 animate-pulse border-b md:hidden" />
       {/* Content skeleton */}
       <div className="flex-1 space-y-3 px-4 py-4 md:px-0">
-        <div className="h-[420px] animate-pulse rounded-2xl bg-muted" />
-        <div className="h-28 animate-pulse rounded-2xl bg-muted" />
+        <div className="bg-muted h-[420px] animate-pulse rounded-2xl" />
+        <div className="bg-muted h-28 animate-pulse rounded-2xl" />
       </div>
     </div>
   )
